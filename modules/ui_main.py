@@ -664,7 +664,7 @@ class Ui_MainWindow(object):
         self.btn_home.setFont(font)
         self.btn_home.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.btn_home.setLayoutDirection(Qt.LeftToRight)
-        self.btn_home.setStyleSheet(u"background-image: url(:/resources/images/icons/icon_apps_black.png);")
+        self.btn_home.setStyleSheet(u"background-image: url(:/heroicons/Home.svg);")
 
         self.verticalLayout_8.addWidget(self.btn_home)
 
@@ -676,7 +676,7 @@ class Ui_MainWindow(object):
         self.btn_new.setFont(font)
         self.btn_new.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.btn_new.setLayoutDirection(Qt.LeftToRight)
-        self.btn_new.setStyleSheet(u"background-image: url(:/resources/images/icons/cil-file-black.png);")
+        self.btn_new.setStyleSheet(u"background-image: url(:/heroicons/DocumentMagnifyingGlass.svg);")
 
         self.verticalLayout_8.addWidget(self.btn_new)
 

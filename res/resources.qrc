@@ -17,4 +17,8 @@
     <file>images/media/gino_logo.png</file>
     <file>images/media/Gino_vertical.png</file>
   </qresource>
+  <qresource>
+    <file>heroicons/Home.svg</file>
+    <file>heroicons/DocumentMagnifyingGlass.svg</file>
+  </qresource>
 </RCC>

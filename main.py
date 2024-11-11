@@ -89,7 +89,7 @@ class MainWindow(QMainWindow):
 
         # SET CUSTOM THEME
         # ///////////////////////////////////////////////////////////////
-        useCustomTheme = True
+        useCustomTheme = False
         themeFile = "themes/light.qss"
 
         # SET THEME AND HACKS

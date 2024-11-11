@@ -687,7 +687,7 @@ Button */
               <font>
                <family>Segoe UI Semibold</family>
                <pointsize>12</pointsize>
-               <weight>7</weight>
+               <weight>8</weight>
                <italic>false</italic>
                <bold>false</bold>
               </font>
@@ -849,7 +849,7 @@ Button */
                    <enum>Qt::LeftToRight</enum>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-image: url(:/resources/images/icons/icon_apps_black.png);</string>
+                   <string notr="true">background-image: url(:/heroicons/Home.svg);</string>
                   </property>
                   <property name="text">
                    <string>Home</string>
@@ -886,7 +886,7 @@ Button */
                    <enum>Qt::LeftToRight</enum>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-image: url(:/resources/images/icons/cil-file-black.png);</string>
+                   <string notr="true">background-image: url(:/heroicons/DocumentMagnifyingGlass.svg);</string>
                   </property>
                   <property name="text">
                    <string>New</string>
