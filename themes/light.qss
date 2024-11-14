@@ -49,7 +49,7 @@ Left Menu */
 	background-position: left center;
 	background-repeat: no-repeat;
 	border: none;
-	border-left: 22px solid transparent;
+	border-left: 16px solid transparent;
 	background-color: transparent;
 	text-align: left;
 	padding-left: 44px;
@@ -141,7 +141,7 @@ Extra Tab */
 	background-position: left center;
 	background-repeat: no-repeat;
 	border: none;
-	border-left: 22px solid transparent;
+	border-left: 18px solid transparent;
 	background-color:transparent;
 	text-align: left;
 	padding-left: 44px;

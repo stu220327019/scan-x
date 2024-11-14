@@ -57,7 +57,7 @@ class Ui_MainWindow(object):
 "\n"
 "/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
 "Bg App */\n"
-"#bgApp {	\n"
+"#bgApp {\n"
 "	background-color: #f5f5fa;\n"
 "	border: 1px solid #CCC;\n"
 "	color: #44475a;\n"
@@ -65,14 +65,14 @@ class Ui_MainWindow(object):
 "\n"
 "/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
 "Left Menu */\n"
-"#leftMenuBg {	\n"
+"#leftMenuBg {\n"
 "	background-color: #ffffff;\n"
 "	border-right: 1px solid #c0c0c0;\n"
 "}\n"
 "#topLogo {\n"
 "	background-color: #ffffff;\n"
-"	background-image: ur"
-                        "l(:/resources/images/media/gino_logo.png);\n"
+"	background-image: url("
+                        ":/resources/images/media/gino_logo.png);\n"
 "	background-position: centered;\n"
 "	background-repeat: no-repeat;\n"
 "}\n"
@@ -83,11 +83,11 @@ class Ui_MainWindow(object):
 "#topMenu {\n"
 "	padding-right: 1px;\n"
 "}\n"
-"#topMenu .QPushButton {	\n"
+"#topMenu .QPushButton {\n"
 "	background-position: left center;\n"
 "	background-repeat: no-repeat;\n"
 "	border: none;\n"
-"	border-left: 22px solid transparent;\n"
+"	border-left: 18px solid transparent;\n"
 "	background-color: transparent;\n"
 "	text-align: left;\n"
 "	padding-left: 44px;\n"
@@ -96,25 +96,25 @@ class Ui_MainWindow(object):
 "#topMenu .QPushButton:hover {\n"
 "	background-color: #f2f6ff;\n"
 "}\n"
-"#topMenu .QPushButton:pressed {	\n"
+"#topMenu .QPushButton:pressed {\n"
 "	background-color: #2f93e1;\n"
 "	color: rgb(255, 255, 255);\n"
 "}\n"
-"#bottomMenu .QPushButton {	\n"
+"#bottomMenu .QPushButton {\n"
 "	background-position: left center;\n"
 "	background-repeat: no-repeat;\n"
 "	border: none;\n"
 "	border-left: 20px solid transparent;\n"
 "	background-color:transparent;\n"
 "	text-align: left;\n"
-"	padding-l"
-                        "eft: 44px;\n"
+"	padding-left: "
+                        "44px;\n"
 "	color: #4d4d4d;\n"
 "}\n"
 "#bottomMenu .QPushButton:hover {\n"
 "	background-color: #2f93e1;\n"
 "}\n"
-"#bottomMenu .QPushButton:pressed {	\n"
+"#bottomMenu .QPushButton:pressed {\n"
 "	background-color: #2f93e1;\n"
 "	color: rgb(255, 255, 255);\n"
 "}\n"
@@ -133,7 +133,7 @@ class Ui_MainWindow(object):
 "#toggleButton:hover {\n"
 "	background-color: #f2f6ff;\n"
 "}\n"
-"#toggleButton:pressed {	\n"
+"#toggleButton:pressed {\n"
 "	background-color: #f2f6ff;\n"
 "	color: rgb(255, 255, 255);\n"
 "}\n"
@@ -144,14 +144,14 @@ class Ui_MainWindow(object):
 "\n"
 "/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
 "Extra Tab */\n"
-"#extraLeftBox {	\n"
+"#extraLeftBox {\n"
 "	background-color: #f2f6ff;\n"
 "	border-right: 1px solid rgb(224, 224, 224);\n"
 "	color: #2f93e1;\n"
 "}\n"
-"#extraTopBg{	\n"
-"	b"
-                        "ackground-color: #f2f6ff;\n"
+"#extraTopBg{\n"
+"	background"
+                        "-color: #f2f6ff;\n"
 "	border-right: 1px solid rgb(224, 224, 224);\n"
 "	border-left: 1px solid rgb(224, 224, 224);\n"
 "}\n"
@@ -181,9 +181,9 @@ class Ui_MainWindow(object):
 "	background-position: left center;\n"
 "	background-repeat: no-repeat;\n"
 "	border: none;\n"
-"	border-left: 22px solid tran"
-                        "sparent;\n"
-"	background-color:transparent;\n"
+"	border-left: 18px solid transparent;\n"
+""
+                        "	background-color:transparent;\n"
 "	text-align: left;\n"
 "	padding-left: 44px;\n"
 "	color: #2f93e1;\n"
@@ -191,14 +191,14 @@ class Ui_MainWindow(object):
 "#extraTopMenu .QPushButton:hover {\n"
 "	background-color: #ffffff;\n"
 "}\n"
-"#extraTopMenu .QPushButton:pressed {	\n"
+"#extraTopMenu .QPushButton:pressed {\n"
 "	background-color: rgb(161, 196, 249);\n"
 "	color: rgb(255, 255, 255);\n"
 "}\n"
 "\n"
 "/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
 "Content App */\n"
-"#contentTopBg{	\n"
+"#contentTopBg{\n"
 "	background-color: #ffffff;\n"
 "}\n"
 "#contentBottom{\n"
@@ -214,9 +214,9 @@ class Ui_MainWindow(object):
 "#rightButtons .QPushButton:pressed { background-color: #2f93e1; border-style: solid; border-radius: 4px; }\n"
 "\n"
 "/* Theme Settings */\n"
-"#extraRightBox {"
-                        " \n"
-"	background-color: #ffffff;\n"
+"#extraRightBox {\n"
+"	backgroun"
+                        "d-color: #ffffff;\n"
 "}\n"
 "\n"
 "/* Bottom Bar */\n"
@@ -239,20 +239,20 @@ class Ui_MainWindow(object):
 "	background-color: #2f93e1;\n"
 "	color: #f2f6ff;\n"
 "}\n"
-"#contentSettings .QPushButton:pressed {	\n"
+"#contentSettings .QPushButton:pressed {\n"
 "	background-color: #46afff;\n"
 "	color: #f2f6ff;\n"
 "}\n"
 "/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
 "QTableWidget */\n"
-"QTableWidget {	\n"
+"QTableWidget {\n"
 "	background-color: transparent;\n"
 "	padding: 10px;\n"
 "	border-radius: 5px;\n"
 "	gridline-color: #9faeda;\n"
+"	outline: none;\n"
 ""
-                        "	outline: none;\n"
-"}\n"
+                        "}\n"
 "QTableWidget::item{\n"
 "	border-color: #9faeda;\n"
 "	padding-left: 5px;\n"
@@ -269,7 +269,7 @@ class Ui_MainWindow(object):
 "	border: none;\n"
 "	border-style: none;\n"
 "}\n"
-"QTableWidget::horizontalHeader {	\n"
+"QTableWidget::horizontalHeader {\n"
 "	background-color: #ffffff;\n"
 "}\n"
 "QHeaderView::section:horizontal\n"
@@ -293,8 +293,8 @@ class Ui_MainWindow(object):
 "	border-radius: 2px;\n"
 "	border: 1px solid #5f5f5f;\n"
 "	padding-left: 10px;\n"
-""
-                        "	padding-bottom: 5px;\n"
+"	padding-bottom: 5p"
+                        "x;\n"
 "	padding-top: 5px;\n"
 "	selection-color: rgb(255, 255, 255);\n"
 "	selection-background-color: #2f93e1;\n"
@@ -332,9 +332,9 @@ class Ui_MainWindow(object):
 "\n"
 "/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
 "ScrollBars */\n"
-"QScrol"
-                        "lBar:horizontal {\n"
-"	border: none;\n"
+"QScrollBar:horizontal {\n"
+""
+                        "	border: none;\n"
 "	background: #ffffff;\n"
 "	height: 8px;\n"
 "	margin: 0px 21px 0 21px;\n"
@@ -373,13 +373,13 @@ class Ui_MainWindow(object):
 "}\n"
 "QScrollBar:vertical {\n"
 "	border: none;\n"
-"	background-"
-                        "color: #ffffff;\n"
-"	width: 8px;\n"
+"	background-color: #ffffff;\n"
+"	w"
+                        "idth: 8px;\n"
 "	margin: 21px 0 21px 0;\n"
 "	border-radius: 0px;\n"
 "}\n"
-"QScrollBar::handle:vertical {	\n"
+"QScrollBar::handle:vertical {\n"
 "	background: rgb(189, 147, 249);\n"
 "	min-height: 25px;\n"
 "	border-radius: 4px\n"
@@ -411,9 +411,9 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
-"CheckBox *"
-                        "/\n"
-"QCheckBox::indicator {\n"
+"CheckBox */\n"
+"QCheckBox::indica"
+                        "tor {\n"
 "	border: 3px solid #5e5e5e;\n"
 "	width: 15px;\n"
 "	height: 15px;\n"
@@ -448,9 +448,9 @@ class Ui_MainWindow(object):
 "\n"
 "/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
 "ComboBox */\n"
-"QComb"
-                        "oBox{\n"
-"	background-color: #ffffff;\n"
+"QComboBox{\n"
+"	background-c"
+                        "olor: #ffffff;\n"
 "	border-radius: 2px;\n"
 "	border: 1px solid #505050;\n"
 "	padding: 5px;\n"
@@ -463,15 +463,15 @@ class Ui_MainWindow(object):
 "QComboBox::drop-down {\n"
 "	subcontrol-origin: padding;\n"
 "	subcontrol-position: top right;\n"
-"	width: 25px; \n"
+"	width: 25px;\n"
 "	border-top-right-radius: 3px;\n"
-"	border-bottom-right-radius: 3px;	\n"
+"	border-bottom-right-radius: 3px;\n"
 "	background-image: url(:/resources/images/icons/cil-arrow-bottom.png);\n"
 "	background-position: center;\n"
 "	background-repeat: no-reperat;\n"
 "}\n"
 "QComboBox QAbstractItemView {\n"
-"	color: #505050; \n"
+"	color: #505050;\n"
 "	background-color: #ffffff;\n"
 "	padding: 10px;\n"
 "	selection-background-color: #2f93e1;\n"
@@ -486,9 +486,9 @@ class Ui_MainWindow(object):
 "	background-color: #ffffff;\n"
 "}\n"
 "QSlider::handle:horizontal {\n"
-"	backgro"
-                        "und-color: #2f93e1;  \n"
-"	border: none;\n"
+"	background-color: #2f93e1;\n"
+"	b"
+                        "order: none;\n"
 "	height: 10px;\n"
 "	width: 10px;\n"
 "	margin: 0px;\n"
@@ -527,19 +527,19 @@ class Ui_MainWindow(object):
 "\n"
 "/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
 "CommandLinkButton */\n"
-"#pagesContainer QCommandLinkButton {	\n"
-""
-                        "	color: #2f93e1;\n"
-"	border-radius: 5px;\n"
+"#pagesContainer QCommandLinkButton {\n"
+"	color: #2f93e1;\n"
+"	border"
+                        "-radius: 5px;\n"
 "	padding: 5px;\n"
 "	border: 2px solid #2f93e1;\n"
 "	color: #2f93e1\n"
 "}\n"
-"#pagesContainer QCommandLinkButton:hover {	\n"
+"#pagesContainer QCommandLinkButton:hover {\n"
 "	color: #2f93e1;\n"
 "	background-color: #ffffff;\n"
 "}\n"
-"#pagesContainer QCommandLinkButton:pressed {	\n"
+"#pagesContainer QCommandLinkButton:pressed {\n"
 "	color: rgb(189, 147, 249);\n"
 "	background-color: #586796;\n"
 "}\n"
@@ -548,7 +548,7 @@ class Ui_MainWindow(object):
 "Button */\n"
 "#pagesContainer QPushButton {\n"
 "	border: 2px solid #2f93e1;\n"
-"	border-radius: 5px;	\n"
+"	border-radius: 5px;\n"
 "	background-color: #ffffff;\n"
 "	color: #f8f8f2;\n"
 "}\n"
@@ -556,12 +556,10 @@ class Ui_MainWindow(object):
 "	background-color: #7082b6;\n"
 "	border: 2px solid #7082b6;\n"
 "}\n"
-"#pagesContainer QPushButton:pressed {	\n"
+"#pagesContainer QPushButton:pressed {\n"
 "	background-color: #2f93e1;\n"
-"	border: 2px solid #2f93e1;\n"
+"	border: 5px solid #2f93e1;\n"
 "}\n"
-"\n"
-"\n"
 "")
         self.appMargins = QVBoxLayout(self.styleSheet)
         self.appMargins.setSpacing(0)
@@ -665,20 +663,38 @@ class Ui_MainWindow(object):
         self.btn_home.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.btn_home.setLayoutDirection(Qt.LeftToRight)
         self.btn_home.setStyleSheet(u"background-image: url(:/heroicons/Home.svg);")
+        self.btn_home.setCheckable(False)
+        self.btn_home.setChecked(False)
 
         self.verticalLayout_8.addWidget(self.btn_home)
 
-        self.btn_new = QPushButton(self.topMenu)
-        self.btn_new.setObjectName(u"btn_new")
-        sizePolicy.setHeightForWidth(self.btn_new.sizePolicy().hasHeightForWidth())
-        self.btn_new.setSizePolicy(sizePolicy)
-        self.btn_new.setMinimumSize(QSize(0, 45))
-        self.btn_new.setFont(font)
-        self.btn_new.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        self.btn_new.setLayoutDirection(Qt.LeftToRight)
-        self.btn_new.setStyleSheet(u"background-image: url(:/heroicons/DocumentMagnifyingGlass.svg);")
+        self.btn_fileScan = QPushButton(self.topMenu)
+        self.btn_fileScan.setObjectName(u"btn_fileScan")
+        sizePolicy.setHeightForWidth(self.btn_fileScan.sizePolicy().hasHeightForWidth())
+        self.btn_fileScan.setSizePolicy(sizePolicy)
+        self.btn_fileScan.setMinimumSize(QSize(0, 45))
+        self.btn_fileScan.setFont(font)
+        self.btn_fileScan.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.btn_fileScan.setLayoutDirection(Qt.LeftToRight)
+        self.btn_fileScan.setStyleSheet(u"background-image: url(:/heroicons/DocumentMagnifyingGlass.svg);")
 
-        self.verticalLayout_8.addWidget(self.btn_new)
+        self.verticalLayout_8.addWidget(self.btn_fileScan)
+
+        self.btn_folderScan = QPushButton(self.topMenu)
+        self.btn_folderScan.setObjectName(u"btn_folderScan")
+        self.btn_folderScan.setMinimumSize(QSize(0, 45))
+        self.btn_folderScan.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.btn_folderScan.setStyleSheet(u"background-image: url(:/heroicons/FolderOpen.svg);")
+
+        self.verticalLayout_8.addWidget(self.btn_folderScan)
+
+        self.btn_urlScan = QPushButton(self.topMenu)
+        self.btn_urlScan.setObjectName(u"btn_urlScan")
+        self.btn_urlScan.setMinimumSize(QSize(0, 45))
+        self.btn_urlScan.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.btn_urlScan.setStyleSheet(u"background-image: url(:/heroicons/GlobeAlt.svg);")
+
+        self.verticalLayout_8.addWidget(self.btn_urlScan)
 
 
         self.verticalMenuLayout.addWidget(self.topMenu, 0, Qt.AlignTop)
@@ -940,7 +956,7 @@ class Ui_MainWindow(object):
         self.maximizeRestoreAppBtn.setFont(font3)
         self.maximizeRestoreAppBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         icon3 = QIcon()
-        icon3.addFile(u":/resources/images/icons/icon_restore_black.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon3.addFile(u":/resources/images/icons/icon_maximize_black.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.maximizeRestoreAppBtn.setIcon(icon3)
         self.maximizeRestoreAppBtn.setIconSize(QSize(20, 20))
 
@@ -998,11 +1014,11 @@ class Ui_MainWindow(object):
 "background-position: center;\n"
 "background-repeat: no-repeat;")
         self.stackedWidget.addWidget(self.home)
-        self.new_page = QWidget()
-        self.new_page.setObjectName(u"new_page")
-        self.verticalLayout_20 = QVBoxLayout(self.new_page)
+        self.page_fileScan = QWidget()
+        self.page_fileScan.setObjectName(u"page_fileScan")
+        self.verticalLayout_20 = QVBoxLayout(self.page_fileScan)
         self.verticalLayout_20.setObjectName(u"verticalLayout_20")
-        self.frame = QFrame(self.new_page)
+        self.frame = QFrame(self.page_fileScan)
         self.frame.setObjectName(u"frame")
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
@@ -1018,7 +1034,47 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_20.addWidget(self.frame, 0, Qt.AlignTop)
 
-        self.stackedWidget.addWidget(self.new_page)
+        self.stackedWidget.addWidget(self.page_fileScan)
+        self.page_folderScan = QWidget()
+        self.page_folderScan.setObjectName(u"page_folderScan")
+        self.verticalLayout_17 = QVBoxLayout(self.page_folderScan)
+        self.verticalLayout_17.setObjectName(u"verticalLayout_17")
+        self.frame_2 = QFrame(self.page_folderScan)
+        self.frame_2.setObjectName(u"frame_2")
+        self.frame_2.setFrameShape(QFrame.StyledPanel)
+        self.frame_2.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_16 = QVBoxLayout(self.frame_2)
+        self.verticalLayout_16.setObjectName(u"verticalLayout_16")
+        self.label_2 = QLabel(self.frame_2)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setAlignment(Qt.AlignCenter)
+
+        self.verticalLayout_16.addWidget(self.label_2)
+
+
+        self.verticalLayout_17.addWidget(self.frame_2, 0, Qt.AlignTop)
+
+        self.stackedWidget.addWidget(self.page_folderScan)
+        self.page_urlScan = QWidget()
+        self.page_urlScan.setObjectName(u"page_urlScan")
+        self.verticalLayout_18 = QVBoxLayout(self.page_urlScan)
+        self.verticalLayout_18.setObjectName(u"verticalLayout_18")
+        self.frame_3 = QFrame(self.page_urlScan)
+        self.frame_3.setObjectName(u"frame_3")
+        self.frame_3.setFrameShape(QFrame.StyledPanel)
+        self.frame_3.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_19 = QVBoxLayout(self.frame_3)
+        self.verticalLayout_19.setObjectName(u"verticalLayout_19")
+        self.label_3 = QLabel(self.frame_3)
+        self.label_3.setObjectName(u"label_3")
+        self.label_3.setAlignment(Qt.AlignCenter)
+
+        self.verticalLayout_19.addWidget(self.label_3)
+
+
+        self.verticalLayout_18.addWidget(self.frame_3, 0, Qt.AlignTop)
+
+        self.stackedWidget.addWidget(self.page_urlScan)
 
         self.verticalLayout_15.addWidget(self.stackedWidget)
 
@@ -1128,7 +1184,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -1139,7 +1195,9 @@ class Ui_MainWindow(object):
         self.titleLeftApp.setText(QCoreApplication.translate("MainWindow", u"Genius Software", None))
         self.titleLeftDescription.setText(QCoreApplication.translate("MainWindow", u"Invoice App", None))
         self.btn_home.setText(QCoreApplication.translate("MainWindow", u"Home", None))
-        self.btn_new.setText(QCoreApplication.translate("MainWindow", u"New", None))
+        self.btn_fileScan.setText(QCoreApplication.translate("MainWindow", u"File Scan", None))
+        self.btn_folderScan.setText(QCoreApplication.translate("MainWindow", u"Folder Scan", None))
+        self.btn_urlScan.setText(QCoreApplication.translate("MainWindow", u"URL Scan", None))
         self.toggleLeftBox.setText(QCoreApplication.translate("MainWindow", u"Left Box", None))
         self.extraLabel.setText(QCoreApplication.translate("MainWindow", u"Settings", None))
 #if QT_CONFIG(tooltip)
@@ -1179,7 +1237,9 @@ class Ui_MainWindow(object):
         self.closeAppBtn.setToolTip(QCoreApplication.translate("MainWindow", u"Close", None))
 #endif // QT_CONFIG(tooltip)
         self.closeAppBtn.setText("")
-        self.label.setText(QCoreApplication.translate("MainWindow", u"NEW PAGE TEST", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"File Scan", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Folder Scan", None))
+        self.label_3.setText(QCoreApplication.translate("MainWindow", u"URL Scan", None))
         self.btn_logout.setText(QCoreApplication.translate("MainWindow", u"Logout", None))
         self.creditsLabel.setText(QCoreApplication.translate("MainWindow", u"Created & Developed by Gino", None))
         self.version.setText(QCoreApplication.translate("MainWindow", u"v1.0.3", None))

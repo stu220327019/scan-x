@@ -18,6 +18,8 @@
     <file>images/media/Gino_vertical.png</file>
   </qresource>
   <qresource>
+    <file>heroicons/GlobeAlt.svg</file>
+    <file>heroicons/FolderOpen.svg</file>
     <file>heroicons/Home.svg</file>
     <file>heroicons/DocumentMagnifyingGlass.svg</file>
   </qresource>

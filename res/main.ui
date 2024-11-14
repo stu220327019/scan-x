@@ -53,7 +53,7 @@ QToolTip {
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
 Bg App */
-#bgApp {	
+#bgApp {
 	background-color: #f5f5fa;
 	border: 1px solid #CCC;
 	color: #44475a;
@@ -61,7 +61,7 @@ Bg App */
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
 Left Menu */
-#leftMenuBg {	
+#leftMenuBg {
 	background-color: #ffffff;
 	border-right: 1px solid #c0c0c0;
 }
@@ -78,11 +78,11 @@ Left Menu */
 #topMenu {
 	padding-right: 1px;
 }
-#topMenu .QPushButton {	
+#topMenu .QPushButton {
 	background-position: left center;
 	background-repeat: no-repeat;
 	border: none;
-	border-left: 22px solid transparent;
+	border-left: 18px solid transparent;
 	background-color: transparent;
 	text-align: left;
 	padding-left: 44px;
@@ -91,11 +91,11 @@ Left Menu */
 #topMenu .QPushButton:hover {
 	background-color: #f2f6ff;
 }
-#topMenu .QPushButton:pressed {	
+#topMenu .QPushButton:pressed {
 	background-color: #2f93e1;
 	color: rgb(255, 255, 255);
 }
-#bottomMenu .QPushButton {	
+#bottomMenu .QPushButton {
 	background-position: left center;
 	background-repeat: no-repeat;
 	border: none;
@@ -108,7 +108,7 @@ Left Menu */
 #bottomMenu .QPushButton:hover {
 	background-color: #2f93e1;
 }
-#bottomMenu .QPushButton:pressed {	
+#bottomMenu .QPushButton:pressed {
 	background-color: #2f93e1;
 	color: rgb(255, 255, 255);
 }
@@ -127,7 +127,7 @@ Left Menu */
 #toggleButton:hover {
 	background-color: #f2f6ff;
 }
-#toggleButton:pressed {	
+#toggleButton:pressed {
 	background-color: #f2f6ff;
 	color: rgb(255, 255, 255);
 }
@@ -138,12 +138,12 @@ Left Menu */
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
 Extra Tab */
-#extraLeftBox {	
+#extraLeftBox {
 	background-color: #f2f6ff;
 	border-right: 1px solid rgb(224, 224, 224);
 	color: #2f93e1;
 }
-#extraTopBg{	
+#extraTopBg{
 	background-color: #f2f6ff;
 	border-right: 1px solid rgb(224, 224, 224);
 	border-left: 1px solid rgb(224, 224, 224);
@@ -174,7 +174,7 @@ Extra Tab */
 	background-position: left center;
 	background-repeat: no-repeat;
 	border: none;
-	border-left: 22px solid transparent;
+	border-left: 18px solid transparent;
 	background-color:transparent;
 	text-align: left;
 	padding-left: 44px;
@@ -183,14 +183,14 @@ Extra Tab */
 #extraTopMenu .QPushButton:hover {
 	background-color: #ffffff;
 }
-#extraTopMenu .QPushButton:pressed {	
+#extraTopMenu .QPushButton:pressed {
 	background-color: rgb(161, 196, 249);
 	color: rgb(255, 255, 255);
 }
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
 Content App */
-#contentTopBg{	
+#contentTopBg{
 	background-color: #ffffff;
 }
 #contentBottom{
@@ -206,7 +206,7 @@ Content App */
 #rightButtons .QPushButton:pressed { background-color: #2f93e1; border-style: solid; border-radius: 4px; }
 
 /* Theme Settings */
-#extraRightBox { 
+#extraRightBox {
 	background-color: #ffffff;
 }
 
@@ -230,13 +230,13 @@ Content App */
 	background-color: #2f93e1;
 	color: #f2f6ff;
 }
-#contentSettings .QPushButton:pressed {	
+#contentSettings .QPushButton:pressed {
 	background-color: #46afff;
 	color: #f2f6ff;
 }
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
 QTableWidget */
-QTableWidget {	
+QTableWidget {
 	background-color: transparent;
 	padding: 10px;
 	border-radius: 5px;
@@ -259,7 +259,7 @@ QHeaderView::section{
 	border: none;
 	border-style: none;
 }
-QTableWidget::horizontalHeader {	
+QTableWidget::horizontalHeader {
 	background-color: #ffffff;
 }
 QHeaderView::section:horizontal
@@ -366,7 +366,7 @@ QScrollBar:vertical {
 	margin: 21px 0 21px 0;
 	border-radius: 0px;
 }
-QScrollBar::handle:vertical {	
+QScrollBar::handle:vertical {
 	background: rgb(189, 147, 249);
 	min-height: 25px;
 	border-radius: 4px
@@ -448,15 +448,15 @@ QComboBox:hover{
 QComboBox::drop-down {
 	subcontrol-origin: padding;
 	subcontrol-position: top right;
-	width: 25px; 
+	width: 25px;
 	border-top-right-radius: 3px;
-	border-bottom-right-radius: 3px;	
+	border-bottom-right-radius: 3px;
 	background-image: url(:/resources/images/icons/cil-arrow-bottom.png);
 	background-position: center;
 	background-repeat: no-reperat;
 }
 QComboBox QAbstractItemView {
-	color: #505050; 
+	color: #505050;
 	background-color: #ffffff;
 	padding: 10px;
 	selection-background-color: #2f93e1;
@@ -471,7 +471,7 @@ QSlider::groove:horizontal {
 	background-color: #ffffff;
 }
 QSlider::handle:horizontal {
-	background-color: #2f93e1;  
+	background-color: #2f93e1;
 	border: none;
 	height: 10px;
 	width: 10px;
@@ -511,18 +511,18 @@ QSlider::handle:vertical:pressed {
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
 CommandLinkButton */
-#pagesContainer QCommandLinkButton {	
+#pagesContainer QCommandLinkButton {
 	color: #2f93e1;
 	border-radius: 5px;
 	padding: 5px;
 	border: 2px solid #2f93e1;
 	color: #2f93e1
 }
-#pagesContainer QCommandLinkButton:hover {	
+#pagesContainer QCommandLinkButton:hover {
 	color: #2f93e1;
 	background-color: #ffffff;
 }
-#pagesContainer QCommandLinkButton:pressed {	
+#pagesContainer QCommandLinkButton:pressed {
 	color: rgb(189, 147, 249);
 	background-color: #586796;
 }
@@ -531,7 +531,7 @@ CommandLinkButton */
 Button */
 #pagesContainer QPushButton {
 	border: 2px solid #2f93e1;
-	border-radius: 5px;	
+	border-radius: 5px;
 	background-color: #ffffff;
 	color: #f8f8f2;
 }
@@ -539,12 +539,10 @@ Button */
 	background-color: #7082b6;
 	border: 2px solid #7082b6;
 }
-#pagesContainer QPushButton:pressed {	
+#pagesContainer QPushButton:pressed {
 	background-color: #2f93e1;
-	border: 2px solid #2f93e1;
+	border: 5px solid #2f93e1;
 }
-
-
 </string>
    </property>
    <layout class="QVBoxLayout" name="appMargins">
@@ -854,10 +852,16 @@ Button */
                   <property name="text">
                    <string>Home</string>
                   </property>
+                  <property name="checkable">
+                   <bool>false</bool>
+                  </property>
+                  <property name="checked">
+                   <bool>false</bool>
+                  </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="btn_new">
+                 <widget class="QPushButton" name="btn_fileScan">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                     <horstretch>0</horstretch>
@@ -889,7 +893,45 @@ Button */
                    <string notr="true">background-image: url(:/heroicons/DocumentMagnifyingGlass.svg);</string>
                   </property>
                   <property name="text">
-                   <string>New</string>
+                   <string>File Scan</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btn_folderScan">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>45</height>
+                   </size>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-image: url(:/heroicons/FolderOpen.svg);</string>
+                  </property>
+                  <property name="text">
+                   <string>Folder Scan</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btn_urlScan">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>45</height>
+                   </size>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-image: url(:/heroicons/GlobeAlt.svg);</string>
+                  </property>
+                  <property name="text">
+                   <string>URL Scan</string>
                   </property>
                  </widget>
                 </item>
@@ -1584,7 +1626,7 @@ p, li { white-space: pre-wrap; }
                   </property>
                   <property name="icon">
                    <iconset resource="resources.qrc">
-                    <normaloff>:/resources/images/icons/icon_restore_black.png</normaloff>:/resources/images/icons/icon_restore_black.png</iconset>
+                    <normaloff>:/resources/images/icons/icon_maximize_black.png</normaloff>:/resources/images/icons/icon_maximize_black.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -1716,7 +1758,7 @@ p, li { white-space: pre-wrap; }
                       <string notr="true">background: transparent;</string>
                      </property>
                      <property name="currentIndex">
-                      <number>1</number>
+                      <number>0</number>
                      </property>
                      <widget class="QWidget" name="home">
                       <property name="styleSheet">
@@ -1725,7 +1767,7 @@ background-position: center;
 background-repeat: no-repeat;</string>
                       </property>
                      </widget>
-                     <widget class="QWidget" name="new_page">
+                     <widget class="QWidget" name="page_fileScan">
                       <layout class="QVBoxLayout" name="verticalLayout_20">
                        <item alignment="Qt::AlignTop">
                         <widget class="QFrame" name="frame">
@@ -1742,7 +1784,59 @@ background-repeat: no-repeat;</string>
                              <enum>QFrame::NoFrame</enum>
                             </property>
                             <property name="text">
-                             <string>NEW PAGE TEST</string>
+                             <string>File Scan</string>
+                            </property>
+                            <property name="alignment">
+                             <set>Qt::AlignCenter</set>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                     <widget class="QWidget" name="page_folderScan">
+                      <layout class="QVBoxLayout" name="verticalLayout_17">
+                       <item alignment="Qt::AlignTop">
+                        <widget class="QFrame" name="frame_2">
+                         <property name="frameShape">
+                          <enum>QFrame::StyledPanel</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QVBoxLayout" name="verticalLayout_16">
+                          <item>
+                           <widget class="QLabel" name="label_2">
+                            <property name="text">
+                             <string>Folder Scan</string>
+                            </property>
+                            <property name="alignment">
+                             <set>Qt::AlignCenter</set>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                     <widget class="QWidget" name="page_urlScan">
+                      <layout class="QVBoxLayout" name="verticalLayout_18">
+                       <item alignment="Qt::AlignTop">
+                        <widget class="QFrame" name="frame_3">
+                         <property name="frameShape">
+                          <enum>QFrame::StyledPanel</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QVBoxLayout" name="verticalLayout_19">
+                          <item>
+                           <widget class="QLabel" name="label_3">
+                            <property name="text">
+                             <string>URL Scan</string>
                             </property>
                             <property name="alignment">
                              <set>Qt::AlignCenter</set>
