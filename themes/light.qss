@@ -49,7 +49,7 @@ Left Menu */
 	background-position: left center;
 	background-repeat: no-repeat;
 	border: none;
-	border-left: 16px solid transparent;
+	border-left: 18px solid transparent;
 	background-color: transparent;
 	text-align: left;
 	padding-left: 44px;
@@ -160,9 +160,17 @@ Content App */
 #contentTopBg{
 	background-color: #ffffff;
 }
-#contentBottom{
+#contentMain{
 	border-top: 3px solid #2f93e1;
 }
+
+#pagesContainer {
+	background-color: #ffffff;
+}
+#pagesContainer .QFrame {
+	border: none;
+}
+
 #titleRightInfo{
 	color: #0f2c52;
 }
@@ -492,21 +500,4 @@ CommandLinkButton */
 #pagesContainer QCommandLinkButton:pressed {
 	color: rgb(189, 147, 249);
 	background-color: #586796;
-}
-
-/* /////////////////////////////////////////////////////////////////////////////////////////////////
-Button */
-#pagesContainer QPushButton {
-	border: 2px solid #2f93e1;
-	border-radius: 5px;
-	background-color: #ffffff;
-	color: #f8f8f2;
-}
-#pagesContainer QPushButton:hover {
-	background-color: #7082b6;
-	border: 2px solid #7082b6;
-}
-#pagesContainer QPushButton:pressed {
-	background-color: #2f93e1;
-	border: 2px solid #2f93e1;
 }

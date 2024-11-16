@@ -21,6 +21,9 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="styleSheet">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="font">
     <font>
      <family>Segoe UI</family>
@@ -193,9 +196,14 @@ Content App */
 #contentTopBg{
 	background-color: #ffffff;
 }
-#contentBottom{
+#contentMain{
 	border-top: 3px solid #2f93e1;
 }
+
+#pagesContainer .QFrame {
+	border: none;
+}
+
 #titleRightInfo{
 	color: #0f2c52;
 }
@@ -525,23 +533,6 @@ CommandLinkButton */
 #pagesContainer QCommandLinkButton:pressed {
 	color: rgb(189, 147, 249);
 	background-color: #586796;
-}
-
-/* /////////////////////////////////////////////////////////////////////////////////////////////////
-Button */
-#pagesContainer QPushButton {
-	border: 2px solid #2f93e1;
-	border-radius: 5px;
-	background-color: #ffffff;
-	color: #f8f8f2;
-}
-#pagesContainer QPushButton:hover {
-	background-color: #7082b6;
-	border: 2px solid #7082b6;
-}
-#pagesContainer QPushButton:pressed {
-	background-color: #2f93e1;
-	border: 5px solid #2f93e1;
 }
 </string>
    </property>
@@ -1678,7 +1669,7 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item>
-           <widget class="QFrame" name="contentBottom">
+           <widget class="QFrame" name="contentMain">
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
@@ -1727,9 +1718,6 @@ p, li { white-space: pre-wrap; }
                 </property>
                 <item>
                  <widget class="QFrame" name="pagesContainer">
-                  <property name="styleSheet">
-                   <string notr="true"/>
-                  </property>
                   <property name="frameShape">
                    <enum>QFrame::NoFrame</enum>
                   </property>
@@ -1754,11 +1742,8 @@ p, li { white-space: pre-wrap; }
                    </property>
                    <item>
                     <widget class="QStackedWidget" name="stackedWidget">
-                     <property name="styleSheet">
-                      <string notr="true">background: transparent;</string>
-                     </property>
                      <property name="currentIndex">
-                      <number>0</number>
+                      <number>1</number>
                      </property>
                      <widget class="QWidget" name="home">
                       <property name="styleSheet">
@@ -1771,6 +1756,9 @@ background-repeat: no-repeat;</string>
                       <layout class="QVBoxLayout" name="verticalLayout_20">
                        <item alignment="Qt::AlignTop">
                         <widget class="QFrame" name="frame">
+                         <property name="styleSheet">
+                          <string notr="true"/>
+                         </property>
                          <property name="frameShape">
                           <enum>QFrame::StyledPanel</enum>
                          </property>
@@ -1779,16 +1767,49 @@ background-repeat: no-repeat;</string>
                          </property>
                          <layout class="QVBoxLayout" name="verticalLayout">
                           <item>
-                           <widget class="QLabel" name="label">
-                            <property name="frameShape">
-                             <enum>QFrame::NoFrame</enum>
+                           <widget class="QGroupBox" name="groupBox">
+                            <property name="title">
+                             <string>File Upload</string>
                             </property>
-                            <property name="text">
-                             <string>File Scan</string>
-                            </property>
-                            <property name="alignment">
-                             <set>Qt::AlignCenter</set>
-                            </property>
+                            <layout class="QHBoxLayout" name="horizontalLayout_6">
+                             <item>
+                              <widget class="QPushButton" name="btn_fileBrowse">
+                               <property name="text">
+                                <string>Browse...</string>
+                               </property>
+                              </widget>
+                             </item>
+                             <item>
+                              <widget class="QLabel" name="label">
+                               <property name="text">
+                                <string>No file selected</string>
+                               </property>
+                              </widget>
+                             </item>
+                             <item>
+                              <spacer name="horizontalSpacer">
+                               <property name="orientation">
+                                <enum>Qt::Horizontal</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>40</width>
+                                 <height>20</height>
+                                </size>
+                               </property>
+                              </spacer>
+                             </item>
+                             <item>
+                              <widget class="QPushButton" name="btn_fileScan_2">
+                               <property name="enabled">
+                                <bool>true</bool>
+                               </property>
+                               <property name="text">
+                                <string>Scan</string>
+                               </property>
+                              </widget>
+                             </item>
+                            </layout>
                            </widget>
                           </item>
                          </layout>

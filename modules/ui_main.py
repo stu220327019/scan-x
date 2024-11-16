@@ -15,10 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
-    QLabel, QLayout, QMainWindow, QPushButton,
-    QSizePolicy, QStackedWidget, QTextEdit, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QGroupBox,
+    QHBoxLayout, QLabel, QLayout, QMainWindow,
+    QPushButton, QSizePolicy, QSpacerItem, QStackedWidget,
+    QTextEdit, QVBoxLayout, QWidget)
 from . resources_rc import *
 
 class Ui_MainWindow(object):
@@ -29,6 +29,7 @@ class Ui_MainWindow(object):
         MainWindow.setMinimumSize(QSize(940, 560))
         self.styleSheet = QWidget(MainWindow)
         self.styleSheet.setObjectName(u"styleSheet")
+        self.styleSheet.setEnabled(True)
         font = QFont()
         font.setFamilies([u"Segoe UI"])
         font.setPointSize(10)
@@ -201,9 +202,14 @@ class Ui_MainWindow(object):
 "#contentTopBg{\n"
 "	background-color: #ffffff;\n"
 "}\n"
-"#contentBottom{\n"
+"#contentMain{\n"
 "	border-top: 3px solid #2f93e1;\n"
 "}\n"
+"\n"
+"#pagesContainer .QFrame {\n"
+"	border: none;\n"
+"}\n"
+"\n"
 "#titleRightInfo{\n"
 "	color: #0f2c52;\n"
 "}\n"
@@ -212,11 +218,11 @@ class Ui_MainWindow(object):
 "#rightButtons .QPushButton { background-color: rgba(255, 255, 255, 0); border: none;  border-radius: 5px; }\n"
 "#rightButtons .QPushButton:hover { background-color: #f2f6ff; border-style: solid; border-radius: 4px; }\n"
 "#rightButtons .QPushButton:pressed { background-color: #2f93e1; border-style: solid; border-radius: 4px; }\n"
-"\n"
+""
+                        "\n"
 "/* Theme Settings */\n"
 "#extraRightBox {\n"
-"	backgroun"
-                        "d-color: #ffffff;\n"
+"	background-color: #ffffff;\n"
 "}\n"
 "\n"
 "/* Bottom Bar */\n"
@@ -248,11 +254,11 @@ class Ui_MainWindow(object):
 "QTableWidget {\n"
 "	background-color: transparent;\n"
 "	padding: 10px;\n"
-"	border-radius: 5px;\n"
+"	border-rad"
+                        "ius: 5px;\n"
 "	gridline-color: #9faeda;\n"
 "	outline: none;\n"
-""
-                        "}\n"
+"}\n"
 "QTableWidget::item{\n"
 "	border-color: #9faeda;\n"
 "	padding-left: 5px;\n"
@@ -291,10 +297,10 @@ class Ui_MainWindow(object):
 "QLineEdit {\n"
 "	background-color: #ffffff;\n"
 "	border-radius: 2px;\n"
-"	border: 1px solid #5f5f5f;\n"
+"	border: 1px"
+                        " solid #5f5f5f;\n"
 "	padding-left: 10px;\n"
-"	padding-bottom: 5p"
-                        "x;\n"
+"	padding-bottom: 5px;\n"
 "	padding-top: 5px;\n"
 "	selection-color: rgb(255, 255, 255);\n"
 "	selection-background-color: #2f93e1;\n"
@@ -330,11 +336,11 @@ class Ui_MainWindow(object):
 "	border: 2px solid #2f93e1;\n"
 "}\n"
 "\n"
-"/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
+"/* /////////////////////////////////////////////////////////////////////////////////"
+                        "////////////////\n"
 "ScrollBars */\n"
 "QScrollBar:horizontal {\n"
-""
-                        "	border: none;\n"
+"	border: none;\n"
 "	background: #ffffff;\n"
 "	height: 8px;\n"
 "	margin: 0px 21px 0 21px;\n"
@@ -371,11 +377,11 @@ class Ui_MainWindow(object):
 "{\n"
 "	background: none;\n"
 "}\n"
-"QScrollBar:vertical {\n"
+"QScrollBar:v"
+                        "ertical {\n"
 "	border: none;\n"
 "	background-color: #ffffff;\n"
-"	w"
-                        "idth: 8px;\n"
+"	width: 8px;\n"
 "	margin: 21px 0 21px 0;\n"
 "	border-radius: 0px;\n"
 "}\n"
@@ -410,10 +416,10 @@ class Ui_MainWindow(object):
 "	background: none;\n"
 "}\n"
 "\n"
-"/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
+"/* ////////////////////////////////////////////////////////////////////"
+                        "/////////////////////////////\n"
 "CheckBox */\n"
-"QCheckBox::indica"
-                        "tor {\n"
+"QCheckBox::indicator {\n"
 "	border: 3px solid #5e5e5e;\n"
 "	width: 15px;\n"
 "	height: 15px;\n"
@@ -446,11 +452,11 @@ class Ui_MainWindow(object):
 "	border: 3px solid #2f93e1;\n"
 "}\n"
 "\n"
-"/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
+"/* ///////////////////////////////////////////////////////////////////////////////"
+                        "//////////////////\n"
 "ComboBox */\n"
 "QComboBox{\n"
-"	background-c"
-                        "olor: #ffffff;\n"
+"	background-color: #ffffff;\n"
 "	border-radius: 2px;\n"
 "	border: 1px solid #505050;\n"
 "	padding: 5px;\n"
@@ -485,10 +491,10 @@ class Ui_MainWindow(object):
 "	margin: 0px;\n"
 "	background-color: #ffffff;\n"
 "}\n"
-"QSlider::handle:horizontal {\n"
+""
+                        "QSlider::handle:horizontal {\n"
 "	background-color: #2f93e1;\n"
-"	b"
-                        "order: none;\n"
+"	border: none;\n"
 "	height: 10px;\n"
 "	width: 10px;\n"
 "	margin: 0px;\n"
@@ -527,10 +533,10 @@ class Ui_MainWindow(object):
 "\n"
 "/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
 "CommandLinkButton */\n"
-"#pagesContainer QCommandLinkButton {\n"
+"#p"
+                        "agesContainer QCommandLinkButton {\n"
 "	color: #2f93e1;\n"
-"	border"
-                        "-radius: 5px;\n"
+"	border-radius: 5px;\n"
 "	padding: 5px;\n"
 "	border: 2px solid #2f93e1;\n"
 "	color: #2f93e1\n"
@@ -542,23 +548,6 @@ class Ui_MainWindow(object):
 "#pagesContainer QCommandLinkButton:pressed {\n"
 "	color: rgb(189, 147, 249);\n"
 "	background-color: #586796;\n"
-"}\n"
-"\n"
-"/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
-"Button */\n"
-"#pagesContainer QPushButton {\n"
-"	border: 2px solid #2f93e1;\n"
-"	border-radius: 5px;\n"
-"	background-color: #ffffff;\n"
-"	color: #f8f8f2;\n"
-"}\n"
-"#pagesContainer QPushButton:hover {\n"
-"	background-color: #7082b6;\n"
-"	border: 2px solid #7082b6;\n"
-"}\n"
-"#pagesContainer QPushButton:pressed {\n"
-"	background-color: #2f93e1;\n"
-"	border: 5px solid #2f93e1;\n"
 "}\n"
 "")
         self.appMargins = QVBoxLayout(self.styleSheet)
@@ -980,15 +969,15 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addWidget(self.contentTopBg)
 
-        self.contentBottom = QFrame(self.contentBox)
-        self.contentBottom.setObjectName(u"contentBottom")
-        self.contentBottom.setFrameShape(QFrame.NoFrame)
-        self.contentBottom.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_6 = QVBoxLayout(self.contentBottom)
+        self.contentMain = QFrame(self.contentBox)
+        self.contentMain.setObjectName(u"contentMain")
+        self.contentMain.setFrameShape(QFrame.NoFrame)
+        self.contentMain.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_6 = QVBoxLayout(self.contentMain)
         self.verticalLayout_6.setSpacing(0)
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
         self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
-        self.content = QFrame(self.contentBottom)
+        self.content = QFrame(self.contentMain)
         self.content.setObjectName(u"content")
         self.content.setFrameShape(QFrame.NoFrame)
         self.content.setFrameShadow(QFrame.Raised)
@@ -998,7 +987,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.pagesContainer = QFrame(self.content)
         self.pagesContainer.setObjectName(u"pagesContainer")
-        self.pagesContainer.setStyleSheet(u"")
         self.pagesContainer.setFrameShape(QFrame.NoFrame)
         self.pagesContainer.setFrameShadow(QFrame.Raised)
         self.verticalLayout_15 = QVBoxLayout(self.pagesContainer)
@@ -1007,7 +995,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_15.setContentsMargins(10, 10, 10, 10)
         self.stackedWidget = QStackedWidget(self.pagesContainer)
         self.stackedWidget.setObjectName(u"stackedWidget")
-        self.stackedWidget.setStyleSheet(u"background: transparent;")
         self.home = QWidget()
         self.home.setObjectName(u"home")
         self.home.setStyleSheet(u"background-image: url(:/resources/images/media/Gino_vertical.png);\n"
@@ -1020,16 +1007,37 @@ class Ui_MainWindow(object):
         self.verticalLayout_20.setObjectName(u"verticalLayout_20")
         self.frame = QFrame(self.page_fileScan)
         self.frame.setObjectName(u"frame")
+        self.frame.setStyleSheet(u"")
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
         self.verticalLayout = QVBoxLayout(self.frame)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.label = QLabel(self.frame)
-        self.label.setObjectName(u"label")
-        self.label.setFrameShape(QFrame.NoFrame)
-        self.label.setAlignment(Qt.AlignCenter)
+        self.groupBox = QGroupBox(self.frame)
+        self.groupBox.setObjectName(u"groupBox")
+        self.horizontalLayout_6 = QHBoxLayout(self.groupBox)
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.btn_fileBrowse = QPushButton(self.groupBox)
+        self.btn_fileBrowse.setObjectName(u"btn_fileBrowse")
 
-        self.verticalLayout.addWidget(self.label)
+        self.horizontalLayout_6.addWidget(self.btn_fileBrowse)
+
+        self.label = QLabel(self.groupBox)
+        self.label.setObjectName(u"label")
+
+        self.horizontalLayout_6.addWidget(self.label)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_6.addItem(self.horizontalSpacer)
+
+        self.btn_fileScan_2 = QPushButton(self.groupBox)
+        self.btn_fileScan_2.setObjectName(u"btn_fileScan_2")
+        self.btn_fileScan_2.setEnabled(True)
+
+        self.horizontalLayout_6.addWidget(self.btn_fileScan_2)
+
+
+        self.verticalLayout.addWidget(self.groupBox)
 
 
         self.verticalLayout_20.addWidget(self.frame, 0, Qt.AlignTop)
@@ -1131,7 +1139,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_6.addWidget(self.content)
 
-        self.bottomBar = QFrame(self.contentBottom)
+        self.bottomBar = QFrame(self.contentMain)
         self.bottomBar.setObjectName(u"bottomBar")
         self.bottomBar.setMinimumSize(QSize(0, 22))
         self.bottomBar.setMaximumSize(QSize(16777215, 22))
@@ -1172,7 +1180,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_6.addWidget(self.bottomBar)
 
 
-        self.verticalLayout_2.addWidget(self.contentBottom)
+        self.verticalLayout_2.addWidget(self.contentMain)
 
 
         self.appLayout.addWidget(self.contentBox)
@@ -1184,7 +1192,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -1237,7 +1245,10 @@ class Ui_MainWindow(object):
         self.closeAppBtn.setToolTip(QCoreApplication.translate("MainWindow", u"Close", None))
 #endif // QT_CONFIG(tooltip)
         self.closeAppBtn.setText("")
-        self.label.setText(QCoreApplication.translate("MainWindow", u"File Scan", None))
+        self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"File Upload", None))
+        self.btn_fileBrowse.setText(QCoreApplication.translate("MainWindow", u"Browse...", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"No file selected", None))
+        self.btn_fileScan_2.setText(QCoreApplication.translate("MainWindow", u"Scan", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"Folder Scan", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"URL Scan", None))
         self.btn_logout.setText(QCoreApplication.translate("MainWindow", u"Logout", None))
