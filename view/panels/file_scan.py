@@ -62,7 +62,7 @@ class FileScan(QObject):
         await self.fileScanTask.run()
 
     def progressFileScanResult(self):
-        self.ui.progressBar.setValue(value() + 5)
+        self.ui.progressBar.setValue(self.ui.progressBar.value() + 5)
 
     def updateFileScanResult(self, analysis):
         self.ui.progressBar.hide()
