@@ -1,8 +1,9 @@
-from .ui.ui_main import Ui_MainWindow
-from widgets.custom_grips import CustomGrip
 from PySide6.QtWidgets import QMainWindow, QGraphicsDropShadowEffect, QSizeGrip, QPushButton
 from PySide6.QtCore import Qt, QPropertyAnimation, QEasingCurve, QParallelAnimationGroup
 from PySide6.QtGui import QIcon, QColor
+from widgets import CustomGrip
+from .ui.ui_main import Ui_MainWindow
+from .panels.file_scan import FileScan
 
 
 class View(QMainWindow):
@@ -22,7 +23,7 @@ class View(QMainWindow):
     background-color: #f2f6ff;
     """
 
-    def __init__(self, model) -> None:
+    def __init__(self, model):
         super(View, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
@@ -34,6 +35,8 @@ class View(QMainWindow):
         self.setAttribute(Qt.WA_TranslucentBackground)
 
         self.uiDefinitions()
+
+        self.fileScan = FileScan(self.ui)
 
     # TOGGLE MENU
     # ///////////////////////////////////////////////////////////////

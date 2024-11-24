@@ -4,18 +4,25 @@ from view import *
 from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtGui import QFontDatabase,QIcon
 import sys
+import asyncio
+from qasync import QEventLoop
 
 
-class App():
-    def __init__(self) -> None:
-        self.model = Model()
-        self.view = View(self.model)
-        self.controller = Controller(self.view, self.model)
+def main():
+    app = QApplication(sys.argv)
+    loop = QEventLoop(app)
+    asyncio.set_event_loop(loop)
+
+    model = Model()
+    view = View(model)
+    controller = Controller(view, model)
+
+    view.show()
+
+    # sys.exit(app.exec())
+    with loop:
+        loop.run_forever()
 
 
 if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    # QFontDatabase.addApplicationFont('resources/fonts/segoeui.ttf')
-    # app.setWindowIcon(QIcon("icon.ico"))
-    App()
-    sys.exit(app.exec())
+    main()

@@ -11,8 +11,6 @@ class Controller:
         self._connectButtons()
         self._connectNavLinks()
 
-        self._view.show()
-
     def _connectButtons(self):
         self._view.ui.toggleButton.clicked.connect(self._view.toggleMenu)
         self._view.ui.toggleLeftBox.clicked.connect(self._view.toggleLeftBox)

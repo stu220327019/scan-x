@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 pyside6 = "*"
+vt-py = "*"
+qasync = "*"
 
 [dev-packages]
 python-lsp-server = "*"

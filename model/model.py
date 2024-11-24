@@ -6,10 +6,10 @@ class Model(QObject):
 
     def topMenuPageIdx(self, obj):
         pages = {
-            'btn_home': 0,
-            'btn_fileScan': 1,
-            'btn_folderScan': 2,
-            'btn_urlScan' : 3
+            'nav_btn_home': 0,
+            'nav_btn_fileScan': 1,
+            'nav_btn_folderScan': 2,
+            'nav_btn_urlScan' : 3
         }
         btnName = obj.objectName()
         return pages.get(btnName)
