@@ -7,6 +7,7 @@ import vt
 import json
 import time
 import asyncio
+import magic
 from qasync import asyncSlot
 from ..ui.ui_main import Ui_MainWindow
 from core.config import VIRUS_TOTAL_API_KEY
@@ -32,6 +33,7 @@ class FileScan(QObject):
             self.ui.lbl_fileSelected.setText(self.filepath)
             self.ui.lbl_fileSelected.setStyleSheet("color: #0000ff")
             self.ui.btn_fileScan.setEnabled(True)
+            self.ui.groupBox_fileScanResult.hide()
 
             self.ui.tbl_fileInfo.clear()
             self.fileDetailsThread = FileDetailsThread(self.filepath)
@@ -39,8 +41,8 @@ class FileScan(QObject):
             self.fileDetailsThread.start()
 
     def updateFileInfo(self, fileInfo: dict):
-        for label, key in [['Name', 'name'], ['Path', 'path'], ['MD5', 'md5'],
-                           ['SHA1', 'sha1'], ['SHA256', 'sha256'], ['Size', 'size']]:
+        for label, key in [['Name', 'name'], ['Path', 'path'], ['MD5', 'md5'], ['SHA1', 'sha1'],
+                           ['SHA256', 'sha256'], ['Size', 'size'], ['Type', 'type']]:
             item = QTreeWidgetItem(self.ui.tbl_fileInfo)
             item.setText(0, label)
             value = '{} Bytes'.format(fileInfo.get(key)) if key == 'size' else fileInfo.get(key)
@@ -51,12 +53,18 @@ class FileScan(QObject):
     async def startFileScan(self):
         self.ui.btn_fileScan.setEnabled(False)
         self.ui.progressBar.show()
+        self.ui.progressBar.setValue(10)
+        self.ui.tbl_fileScanResult.clear()
         self.startTime = time.time()
         self.fileScanTask = FileScanTask(self.filepath)
-        self.fileScanTask.okSignal.connect(self.updatefileScanResult)
+        self.fileScanTask.okSignal.connect(self.updateFileScanResult)
+        self.fileScanTask.progressSignal.connect(self.progressFileScanResult)
         await self.fileScanTask.run()
 
-    def updatefileScanResult(self, analysis):
+    def progressFileScanResult(self):
+        self.ui.progressBar.setValue(value() + 5)
+
+    def updateFileScanResult(self, analysis):
         self.ui.progressBar.hide()
         results = analysis.last_analysis_results.values()
         detection = [x for x in results if x['result'] is not None]
@@ -92,7 +100,8 @@ class FileDetailsThread(QThread):
                 'md5': hashlib.md5(cfile).hexdigest(),
                 'sha1': hashlib.sha1(cfile).hexdigest(),
                 'sha256': hashlib.sha256(cfile).hexdigest(),
-                'size': os.path.getsize(filepath)
+                'size': os.path.getsize(filepath),
+                'type': magic.from_file(filepath)
             }
 
     def run(self):
@@ -102,6 +111,7 @@ class FileDetailsThread(QThread):
 
 class FileScanTask(QObject):
     okSignal = Signal(object)
+    progressSignal = Signal()
 
     def __init__(self, filepath, parent=None):
         super(FileScanTask, self).__init__(parent)
@@ -117,6 +127,7 @@ class FileScanTask(QObject):
                     analysis = await client.get_object_async('/analyses/{}', analysis.id)
                     if analysis.status == 'completed':
                         break
+                    self.progressSignal.emit()
                     await asyncio.sleep(30)
                 result = await client.get_object_async('/files/{}', sha1)
                 # print(json.dumps(result, indent=4, default=vars))
