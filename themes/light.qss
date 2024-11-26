@@ -211,49 +211,6 @@ Content App */
 }
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
-LineEdit */
-QLineEdit {
-	background-color: #ffffff;
-	border-radius: 2px;
-	border: 1px solid #5f5f5f;
-	padding-left: 10px;
-	padding-bottom: 5px;
-	padding-top: 5px;
-	selection-color: rgb(255, 255, 255);
-	selection-background-color: #2f93e1;
-	color: #868686;
-}
-QLineEdit:hover {
-	border: 1px solid #6a7cb1;
-}
-QLineEdit:focus {
-	border: 1px solid #2f93e1;;
-}
-
-/* /////////////////////////////////////////////////////////////////////////////////////////////////
-PlainTextEdit */
-QPlainTextEdit {
-	background-color: #ffffff;
-	border-radius: 5px;
-	padding: 10px;
-	selection-color: rgb(255, 255, 255);
-	selection-background-color: 2f93e1;
-	color: #f8f8f2;
-}
-QPlainTextEdit  QScrollBar:vertical {
-	width: 8px;
-}
-QPlainTextEdit  QScrollBar:horizontal {
-	height: 8px;
-}
-QPlainTextEdit:hover {
-	border: 2px solid rgb(64, 71, 88);
-}
-QPlainTextEdit:focus {
-	border: 2px solid #2f93e1;
-}
-
-/* /////////////////////////////////////////////////////////////////////////////////////////////////
 CheckBox */
 QCheckBox::indicator {
 	border: 3px solid #5e5e5e;

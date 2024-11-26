@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="resources">
+    <file>images/icons/exclaimation-circle.svg</file>
+    <file>images/icons/check-circle.svg</file>
     <file>images/icons/icon_settings.png</file>
     <file>images/icons/cil-arrow-bottom.png</file>
     <file>images/icons/cil-file-black.png</file>
@@ -18,6 +20,7 @@
     <file>images/media/Gino_vertical.png</file>
   </qresource>
   <qresource>
+    <file>heroicons/CheckCircle.svg</file>
     <file>heroicons/GlobeAlt.svg</file>
     <file>heroicons/FolderOpen.svg</file>
     <file>heroicons/Home.svg</file>

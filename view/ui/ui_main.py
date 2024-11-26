@@ -17,9 +17,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QGroupBox,
     QHBoxLayout, QHeaderView, QLabel, QLayout,
-    QMainWindow, QProgressBar, QPushButton, QSizePolicy,
-    QSpacerItem, QStackedWidget, QTextEdit, QTreeWidget,
-    QTreeWidgetItem, QVBoxLayout, QWidget)
+    QLineEdit, QMainWindow, QProgressBar, QPushButton,
+    QSizePolicy, QSpacerItem, QStackedWidget, QTextEdit,
+    QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget)
 from . resources_rc import *
 
 class Ui_MainWindow(object):
@@ -255,54 +255,10 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
-"LineEdit */\n"
-"QLineEdit {\n"
-"	backgr"
-                        "ound-color: #ffffff;\n"
-"	border-radius: 2px;\n"
-"	border: 1px solid #5f5f5f;\n"
-"	padding-left: 10px;\n"
-"	padding-bottom: 5px;\n"
-"	padding-top: 5px;\n"
-"	selection-color: rgb(255, 255, 255);\n"
-"	selection-background-color: #2f93e1;\n"
-"	color: #868686;\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border: 1px solid #6a7cb1;\n"
-"}\n"
-"QLineEdit:focus {\n"
-"	border: 1px solid #2f93e1;;\n"
-"}\n"
-"\n"
-"/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
-"PlainTextEdit */\n"
-"QPlainTextEdit {\n"
-"	background-color: #ffffff;\n"
-"	border-radius: 5px;\n"
-"	padding: 10px;\n"
-"	selection-color: rgb(255, 255, 255);\n"
-"	selection-background-color: 2f93e1;\n"
-"	color: #f8f8f2;\n"
-"}\n"
-"QPlainTextEdit  QScrollBar:vertical {\n"
-"	width: 8px;\n"
-"}\n"
-"QPlainTextEdit  QScrollBar:horizontal {\n"
-"	height: 8px;\n"
-"}\n"
-"QPlainTextEdit:hover {\n"
-"	border: 2px solid rgb(64, 71, 88);\n"
-"}\n"
-"QPlainTextEdit:focus {\n"
-"	border: 2px solid #2f93e1;\n"
-"}\n"
-"\n"
-"/* ///////////////////"
-                        "//////////////////////////////////////////////////////////////////////////////\n"
 "CheckBox */\n"
 "QCheckBox::indicator {\n"
-"	border: 3px solid #5e5e5e;\n"
+""
+                        "	border: 3px solid #5e5e5e;\n"
 "	width: 15px;\n"
 "	height: 15px;\n"
 "	border-radius: 10px;\n"
@@ -334,11 +290,11 @@ class Ui_MainWindow(object):
 "	border: 3px solid #2f93e1;\n"
 "}\n"
 "\n"
-"/* //////////////////////////////"
-                        "///////////////////////////////////////////////////////////////////\n"
+"/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
 "ComboBox */\n"
 "QComboBox{\n"
-"	background-color: #ffffff;\n"
+"	background-color: #fff"
+                        "fff;\n"
 "	border-radius: 2px;\n"
 "	border: 1px solid #505050;\n"
 "	padding: 5px;\n"
@@ -370,13 +326,13 @@ class Ui_MainWindow(object):
 "QSlider::groove:horizontal {\n"
 "	border-radius: 5px;\n"
 "	height: 10px;\n"
-"	margin"
-                        ": 0px;\n"
+"	margin: 0px;\n"
 "	background-color: #ffffff;\n"
 "}\n"
 "QSlider::handle:horizontal {\n"
 "	background-color: #2f93e1;\n"
-"	border: none;\n"
+"	border: non"
+                        "e;\n"
 "	height: 10px;\n"
 "	width: 10px;\n"
 "	margin: 0px;\n"
@@ -413,12 +369,12 @@ class Ui_MainWindow(object):
 "	background-color: #2f93e1;\n"
 "}\n"
 "\n"
-"/* ////////////////////////////////////////////////////////////////////////////////"
-                        "/////////////////\n"
+"/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
 "CommandLinkButton */\n"
 "#pagesContainer QCommandLinkButton {\n"
 "	color: #2f93e1;\n"
-"	border-radius: 5px;\n"
+"	border-radius: 5"
+                        "px;\n"
 "	padding: 5px;\n"
 "	border: 2px solid #2f93e1;\n"
 "	color: #2f93e1\n"
@@ -1033,20 +989,98 @@ class Ui_MainWindow(object):
         self.page_urlScan.setObjectName(u"page_urlScan")
         self.verticalLayout_18 = QVBoxLayout(self.page_urlScan)
         self.verticalLayout_18.setObjectName(u"verticalLayout_18")
+        self.groupBox_2 = QGroupBox(self.page_urlScan)
+        self.groupBox_2.setObjectName(u"groupBox_2")
+        self.horizontalLayout_9 = QHBoxLayout(self.groupBox_2)
+        self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
+        self.input_url = QLineEdit(self.groupBox_2)
+        self.input_url.setObjectName(u"input_url")
+
+        self.horizontalLayout_9.addWidget(self.input_url)
+
+        self.btn_UrlScan = QPushButton(self.groupBox_2)
+        self.btn_UrlScan.setObjectName(u"btn_UrlScan")
+        self.btn_UrlScan.setEnabled(False)
+
+        self.horizontalLayout_9.addWidget(self.btn_UrlScan)
+
+
+        self.verticalLayout_18.addWidget(self.groupBox_2)
+
         self.frame_3 = QFrame(self.page_urlScan)
         self.frame_3.setObjectName(u"frame_3")
         self.frame_3.setFrameShape(QFrame.StyledPanel)
         self.frame_3.setFrameShadow(QFrame.Raised)
         self.verticalLayout_19 = QVBoxLayout(self.frame_3)
         self.verticalLayout_19.setObjectName(u"verticalLayout_19")
-        self.label_3 = QLabel(self.frame_3)
+
+        self.verticalLayout_18.addWidget(self.frame_3)
+
+        self.groupBox_urlScanResult = QGroupBox(self.page_urlScan)
+        self.groupBox_urlScanResult.setObjectName(u"groupBox_urlScanResult")
+        self.verticalLayout_23 = QVBoxLayout(self.groupBox_urlScanResult)
+        self.verticalLayout_23.setObjectName(u"verticalLayout_23")
+        self.horizontalLayout_10 = QHBoxLayout()
+        self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
+        self.label_6 = QLabel(self.groupBox_urlScanResult)
+        self.label_6.setObjectName(u"label_6")
+
+        self.horizontalLayout_10.addWidget(self.label_6)
+
+        self.label_urlScanStatus = QLabel(self.groupBox_urlScanResult)
+        self.label_urlScanStatus.setObjectName(u"label_urlScanStatus")
+
+        self.horizontalLayout_10.addWidget(self.label_urlScanStatus)
+
+        self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_10.addItem(self.horizontalSpacer_5)
+
+        self.label_7 = QLabel(self.groupBox_urlScanResult)
+        self.label_7.setObjectName(u"label_7")
+        self.label_7.setFont(font)
+
+        self.horizontalLayout_10.addWidget(self.label_7)
+
+        self.label_urlScanDetection = QLabel(self.groupBox_urlScanResult)
+        self.label_urlScanDetection.setObjectName(u"label_urlScanDetection")
+
+        self.horizontalLayout_10.addWidget(self.label_urlScanDetection)
+
+        self.horizontalSpacer_6 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_10.addItem(self.horizontalSpacer_6)
+
+
+        self.verticalLayout_23.addLayout(self.horizontalLayout_10)
+
+        self.tbl_urlScanResult = QTreeWidget(self.groupBox_urlScanResult)
+        self.tbl_urlScanResult.setObjectName(u"tbl_urlScanResult")
+        self.tbl_urlScanResult.setAlternatingRowColors(True)
+
+        self.verticalLayout_23.addWidget(self.tbl_urlScanResult)
+
+        self.horizontalLayout_11 = QHBoxLayout()
+        self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
+        self.horizontalSpacer_7 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_11.addItem(self.horizontalSpacer_7)
+
+        self.label_3 = QLabel(self.groupBox_urlScanResult)
         self.label_3.setObjectName(u"label_3")
-        self.label_3.setAlignment(Qt.AlignCenter)
 
-        self.verticalLayout_19.addWidget(self.label_3)
+        self.horizontalLayout_11.addWidget(self.label_3)
+
+        self.label_urlScanElapsedTime = QLabel(self.groupBox_urlScanResult)
+        self.label_urlScanElapsedTime.setObjectName(u"label_urlScanElapsedTime")
+
+        self.horizontalLayout_11.addWidget(self.label_urlScanElapsedTime)
 
 
-        self.verticalLayout_18.addWidget(self.frame_3, 0, Qt.AlignTop)
+        self.verticalLayout_23.addLayout(self.horizontalLayout_11)
+
+
+        self.verticalLayout_18.addWidget(self.groupBox_urlScanResult)
 
         self.stackedWidget.addWidget(self.page_urlScan)
 
@@ -1158,7 +1192,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(3)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -1228,7 +1262,19 @@ class Ui_MainWindow(object):
         self.label.setText(QCoreApplication.translate("MainWindow", u"Elapsed time:", None))
         self.label_fileScanElapsedTime.setText("")
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"Folder Scan", None))
-        self.label_3.setText(QCoreApplication.translate("MainWindow", u"URL Scan", None))
+        self.groupBox_2.setTitle(QCoreApplication.translate("MainWindow", u"URL Scan", None))
+        self.input_url.setPlaceholderText(QCoreApplication.translate("MainWindow", u"https://", None))
+        self.btn_UrlScan.setText(QCoreApplication.translate("MainWindow", u"Scan", None))
+        self.groupBox_urlScanResult.setTitle(QCoreApplication.translate("MainWindow", u"Analysis Results", None))
+        self.label_6.setText(QCoreApplication.translate("MainWindow", u"Status:", None))
+        self.label_urlScanStatus.setText("")
+        self.label_7.setText(QCoreApplication.translate("MainWindow", u"Detection:", None))
+        self.label_urlScanDetection.setText("")
+        ___qtreewidgetitem2 = self.tbl_urlScanResult.headerItem()
+        ___qtreewidgetitem2.setText(1, QCoreApplication.translate("MainWindow", u"Result", None));
+        ___qtreewidgetitem2.setText(0, QCoreApplication.translate("MainWindow", u"Vendor", None));
+        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Elapsed time:", None))
+        self.label_urlScanElapsedTime.setText("")
         self.btn_logout.setText(QCoreApplication.translate("MainWindow", u"Logout", None))
         self.creditsLabel.setText(QCoreApplication.translate("MainWindow", u"Created & Developed by 220327019@stu.vtc.edu.hk", None))
         self.version.setText(QCoreApplication.translate("MainWindow", u"v1.0.1", None))

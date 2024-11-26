@@ -1,6 +1,6 @@
 from PySide6.QtCore import QObject, QThread, Signal
 from PySide6.QtWidgets import QFileDialog, QTreeWidgetItem
-from PySide6.QtGui import Qt
+from PySide6.QtGui import Qt, QIcon
 import os
 import hashlib
 import vt
@@ -71,9 +71,11 @@ class FileScan(QObject):
         for result in results:
             item = QTreeWidgetItem(self.ui.tbl_fileScanResult)
             item.setText(0, result['engine_name'])
-            value = 'None' if result['result'] is None else result['result']
+            detected = result['result'] is not None
+            value = result['result'] if detected else 'Undetected'
             item.setText(1, value)
-            item.setForeground(1, Qt.red if result['result'] else Qt.green)
+            icon = QIcon(':/resources/images/icons/exclaimation-circle.svg' if detected else ':/resources/images/icons/check-circle.svg')
+            item.setIcon(1, icon)
         self.ui.label_fileScanDetection.setText('{} / {}'.format(len(detection), len(results)))
         statusTxt, color = ('No virus detected', '#00ff00') if len(detection) == 0 else ('Virus detected', '#ff0000')
         self.ui.label_fileScanStatus.setText(statusTxt)
