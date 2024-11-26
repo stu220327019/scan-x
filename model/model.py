@@ -8,7 +8,7 @@ class Model(QObject):
         pages = {
             'nav_btn_home': 0,
             'nav_btn_fileScan': 1,
-            'nav_btn_folderScan': 2,
+            'nav_btn_dirScan': 2,
             'nav_btn_urlScan' : 3
         }
         btnName = obj.objectName()

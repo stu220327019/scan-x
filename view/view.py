@@ -4,6 +4,7 @@ from PySide6.QtGui import QIcon, QColor
 from widgets import CustomGrip
 from .ui.ui_main import Ui_MainWindow
 from .panels.file_scan import FileScan
+from .panels.dir_scan import DirScan
 from .panels.url_scan import URLScan
 
 
@@ -38,6 +39,7 @@ class View(QMainWindow):
         self.uiDefinitions()
 
         self.fileScan = FileScan(self.ui)
+        self.dirScan = DirScan(self.ui)
         self.urlScan = URLScan(self.ui)
 
     # TOGGLE MENU

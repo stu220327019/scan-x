@@ -507,13 +507,13 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_8.addWidget(self.nav_btn_fileScan)
 
-        self.nav_btn_folderScan = QPushButton(self.topMenu)
-        self.nav_btn_folderScan.setObjectName(u"nav_btn_folderScan")
-        self.nav_btn_folderScan.setMinimumSize(QSize(0, 45))
-        self.nav_btn_folderScan.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        self.nav_btn_folderScan.setStyleSheet(u"background-image: url(:/heroicons/FolderOpen.svg);")
+        self.nav_btn_dirScan = QPushButton(self.topMenu)
+        self.nav_btn_dirScan.setObjectName(u"nav_btn_dirScan")
+        self.nav_btn_dirScan.setMinimumSize(QSize(0, 45))
+        self.nav_btn_dirScan.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.nav_btn_dirScan.setStyleSheet(u"background-image: url(:/heroicons/FolderOpen.svg);")
 
-        self.verticalLayout_8.addWidget(self.nav_btn_folderScan)
+        self.verticalLayout_8.addWidget(self.nav_btn_dirScan)
 
         self.nav_btn_urlScan = QPushButton(self.topMenu)
         self.nav_btn_urlScan.setObjectName(u"nav_btn_urlScan")
@@ -965,31 +965,124 @@ class Ui_MainWindow(object):
         self.verticalLayout_20.addWidget(self.frame, 0, Qt.AlignTop)
 
         self.stackedWidget.addWidget(self.page_fileScan)
-        self.page_folderScan = QWidget()
-        self.page_folderScan.setObjectName(u"page_folderScan")
-        self.verticalLayout_17 = QVBoxLayout(self.page_folderScan)
+        self.page_dirScan = QWidget()
+        self.page_dirScan.setObjectName(u"page_dirScan")
+        self.verticalLayout_17 = QVBoxLayout(self.page_dirScan)
         self.verticalLayout_17.setObjectName(u"verticalLayout_17")
-        self.frame_2 = QFrame(self.page_folderScan)
+        self.frame_2 = QFrame(self.page_dirScan)
         self.frame_2.setObjectName(u"frame_2")
         self.frame_2.setFrameShape(QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QFrame.Raised)
         self.verticalLayout_16 = QVBoxLayout(self.frame_2)
         self.verticalLayout_16.setObjectName(u"verticalLayout_16")
-        self.label_2 = QLabel(self.frame_2)
-        self.label_2.setObjectName(u"label_2")
-        self.label_2.setAlignment(Qt.AlignCenter)
+        self.groupBox_3 = QGroupBox(self.frame_2)
+        self.groupBox_3.setObjectName(u"groupBox_3")
+        self.horizontalLayout_12 = QHBoxLayout(self.groupBox_3)
+        self.horizontalLayout_12.setObjectName(u"horizontalLayout_12")
+        self.btn_dirBrowse = QPushButton(self.groupBox_3)
+        self.btn_dirBrowse.setObjectName(u"btn_dirBrowse")
 
-        self.verticalLayout_16.addWidget(self.label_2)
+        self.horizontalLayout_12.addWidget(self.btn_dirBrowse)
+
+        self.lbl_dirSelected = QLabel(self.groupBox_3)
+        self.lbl_dirSelected.setObjectName(u"lbl_dirSelected")
+
+        self.horizontalLayout_12.addWidget(self.lbl_dirSelected)
+
+        self.horizontalSpacer_8 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_12.addItem(self.horizontalSpacer_8)
+
+        self.btn_dirScan = QPushButton(self.groupBox_3)
+        self.btn_dirScan.setObjectName(u"btn_dirScan")
+        self.btn_dirScan.setEnabled(False)
+
+        self.horizontalLayout_12.addWidget(self.btn_dirScan)
 
 
-        self.verticalLayout_17.addWidget(self.frame_2, 0, Qt.AlignTop)
+        self.verticalLayout_16.addWidget(self.groupBox_3, 0, Qt.AlignTop)
 
-        self.stackedWidget.addWidget(self.page_folderScan)
+        self.groupBox_dirScan = QGroupBox(self.frame_2)
+        self.groupBox_dirScan.setObjectName(u"groupBox_dirScan")
+        self.verticalLayout_24 = QVBoxLayout(self.groupBox_dirScan)
+        self.verticalLayout_24.setObjectName(u"verticalLayout_24")
+        self.horizontalLayout_13 = QHBoxLayout()
+        self.horizontalLayout_13.setObjectName(u"horizontalLayout_13")
+        self.label_8 = QLabel(self.groupBox_dirScan)
+        self.label_8.setObjectName(u"label_8")
+
+        self.horizontalLayout_13.addWidget(self.label_8)
+
+        self.label_urlScanStatus_2 = QLabel(self.groupBox_dirScan)
+        self.label_urlScanStatus_2.setObjectName(u"label_urlScanStatus_2")
+
+        self.horizontalLayout_13.addWidget(self.label_urlScanStatus_2)
+
+        self.horizontalSpacer_9 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_13.addItem(self.horizontalSpacer_9)
+
+        self.label_9 = QLabel(self.groupBox_dirScan)
+        self.label_9.setObjectName(u"label_9")
+        self.label_9.setFont(font)
+
+        self.horizontalLayout_13.addWidget(self.label_9)
+
+        self.label_urlScanDetection_2 = QLabel(self.groupBox_dirScan)
+        self.label_urlScanDetection_2.setObjectName(u"label_urlScanDetection_2")
+
+        self.horizontalLayout_13.addWidget(self.label_urlScanDetection_2)
+
+        self.horizontalSpacer_10 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_13.addItem(self.horizontalSpacer_10)
+
+
+        self.verticalLayout_24.addLayout(self.horizontalLayout_13)
+
+        self.tree_dirScan = QTreeWidget(self.groupBox_dirScan)
+        self.tree_dirScan.setObjectName(u"tree_dirScan")
+        self.tree_dirScan.setAlternatingRowColors(True)
+
+        self.verticalLayout_24.addWidget(self.tree_dirScan)
+
+        self.horizontalLayout_14 = QHBoxLayout()
+        self.horizontalLayout_14.setObjectName(u"horizontalLayout_14")
+        self.horizontalSpacer_11 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_14.addItem(self.horizontalSpacer_11)
+
+        self.label_10 = QLabel(self.groupBox_dirScan)
+        self.label_10.setObjectName(u"label_10")
+
+        self.horizontalLayout_14.addWidget(self.label_10)
+
+        self.label_urlScanElapsedTime_2 = QLabel(self.groupBox_dirScan)
+        self.label_urlScanElapsedTime_2.setObjectName(u"label_urlScanElapsedTime_2")
+
+        self.horizontalLayout_14.addWidget(self.label_urlScanElapsedTime_2)
+
+
+        self.verticalLayout_24.addLayout(self.horizontalLayout_14)
+
+
+        self.verticalLayout_16.addWidget(self.groupBox_dirScan)
+
+
+        self.verticalLayout_17.addWidget(self.frame_2)
+
+        self.stackedWidget.addWidget(self.page_dirScan)
         self.page_urlScan = QWidget()
         self.page_urlScan.setObjectName(u"page_urlScan")
         self.verticalLayout_18 = QVBoxLayout(self.page_urlScan)
         self.verticalLayout_18.setObjectName(u"verticalLayout_18")
-        self.groupBox_2 = QGroupBox(self.page_urlScan)
+        self.frame_3 = QFrame(self.page_urlScan)
+        self.frame_3.setObjectName(u"frame_3")
+        self.frame_3.setFrameShape(QFrame.StyledPanel)
+        self.frame_3.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_19 = QVBoxLayout(self.frame_3)
+        self.verticalLayout_19.setObjectName(u"verticalLayout_19")
+        self.groupBox_2 = QGroupBox(self.frame_3)
         self.groupBox_2.setObjectName(u"groupBox_2")
         self.horizontalLayout_9 = QHBoxLayout(self.groupBox_2)
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
@@ -1005,18 +1098,9 @@ class Ui_MainWindow(object):
         self.horizontalLayout_9.addWidget(self.btn_UrlScan)
 
 
-        self.verticalLayout_18.addWidget(self.groupBox_2)
+        self.verticalLayout_19.addWidget(self.groupBox_2)
 
-        self.frame_3 = QFrame(self.page_urlScan)
-        self.frame_3.setObjectName(u"frame_3")
-        self.frame_3.setFrameShape(QFrame.StyledPanel)
-        self.frame_3.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_19 = QVBoxLayout(self.frame_3)
-        self.verticalLayout_19.setObjectName(u"verticalLayout_19")
-
-        self.verticalLayout_18.addWidget(self.frame_3)
-
-        self.groupBox_urlScanResult = QGroupBox(self.page_urlScan)
+        self.groupBox_urlScanResult = QGroupBox(self.frame_3)
         self.groupBox_urlScanResult.setObjectName(u"groupBox_urlScanResult")
         self.verticalLayout_23 = QVBoxLayout(self.groupBox_urlScanResult)
         self.verticalLayout_23.setObjectName(u"verticalLayout_23")
@@ -1080,7 +1164,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_23.addLayout(self.horizontalLayout_11)
 
 
-        self.verticalLayout_18.addWidget(self.groupBox_urlScanResult)
+        self.verticalLayout_19.addWidget(self.groupBox_urlScanResult)
+
+
+        self.verticalLayout_18.addWidget(self.frame_3)
 
         self.stackedWidget.addWidget(self.page_urlScan)
 
@@ -1192,7 +1279,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(3)
+        self.stackedWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -1204,7 +1291,7 @@ class Ui_MainWindow(object):
         self.titleLeftDescription.setText(QCoreApplication.translate("MainWindow", u"Invoice App", None))
         self.nav_btn_home.setText(QCoreApplication.translate("MainWindow", u"Home", None))
         self.nav_btn_fileScan.setText(QCoreApplication.translate("MainWindow", u"File Scan", None))
-        self.nav_btn_folderScan.setText(QCoreApplication.translate("MainWindow", u"Folder Scan", None))
+        self.nav_btn_dirScan.setText(QCoreApplication.translate("MainWindow", u"Folder Scan", None))
         self.nav_btn_urlScan.setText(QCoreApplication.translate("MainWindow", u"URL Scan", None))
         self.toggleLeftBox.setText(QCoreApplication.translate("MainWindow", u"Left Box", None))
         self.extraLabel.setText(QCoreApplication.translate("MainWindow", u"Settings", None))
@@ -1261,7 +1348,22 @@ class Ui_MainWindow(object):
         ___qtreewidgetitem1.setText(0, QCoreApplication.translate("MainWindow", u"Engine", None));
         self.label.setText(QCoreApplication.translate("MainWindow", u"Elapsed time:", None))
         self.label_fileScanElapsedTime.setText("")
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Folder Scan", None))
+        self.groupBox_3.setTitle(QCoreApplication.translate("MainWindow", u"Open directory", None))
+        self.btn_dirBrowse.setText(QCoreApplication.translate("MainWindow", u"Browse...", None))
+        self.lbl_dirSelected.setText(QCoreApplication.translate("MainWindow", u"No directory selected", None))
+        self.btn_dirScan.setText(QCoreApplication.translate("MainWindow", u"Scan", None))
+        self.groupBox_dirScan.setTitle(QCoreApplication.translate("MainWindow", u"Directory", None))
+        self.label_8.setText(QCoreApplication.translate("MainWindow", u"Status:", None))
+        self.label_urlScanStatus_2.setText("")
+        self.label_9.setText(QCoreApplication.translate("MainWindow", u"Detection:", None))
+        self.label_urlScanDetection_2.setText("")
+        ___qtreewidgetitem2 = self.tree_dirScan.headerItem()
+        ___qtreewidgetitem2.setText(3, QCoreApplication.translate("MainWindow", u"Result", None));
+        ___qtreewidgetitem2.setText(2, QCoreApplication.translate("MainWindow", u"Size", None));
+        ___qtreewidgetitem2.setText(1, QCoreApplication.translate("MainWindow", u"Type", None));
+        ___qtreewidgetitem2.setText(0, QCoreApplication.translate("MainWindow", u"Name", None));
+        self.label_10.setText(QCoreApplication.translate("MainWindow", u"Elapsed time:", None))
+        self.label_urlScanElapsedTime_2.setText("")
         self.groupBox_2.setTitle(QCoreApplication.translate("MainWindow", u"URL Scan", None))
         self.input_url.setPlaceholderText(QCoreApplication.translate("MainWindow", u"https://", None))
         self.btn_UrlScan.setText(QCoreApplication.translate("MainWindow", u"Scan", None))
@@ -1270,9 +1372,9 @@ class Ui_MainWindow(object):
         self.label_urlScanStatus.setText("")
         self.label_7.setText(QCoreApplication.translate("MainWindow", u"Detection:", None))
         self.label_urlScanDetection.setText("")
-        ___qtreewidgetitem2 = self.tbl_urlScanResult.headerItem()
-        ___qtreewidgetitem2.setText(1, QCoreApplication.translate("MainWindow", u"Result", None));
-        ___qtreewidgetitem2.setText(0, QCoreApplication.translate("MainWindow", u"Vendor", None));
+        ___qtreewidgetitem3 = self.tbl_urlScanResult.headerItem()
+        ___qtreewidgetitem3.setText(1, QCoreApplication.translate("MainWindow", u"Result", None));
+        ___qtreewidgetitem3.setText(0, QCoreApplication.translate("MainWindow", u"Vendor", None));
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"Elapsed time:", None))
         self.label_urlScanElapsedTime.setText("")
         self.btn_logout.setText(QCoreApplication.translate("MainWindow", u"Logout", None))

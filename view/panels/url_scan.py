@@ -77,5 +77,5 @@ class URLScanTask(QObject):
                 self.progressSignal.emit()
                 await asyncio.sleep(30)
             result = await client.get_object_async('/urls/{}', url_id)
-            print(json.dumps(result, indent=4, default=vars))
+            # print(json.dumps(result, indent=4, default=vars))
             self.okSignal.emit(result)
