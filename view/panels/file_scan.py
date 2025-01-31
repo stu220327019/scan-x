@@ -27,18 +27,27 @@ class FileScan(QObject):
 
     def fileBrowse(self):
         dlg = QFileDialog()
-        dlg.setFileMode(QFileDialog.AnyFile)
+        dlg.setFileMode(QFileDialog.ExistingFiles)
         if dlg.exec_():
-            self.filepath = dlg.selectedFiles()[0]
-            self.ui.lbl_fileSelected.setText(self.filepath)
-            self.ui.lbl_fileSelected.setStyleSheet("color: #0000ff")
-            self.ui.btn_fileScan.setEnabled(True)
-            self.ui.groupBox_fileScanResult.hide()
+            selectedFiles = dlg.selectedFiles()
+            if len(selectedFiles) == 1:
+                self.ui.stackedWidget_2.setCurrentIndex(0)
+                self.filepath = selectedFiles[0]
+                self.ui.lbl_fileSelected.setText(self.filepath)
+                self.ui.lbl_fileSelected.setStyleSheet("color: #0000ff")
+                self.ui.btn_fileScan.setEnabled(True)
+                self.ui.groupBox_fileScanResult.hide()
 
-            self.ui.tbl_fileInfo.clear()
-            self.fileDetailsThread = FileDetailsThread(self.filepath)
-            self.fileDetailsThread.okSignal.connect(self.updateFileInfo)
-            self.fileDetailsThread.start()
+                self.ui.tbl_fileInfo.clear()
+                self.fileDetailsThread = FileDetailsThread(self.filepath)
+                self.fileDetailsThread.okSignal.connect(self.updateFileInfo)
+                self.fileDetailsThread.start()
+            else:
+                self.ui.stackedWidget_2.setCurrentIndex(1)
+                self.ui.tree_fileScan.clear()
+                items = [QTreeWidgetItem([f]) for f in selectedFiles]
+                self.ui.tree_fileScan.insertTopLevelItems(0, items)
+
 
     def updateFileInfo(self, fileInfo: dict):
         for label, key in [['Name', 'name'], ['Path', 'path'], ['MD5', 'md5'], ['SHA1', 'sha1'],

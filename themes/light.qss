@@ -185,6 +185,11 @@ Content App */
 	background-color: #ffffff;
 }
 
+#extraRightBoxTopBar .QPushButton { background-color: rgba(255, 255, 255, 0); border: none;  border-radius: 5px; }
+#extraRightBoxTopBar .QPushButton:hover { background-color: #f2f6ff; border-style: solid; border-radius: 4px; }
+#extraRightBoxTopBar .QPushButton:pressed { background-color: #2f93e1; border-style: solid; border-radius: 4px; }
+
+
 /* Bottom Bar */
 #bottomBar { background-color: #beceff }
 #bottomBar QLabel { font-size: 11px; color: #525252; padding-left: 10px; padding-right: 10px; padding-bottom: 2px; }
@@ -338,4 +343,47 @@ CommandLinkButton */
 #pagesContainer QCommandLinkButton:pressed {
 	color: rgb(189, 147, 249);
 	background-color: #586796;
+}
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////
+Button */
+/* #pagesContainer QPushButton { */
+/* 	border: 2px solid #2f93e1; */
+/* 	border-radius: 5px; */
+/* 	background-color: #2f93e1; */
+/* 	color: #f8f8f2; */
+/* } */
+/* #pagesContainer QPushButton:hover { */
+/* 	background-color: #7082b6; */
+/* 	border: 2px solid #7082b6; */
+/* } */
+
+#pagesContainer QPushButton
+{
+	border: 2px solid #2f93e1;
+	border-radius: 5px;
+	background-color: #2f93e1;
+    color: #f8f8f2;
+	padding: 5px 10px;
+}
+
+#pagesContainer QPushButton:hover
+{
+	background-color: #7082b6;
+	border: 2px solid #7082b6;
+}
+
+#pagesContainer QPushButton:pressed
+{
+	border: 2px solid #2f93e1;
+}
+
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////
+Custome */
+
+#fileScanDropContainer
+{
+	border: 2px dashed rgb(220, 220, 220);
+	border-radius: 5px;
 }

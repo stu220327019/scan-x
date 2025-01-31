@@ -1,11 +1,13 @@
-from PySide6.QtWidgets import QMainWindow, QGraphicsDropShadowEffect, QSizeGrip, QPushButton
-from PySide6.QtCore import Qt, QPropertyAnimation, QEasingCurve, QParallelAnimationGroup
+from PySide6.QtWidgets import QMainWindow, QGraphicsDropShadowEffect, QSizeGrip, QPushButton, QStackedLayout
+from PySide6.QtCore import Qt, QPropertyAnimation, QEasingCurve, QParallelAnimationGroup, QFile
 from PySide6.QtGui import QIcon, QColor
+from PySide6.QtUiTools import QUiLoader
 from widgets import CustomGrip
 from .ui.ui_main import Ui_MainWindow
 from .panels.file_scan import FileScan
 from .panels.dir_scan import DirScan
 from .panels.url_scan import URLScan
+from .panels.file_scan2 import FileScan2
 
 
 class View(QMainWindow):
@@ -41,6 +43,8 @@ class View(QMainWindow):
         self.fileScan = FileScan(self.ui)
         self.dirScan = DirScan(self.ui)
         self.urlScan = URLScan(self.ui)
+        self.fileScan2 = FileScan2(self.ui)
+
 
     # TOGGLE MENU
     # ///////////////////////////////////////////////////////////////
@@ -94,9 +98,9 @@ class View(QMainWindow):
 
     # TOGGLE RIGHT BOX
     # ///////////////////////////////////////////////////////////////
-    def toggleRightBox(self):
+    def toggleRightBox(self, event):
         # GET WIDTH
-        width = self.ui.extraRightBox.width()
+        width = self.ui.extraRightBoxBg.width()
         widthLeftBox = self.ui.extraLeftBox.width()
         maxExtend = self.RIGHT_BOX_WIDTH
         color = self.BTN_RIGHT_BOX_COLOR
@@ -118,9 +122,10 @@ class View(QMainWindow):
             # RESET BTN
             self.ui.settingsTopBtn.setStyleSheet(style.replace(color, ''))
 
-        self.start_box_animation(widthLeftBox, width, "right")
+        hide_right_box = width != 0
+        self.start_box_animation(widthLeftBox, width, "right", hide_right_box)
 
-    def start_box_animation(self, left_box_width, right_box_width, direction):
+    def start_box_animation(self, left_box_width, right_box_width, direction, hide_right_box = True):
         right_width = 0
         left_width = 0
 
@@ -131,7 +136,7 @@ class View(QMainWindow):
             left_width = 0
         # Check values
         if right_box_width == 0 and direction == "right":
-            right_width = 240
+            right_width = 400
         else:
             right_width = 0
 
@@ -143,7 +148,7 @@ class View(QMainWindow):
         self.left_box.setEasingCurve(QEasingCurve.InOutQuart)
 
         # ANIMATION RIGHT BOX
-        self.right_box = QPropertyAnimation(self.ui.extraRightBox, b"minimumWidth")
+        self.right_box = QPropertyAnimation(self.ui.extraRightBoxBg, b"minimumWidth")
         self.right_box.setDuration(self.TIME_ANIMATION)
         self.right_box.setStartValue(right_box_width)
         self.right_box.setEndValue(right_width)
@@ -153,7 +158,14 @@ class View(QMainWindow):
         self.group = QParallelAnimationGroup()
         self.group.addAnimation(self.left_box)
         self.group.addAnimation(self.right_box)
+
+        if hide_right_box:
+            self.group.finished.connect(lambda: self.ui.content.setCurrentIndex(1))
+        else:
+            self.ui.content.setCurrentIndex(0)
+
         self.group.start()
+
 
     def maximize_restore(self):
         if not self.isMaximized():
@@ -188,6 +200,13 @@ class View(QMainWindow):
         #STANDARD TITLE BAR
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
+
+        loader = QUiLoader()
+        uifile = QFile('./res/file_details.ui')
+        uifile.open(QFile.ReadOnly)
+        # print(uifile)
+        loader.load(uifile, self.ui.extraRightBox)
+        uifile.close()
 
         # MOVE WINDOW / MAXIMIZE / RESTORE
         def moveWindow(event):
@@ -227,6 +246,8 @@ class View(QMainWindow):
 
         # CLOSE APPLICATION
         self.ui.closeAppBtn.clicked.connect(self.close)
+
+        self.ui.content.layout().setStackingMode(QStackedLayout.StackAll)
 
     def resize_grips(self):
         self.left_grip.setGeometry(0, 10, 10, self.height())

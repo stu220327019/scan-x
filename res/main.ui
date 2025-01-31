@@ -28,7 +28,6 @@
     <font>
      <family>Segoe UI</family>
      <pointsize>10</pointsize>
-     <weight>50</weight>
      <italic>false</italic>
      <bold>false</bold>
     </font>
@@ -221,6 +220,11 @@ Content App */
 	background-color: #ffffff;
 }
 
+#extraRightBoxTopBar .QPushButton { background-color: rgba(255, 255, 255, 0); border: none;  border-radius: 5px; }
+#extraRightBoxTopBar .QPushButton:hover { background-color: #f2f6ff; border-style: solid; border-radius: 4px; }
+#extraRightBoxTopBar .QPushButton:pressed { background-color: #2f93e1; border-style: solid; border-radius: 4px; }
+
+
 /* Bottom Bar */
 #bottomBar { background-color: #beceff }
 #bottomBar QLabel { font-size: 11px; color: #525252; padding-left: 10px; padding-right: 10px; padding-bottom: 2px; }
@@ -375,34 +379,62 @@ CommandLinkButton */
 	color: rgb(189, 147, 249);
 	background-color: #586796;
 }
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////
+Button */
+/* #pagesContainer QPushButton { */
+/* 	border: 2px solid #2f93e1; */
+/* 	border-radius: 5px; */
+/* 	background-color: #2f93e1; */
+/* 	color: #f8f8f2; */
+/* } */
+/* #pagesContainer QPushButton:hover { */
+/* 	background-color: #7082b6; */
+/* 	border: 2px solid #7082b6; */
+/* } */
+
+#pagesContainer QPushButton
+{
+	border: 2px solid #2f93e1;
+	border-radius: 5px;
+	background-color: #2f93e1;
+    color: #f8f8f2;
+	padding: 5px 10px;
+}
+
+#pagesContainer QPushButton:hover
+{
+	background-color: #7082b6;
+	border: 2px solid #7082b6;
+}
+
+#pagesContainer QPushButton:pressed
+{
+	border: 2px solid #2f93e1;
+}
+
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////
+Custome */
+
+#fileScanDropContainer
+{
+	border: 2px dashed rgb(220, 220, 220);
+	border-radius: 5px;
+}
 </string>
    </property>
-   <layout class="QVBoxLayout" name="appMargins">
-    <property name="spacing">
-     <number>0</number>
-    </property>
-    <property name="leftMargin">
-     <number>10</number>
-    </property>
-    <property name="topMargin">
-     <number>10</number>
-    </property>
-    <property name="rightMargin">
-     <number>10</number>
-    </property>
-    <property name="bottomMargin">
-     <number>10</number>
-    </property>
+   <layout class="QVBoxLayout" name="verticalLayout_21">
     <item>
      <widget class="QFrame" name="bgApp">
       <property name="styleSheet">
        <string notr="true"/>
       </property>
       <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
+       <enum>QFrame::Shape::NoFrame</enum>
       </property>
       <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
+       <enum>QFrame::Shadow::Raised</enum>
       </property>
       <layout class="QHBoxLayout" name="appLayout">
        <property name="spacing">
@@ -435,10 +467,10 @@ CommandLinkButton */
           </size>
          </property>
          <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
+          <enum>QFrame::Shape::NoFrame</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+          <enum>QFrame::Shadow::Raised</enum>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <property name="spacing">
@@ -471,10 +503,10 @@ CommandLinkButton */
              </size>
             </property>
             <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
+             <enum>QFrame::Shape::NoFrame</enum>
             </property>
             <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
+             <enum>QFrame::Shadow::Raised</enum>
             </property>
             <widget class="QFrame" name="topLogo">
              <property name="geometry">
@@ -498,10 +530,10 @@ CommandLinkButton */
               </size>
              </property>
              <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
+              <enum>QFrame::Shape::NoFrame</enum>
              </property>
              <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
+              <enum>QFrame::Shadow::Raised</enum>
              </property>
             </widget>
             <widget class="QLabel" name="titleLeftApp">
@@ -513,20 +545,11 @@ CommandLinkButton */
                <height>20</height>
               </rect>
              </property>
-             <property name="font">
-              <font>
-               <family>Segoe UI Semibold</family>
-               <pointsize>12</pointsize>
-               <weight>8</weight>
-               <italic>false</italic>
-               <bold>false</bold>
-              </font>
-             </property>
              <property name="text">
               <string>Genius Software</string>
              </property>
              <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
              </property>
             </widget>
             <widget class="QLabel" name="titleLeftDescription">
@@ -548,7 +571,6 @@ CommandLinkButton */
               <font>
                <family>Segoe UI</family>
                <pointsize>8</pointsize>
-               <weight>50</weight>
                <italic>false</italic>
                <bold>false</bold>
               </font>
@@ -557,7 +579,7 @@ CommandLinkButton */
               <string>Invoice App</string>
              </property>
              <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
              </property>
             </widget>
            </widget>
@@ -565,10 +587,10 @@ CommandLinkButton */
           <item>
            <widget class="QFrame" name="leftMenuFrame">
             <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
+             <enum>QFrame::Shape::NoFrame</enum>
             </property>
             <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
+             <enum>QFrame::Shadow::Raised</enum>
             </property>
             <layout class="QVBoxLayout" name="verticalMenuLayout">
              <property name="spacing">
@@ -586,13 +608,13 @@ CommandLinkButton */
              <property name="bottomMargin">
               <number>0</number>
              </property>
-             <item alignment="Qt::AlignTop">
+             <item alignment="Qt::AlignmentFlag::AlignTop">
               <widget class="QFrame" name="topMenu">
                <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
+                <enum>QFrame::Shape::NoFrame</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
+                <enum>QFrame::Shadow::Raised</enum>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_8">
                 <property name="spacing">
@@ -619,10 +641,10 @@ CommandLinkButton */
                    </size>
                   </property>
                   <property name="frameShape">
-                   <enum>QFrame::NoFrame</enum>
+                   <enum>QFrame::Shape::NoFrame</enum>
                   </property>
                   <property name="frameShadow">
-                   <enum>QFrame::Plain</enum>
+                   <enum>QFrame::Shadow::Plain</enum>
                   </property>
                   <property name="lineWidth">
                    <number>-1</number>
@@ -632,7 +654,7 @@ CommandLinkButton */
                     <number>0</number>
                    </property>
                    <property name="sizeConstraint">
-                    <enum>QLayout::SetNoConstraint</enum>
+                    <enum>QLayout::SizeConstraint::SetNoConstraint</enum>
                    </property>
                    <property name="leftMargin">
                     <number>0</number>
@@ -667,7 +689,6 @@ CommandLinkButton */
                    <font>
                     <family>Segoe UI</family>
                     <pointsize>10</pointsize>
-                    <weight>50</weight>
                     <italic>false</italic>
                     <bold>false</bold>
                    </font>
@@ -676,7 +697,7 @@ CommandLinkButton */
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
                   <property name="layoutDirection">
-                   <enum>Qt::LeftToRight</enum>
+                   <enum>Qt::LayoutDirection::LeftToRight</enum>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">background-image: url(:/heroicons/Home.svg);</string>
@@ -710,7 +731,6 @@ CommandLinkButton */
                    <font>
                     <family>Segoe UI</family>
                     <pointsize>10</pointsize>
-                    <weight>50</weight>
                     <italic>false</italic>
                     <bold>false</bold>
                    </font>
@@ -719,7 +739,7 @@ CommandLinkButton */
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
                   <property name="layoutDirection">
-                   <enum>Qt::LeftToRight</enum>
+                   <enum>Qt::LayoutDirection::LeftToRight</enum>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">background-image: url(:/heroicons/DocumentMagnifyingGlass.svg);</string>
@@ -770,13 +790,13 @@ CommandLinkButton */
                </layout>
               </widget>
              </item>
-             <item alignment="Qt::AlignBottom">
+             <item alignment="Qt::AlignmentFlag::AlignBottom">
               <widget class="QFrame" name="bottomMenu">
                <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
+                <enum>QFrame::Shape::NoFrame</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
+                <enum>QFrame::Shadow::Raised</enum>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_9">
                 <property name="spacing">
@@ -812,7 +832,6 @@ CommandLinkButton */
                    <font>
                     <family>Segoe UI</family>
                     <pointsize>10</pointsize>
-                    <weight>50</weight>
                     <italic>false</italic>
                     <bold>false</bold>
                    </font>
@@ -821,7 +840,7 @@ CommandLinkButton */
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
                   <property name="layoutDirection">
-                   <enum>Qt::LeftToRight</enum>
+                   <enum>Qt::LayoutDirection::LeftToRight</enum>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">background-image: url(:/resources/images/icons/icon_settings_black.png);</string>
@@ -855,10 +874,10 @@ CommandLinkButton */
           </size>
          </property>
          <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
+          <enum>QFrame::Shape::NoFrame</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+          <enum>QFrame::Shadow::Raised</enum>
          </property>
          <layout class="QVBoxLayout" name="extraColumLayout">
           <property name="spacing">
@@ -891,10 +910,10 @@ CommandLinkButton */
              </size>
             </property>
             <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
+             <enum>QFrame::Shape::NoFrame</enum>
             </property>
             <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
+             <enum>QFrame::Shadow::Raised</enum>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_5">
              <property name="spacing">
@@ -941,10 +960,10 @@ CommandLinkButton */
                   </size>
                  </property>
                  <property name="frameShape">
-                  <enum>QFrame::NoFrame</enum>
+                  <enum>QFrame::Shape::NoFrame</enum>
                  </property>
                  <property name="frameShadow">
-                  <enum>QFrame::Raised</enum>
+                  <enum>QFrame::Shadow::Raised</enum>
                  </property>
                 </widget>
                </item>
@@ -1004,10 +1023,10 @@ CommandLinkButton */
           <item>
            <widget class="QFrame" name="extraContent">
             <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
+             <enum>QFrame::Shape::NoFrame</enum>
             </property>
             <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
+             <enum>QFrame::Shadow::Raised</enum>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_12">
              <property name="spacing">
@@ -1025,13 +1044,13 @@ CommandLinkButton */
              <property name="bottomMargin">
               <number>0</number>
              </property>
-             <item alignment="Qt::AlignTop">
+             <item alignment="Qt::AlignmentFlag::AlignTop">
               <widget class="QFrame" name="extraTopMenu">
                <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
+                <enum>QFrame::Shape::NoFrame</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
+                <enum>QFrame::Shadow::Raised</enum>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_11">
                 <property name="spacing">
@@ -1067,7 +1086,6 @@ CommandLinkButton */
                    <font>
                     <family>Segoe UI</family>
                     <pointsize>10</pointsize>
-                    <weight>50</weight>
                     <italic>false</italic>
                     <bold>false</bold>
                    </font>
@@ -1076,7 +1094,7 @@ CommandLinkButton */
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
                   <property name="layoutDirection">
-                   <enum>Qt::LeftToRight</enum>
+                   <enum>Qt::LayoutDirection::LeftToRight</enum>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">background-image: url(:/resources/images/icons/cil-save-black.png);</string>
@@ -1092,10 +1110,10 @@ CommandLinkButton */
              <item>
               <widget class="QFrame" name="extraCenter">
                <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
+                <enum>QFrame::Shape::NoFrame</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
+                <enum>QFrame::Shadow::Raised</enum>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_10">
                 <item>
@@ -1110,15 +1128,18 @@ CommandLinkButton */
                    <string notr="true">background: transparent;</string>
                   </property>
                   <property name="frameShape">
-                   <enum>QFrame::NoFrame</enum>
+                   <enum>QFrame::Shape::NoFrame</enum>
                   </property>
                   <property name="readOnly">
                    <bool>true</bool>
                   </property>
                   <property name="html">
                    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#0055ff;&quot;&gt;GUI With PySide&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#454544;&quot;&gt;An interface created using Python and PySide (support for PyQt), and with colors based on the Dracula theme created by Zeno Rocha.&lt;/span&gt;&lt;/p&gt;
@@ -1136,10 +1157,10 @@ p, li { white-space: pre-wrap; }
              <item>
               <widget class="QFrame" name="extraBottom">
                <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
+                <enum>QFrame::Shape::NoFrame</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
+                <enum>QFrame::Shadow::Raised</enum>
                </property>
               </widget>
              </item>
@@ -1152,10 +1173,10 @@ p, li { white-space: pre-wrap; }
        <item>
         <widget class="QFrame" name="contentBox">
          <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
+          <enum>QFrame::Shape::NoFrame</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+          <enum>QFrame::Shadow::Raised</enum>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <property name="spacing">
@@ -1188,10 +1209,10 @@ p, li { white-space: pre-wrap; }
              </size>
             </property>
             <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
+             <enum>QFrame::Shape::NoFrame</enum>
             </property>
             <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
+             <enum>QFrame::Shadow::Plain</enum>
             </property>
             <property name="lineWidth">
              <number>0</number>
@@ -1221,10 +1242,10 @@ p, li { white-space: pre-wrap; }
                 </sizepolicy>
                </property>
                <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
+                <enum>QFrame::Shape::NoFrame</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Plain</enum>
+                <enum>QFrame::Shadow::Plain</enum>
                </property>
                <property name="lineWidth">
                 <number>0</number>
@@ -1269,7 +1290,6 @@ p, li { white-space: pre-wrap; }
                    <font>
                     <family>Segoe UI</family>
                     <pointsize>10</pointsize>
-                    <weight>50</weight>
                     <italic>false</italic>
                     <bold>false</bold>
                    </font>
@@ -1278,7 +1298,7 @@ p, li { white-space: pre-wrap; }
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
                   <property name="layoutDirection">
-                   <enum>Qt::LeftToRight</enum>
+                   <enum>Qt::LayoutDirection::LeftToRight</enum>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">background-image: url(:/resources/images/icons/icon_menu_black.png);</string>
@@ -1306,7 +1326,6 @@ p, li { white-space: pre-wrap; }
                    <font>
                     <family>Segoe UI</family>
                     <pointsize>10</pointsize>
-                    <weight>50</weight>
                     <italic>false</italic>
                     <bold>false</bold>
                    </font>
@@ -1315,14 +1334,14 @@ p, li { white-space: pre-wrap; }
                    <string>Scan-X // Malware Analysis and Report Tool</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
                </layout>
               </widget>
              </item>
-             <item alignment="Qt::AlignRight">
+             <item>
               <widget class="QFrame" name="rightButtons">
                <property name="minimumSize">
                 <size>
@@ -1331,10 +1350,10 @@ p, li { white-space: pre-wrap; }
                 </size>
                </property>
                <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
+                <enum>QFrame::Shape::NoFrame</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
+                <enum>QFrame::Shadow::Raised</enum>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_2">
                 <property name="spacing">
@@ -1440,7 +1459,6 @@ p, li { white-space: pre-wrap; }
                    <font>
                     <family>Segoe UI</family>
                     <pointsize>10</pointsize>
-                    <weight>50</weight>
                     <italic>false</italic>
                     <bold>false</bold>
                     <stylestrategy>PreferDefault</stylestrategy>
@@ -1511,10 +1529,10 @@ p, li { white-space: pre-wrap; }
           <item>
            <widget class="QFrame" name="contentMain">
             <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
+             <enum>QFrame::Shape::NoFrame</enum>
             </property>
             <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
+             <enum>QFrame::Shadow::Raised</enum>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_6">
              <property name="spacing">
@@ -1533,782 +1551,1119 @@ p, li { white-space: pre-wrap; }
               <number>0</number>
              </property>
              <item>
-              <widget class="QFrame" name="content">
+              <widget class="QStackedWidget" name="content">
+               <property name="minimumSize">
+                <size>
+                 <width>300</width>
+                 <height>0</height>
+                </size>
+               </property>
                <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
+                <enum>QFrame::Shape::NoFrame</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
+                <enum>QFrame::Shadow::Raised</enum>
                </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_4">
-                <property name="spacing">
-                 <number>0</number>
+               <property name="currentIndex">
+                <number>1</number>
+               </property>
+               <widget class="QWidget" name="contentPage2">
+                <property name="enabled">
+                 <bool>false</bool>
                 </property>
-                <property name="leftMargin">
-                 <number>0</number>
+                <property name="styleSheet">
+                 <string notr="true">background: rgba(64,64,64,64)</string>
                 </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="QFrame" name="pagesContainer">
-                  <property name="frameShape">
-                   <enum>QFrame::NoFrame</enum>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
-                  </property>
-                  <layout class="QVBoxLayout" name="verticalLayout_15">
-                   <property name="spacing">
-                    <number>0</number>
+                <layout class="QHBoxLayout" name="horizontalLayout_16">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <spacer name="horizontalSpacer_12">
+                   <property name="orientation">
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
-                   <property name="leftMargin">
-                    <number>10</number>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
                    </property>
-                   <property name="topMargin">
-                    <number>10</number>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QWidget" name="extraRightBoxBg" native="true">
+                   <property name="maximumSize">
+                    <size>
+                     <width>0</width>
+                     <height>16777215</height>
+                    </size>
                    </property>
-                   <property name="rightMargin">
-                    <number>10</number>
+                   <property name="styleSheet">
+                    <string notr="true">background:#ffffff</string>
                    </property>
-                   <property name="bottomMargin">
-                    <number>10</number>
+                   <layout class="QVBoxLayout" name="verticalLayout_7" stretch="0,1">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QWidget" name="extraRightBoxTopBar" native="true">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>1</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>400</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <layout class="QHBoxLayout" name="horizontalLayout_18" stretch="1,0">
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <widget class="QLabel" name="label_2">
+                         <property name="text">
+                          <string>TextLabel</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="pushButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>16</width>
+                           <height>16</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>16</width>
+                           <height>16</height>
+                          </size>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="toolTip">
+                          <string>Close</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="resources.qrc">
+                           <normaloff>:/resources/images/icons/icon_close_black.png</normaloff>:/resources/images/icons/icon_close_black.png</iconset>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QWidget" name="extraRightBox" native="true">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="contentPage1">
+                <layout class="QHBoxLayout" name="horizontalLayout_4">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QFrame" name="pagesContainer">
+                   <property name="frameShape">
+                    <enum>QFrame::Shape::NoFrame</enum>
                    </property>
-                   <item>
-                    <widget class="QStackedWidget" name="stackedWidget">
-                     <property name="currentIndex">
-                      <number>1</number>
-                     </property>
-                     <widget class="QWidget" name="home">
-                      <property name="styleSheet">
-                       <string notr="true">background-image: url(:/resources/images/media/Gino_vertical.png);
+                   <property name="frameShadow">
+                    <enum>QFrame::Shadow::Raised</enum>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_15">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>10</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>10</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>10</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>10</number>
+                    </property>
+                    <item>
+                     <widget class="QStackedWidget" name="stackedWidget">
+                      <property name="currentIndex">
+                       <number>1</number>
+                      </property>
+                      <widget class="QWidget" name="home">
+                       <property name="styleSheet">
+                        <string notr="true">background-image: url(:/resources/images/media/Gino_vertical.png);
 background-position: center;
 background-repeat: no-repeat;</string>
-                      </property>
-                     </widget>
-                     <widget class="QWidget" name="page_fileScan">
-                      <layout class="QVBoxLayout" name="verticalLayout_20">
-                       <item alignment="Qt::AlignTop">
-                        <widget class="QFrame" name="frame">
-                         <property name="styleSheet">
-                          <string notr="true"/>
-                         </property>
-                         <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
-                         </property>
-                         <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
-                         </property>
-                         <layout class="QVBoxLayout" name="verticalLayout">
+                       </property>
+                      </widget>
+                      <widget class="QWidget" name="page_fileScan2">
+                       <layout class="QVBoxLayout" name="verticalLayout_27">
+                        <item>
+                         <widget class="QGroupBox" name="groupBox_4">
+                          <property name="title">
+                           <string>Scan files</string>
+                          </property>
+                          <layout class="QVBoxLayout" name="verticalLayout_26">
+                           <item>
+                            <widget class="QWidget" name="fileScanDropContainer" native="true">
+                             <layout class="QVBoxLayout" name="_2">
+                              <property name="leftMargin">
+                               <number>9</number>
+                              </property>
+                              <property name="topMargin">
+                               <number>9</number>
+                              </property>
+                              <property name="rightMargin">
+                               <number>9</number>
+                              </property>
+                              <property name="bottomMargin">
+                               <number>9</number>
+                              </property>
+                              <item>
+                               <widget class="FileDropWidget" name="fileScanDrop" native="true">
+                                <property name="minimumSize">
+                                 <size>
+                                  <width>0</width>
+                                  <height>100</height>
+                                 </size>
+                                </property>
+                                <property name="acceptDrops">
+                                 <bool>true</bool>
+                                </property>
+                                <layout class="QHBoxLayout" name="horizontalLayout_15">
+                                 <item>
+                                  <widget class="QPushButton" name="btn_fileSelect">
+                                   <property name="sizePolicy">
+                                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                     <horstretch>0</horstretch>
+                                     <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                   </property>
+                                   <property name="text">
+                                    <string>Browse file...</string>
+                                   </property>
+                                   <property name="icon">
+                                    <iconset resource="resources.qrc">
+                                     <normaloff>:/resources/images/icons/file_plus_white.svg</normaloff>:/resources/images/icons/file_plus_white.svg</iconset>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                </layout>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QTreeView" name="tree_filelist">
+                             <property name="alternatingRowColors">
+                              <bool>true</bool>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </item>
+                        <item>
+                         <layout class="QHBoxLayout" name="horizontalLayout_22">
+                          <property name="spacing">
+                           <number>20</number>
+                          </property>
                           <item>
-                           <widget class="QGroupBox" name="groupBox">
-                            <property name="title">
-                             <string>File Upload</string>
+                           <spacer name="horizontalSpacer_16">
+                            <property name="orientation">
+                             <enum>Qt::Orientation::Horizontal</enum>
                             </property>
-                            <layout class="QHBoxLayout" name="horizontalLayout_6">
-                             <item>
-                              <widget class="QPushButton" name="btn_fileBrowse">
-                               <property name="text">
-                                <string>Browse...</string>
-                               </property>
-                              </widget>
-                             </item>
-                             <item>
-                              <widget class="QLabel" name="lbl_fileSelected">
-                               <property name="text">
-                                <string>No file selected</string>
-                               </property>
-                              </widget>
-                             </item>
-                             <item>
-                              <spacer name="horizontalSpacer">
-                               <property name="orientation">
-                                <enum>Qt::Horizontal</enum>
-                               </property>
-                               <property name="sizeHint" stdset="0">
-                                <size>
-                                 <width>40</width>
-                                 <height>20</height>
-                                </size>
-                               </property>
-                              </spacer>
-                             </item>
-                             <item>
-                              <widget class="QPushButton" name="btn_fileScan">
-                               <property name="enabled">
-                                <bool>false</bool>
-                               </property>
-                               <property name="text">
-                                <string>Scan</string>
-                               </property>
-                              </widget>
-                             </item>
-                            </layout>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>40</width>
+                              <height>20</height>
+                             </size>
+                            </property>
+                           </spacer>
+                          </item>
+                          <item>
+                           <widget class="QPushButton" name="btn_startFileScan">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="minimumSize">
+                             <size>
+                              <width>100</width>
+                              <height>0</height>
+                             </size>
+                            </property>
+                            <property name="text">
+                             <string>Start</string>
+                            </property>
+                            <property name="icon">
+                             <iconset resource="resources.qrc">
+                              <normaloff>:/resources/images/icons/play_white.svg</normaloff>:/resources/images/icons/play_white.svg</iconset>
+                            </property>
                            </widget>
                           </item>
                           <item>
-                           <widget class="QGroupBox" name="groupBox_fileInfo">
-                            <property name="title">
-                             <string>File Details</string>
+                           <widget class="QPushButton" name="btn_stopFileScan">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
                             </property>
-                            <layout class="QVBoxLayout" name="verticalLayout_21">
-                             <item>
-                              <widget class="QTreeWidget" name="tbl_fileInfo">
-                               <column>
-                                <property name="text">
-                                 <string>Property</string>
-                                </property>
-                               </column>
-                               <column>
-                                <property name="text">
-                                 <string>Value</string>
-                                </property>
-                               </column>
-                              </widget>
-                             </item>
-                            </layout>
-                           </widget>
-                          </item>
-                          <item>
-                           <widget class="QProgressBar" name="progressBar">
-                            <property name="value">
-                             <number>24</number>
+                            <property name="minimumSize">
+                             <size>
+                              <width>100</width>
+                              <height>0</height>
+                             </size>
+                            </property>
+                            <property name="text">
+                             <string>Stop</string>
+                            </property>
+                            <property name="icon">
+                             <iconset resource="resources.qrc">
+                              <normaloff>:/resources/images/icons/rectangle_white.svg</normaloff>:/resources/images/icons/rectangle_white.svg</iconset>
                             </property>
                            </widget>
                           </item>
                           <item>
-                           <widget class="QGroupBox" name="groupBox_fileScanResult">
-                            <property name="title">
-                             <string>Analysis Results</string>
+                           <spacer name="horizontalSpacer_17">
+                            <property name="orientation">
+                             <enum>Qt::Orientation::Horizontal</enum>
                             </property>
-                            <layout class="QVBoxLayout" name="verticalLayout_22">
-                             <item>
-                              <layout class="QHBoxLayout" name="horizontalLayout_7">
-                               <item>
-                                <widget class="QLabel" name="label_5">
-                                 <property name="text">
-                                  <string>Status:</string>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item>
-                                <widget class="QLabel" name="label_fileScanStatus">
-                                 <property name="text">
-                                  <string/>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item>
-                                <spacer name="horizontalSpacer_3">
-                                 <property name="orientation">
-                                  <enum>Qt::Horizontal</enum>
-                                 </property>
-                                 <property name="sizeHint" stdset="0">
-                                  <size>
-                                   <width>40</width>
-                                   <height>20</height>
-                                  </size>
-                                 </property>
-                                </spacer>
-                               </item>
-                               <item>
-                                <widget class="QLabel" name="label_4">
-                                 <property name="font">
-                                  <font>
-                                   <family>Segoe UI</family>
-                                   <pointsize>10</pointsize>
-                                   <weight>50</weight>
-                                   <italic>false</italic>
-                                   <bold>false</bold>
-                                  </font>
-                                 </property>
-                                 <property name="text">
-                                  <string>Detection:</string>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item>
-                                <widget class="QLabel" name="label_fileScanDetection">
-                                 <property name="text">
-                                  <string/>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item>
-                                <spacer name="horizontalSpacer_2">
-                                 <property name="orientation">
-                                  <enum>Qt::Horizontal</enum>
-                                 </property>
-                                 <property name="sizeHint" stdset="0">
-                                  <size>
-                                   <width>40</width>
-                                   <height>20</height>
-                                  </size>
-                                 </property>
-                                </spacer>
-                               </item>
-                              </layout>
-                             </item>
-                             <item>
-                              <widget class="QTreeWidget" name="tbl_fileScanResult">
-                               <property name="alternatingRowColors">
-                                <bool>true</bool>
-                               </property>
-                               <column>
-                                <property name="text">
-                                 <string>Engine</string>
-                                </property>
-                               </column>
-                               <column>
-                                <property name="text">
-                                 <string>Result</string>
-                                </property>
-                               </column>
-                              </widget>
-                             </item>
-                             <item>
-                              <layout class="QHBoxLayout" name="horizontalLayout_8">
-                               <item>
-                                <spacer name="horizontalSpacer_4">
-                                 <property name="orientation">
-                                  <enum>Qt::Horizontal</enum>
-                                 </property>
-                                 <property name="sizeHint" stdset="0">
-                                  <size>
-                                   <width>40</width>
-                                   <height>20</height>
-                                  </size>
-                                 </property>
-                                </spacer>
-                               </item>
-                               <item>
-                                <widget class="QLabel" name="label">
-                                 <property name="text">
-                                  <string>Elapsed time:</string>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item>
-                                <widget class="QLabel" name="label_fileScanElapsedTime">
-                                 <property name="text">
-                                  <string/>
-                                 </property>
-                                </widget>
-                               </item>
-                              </layout>
-                             </item>
-                            </layout>
-                           </widget>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>40</width>
+                              <height>20</height>
+                             </size>
+                            </property>
+                           </spacer>
                           </item>
                          </layout>
-                        </widget>
-                       </item>
-                      </layout>
+                        </item>
+                       </layout>
+                      </widget>
+                      <widget class="QWidget" name="page_fileScan">
+                       <layout class="QVBoxLayout" name="verticalLayout_13">
+                        <item>
+                         <widget class="QFrame" name="frame">
+                          <property name="styleSheet">
+                           <string notr="true"/>
+                          </property>
+                          <property name="frameShape">
+                           <enum>QFrame::Shape::StyledPanel</enum>
+                          </property>
+                          <property name="frameShadow">
+                           <enum>QFrame::Shadow::Raised</enum>
+                          </property>
+                          <layout class="QVBoxLayout" name="verticalLayout">
+                           <item>
+                            <widget class="QGroupBox" name="groupBox">
+                             <property name="title">
+                              <string>File Upload</string>
+                             </property>
+                             <layout class="QHBoxLayout" name="horizontalLayout_6">
+                              <item>
+                               <widget class="QPushButton" name="btn_fileBrowse">
+                                <property name="text">
+                                 <string>Browse...</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="lbl_fileSelected">
+                                <property name="text">
+                                 <string>No file selected</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <spacer name="horizontalSpacer">
+                                <property name="orientation">
+                                 <enum>Qt::Orientation::Horizontal</enum>
+                                </property>
+                                <property name="sizeHint" stdset="0">
+                                 <size>
+                                  <width>40</width>
+                                  <height>20</height>
+                                 </size>
+                                </property>
+                               </spacer>
+                              </item>
+                              <item>
+                               <widget class="QPushButton" name="btn_fileScan">
+                                <property name="enabled">
+                                 <bool>false</bool>
+                                </property>
+                                <property name="text">
+                                 <string>Scan</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QStackedWidget" name="stackedWidget_2">
+                             <property name="currentIndex">
+                              <number>1</number>
+                             </property>
+                             <widget class="QWidget" name="page_3">
+                              <layout class="QVBoxLayout" name="verticalLayout_14">
+                               <property name="spacing">
+                                <number>6</number>
+                               </property>
+                               <property name="leftMargin">
+                                <number>0</number>
+                               </property>
+                               <property name="topMargin">
+                                <number>0</number>
+                               </property>
+                               <property name="rightMargin">
+                                <number>0</number>
+                               </property>
+                               <property name="bottomMargin">
+                                <number>0</number>
+                               </property>
+                               <item>
+                                <widget class="QGroupBox" name="groupBox_fileInfo">
+                                 <property name="title">
+                                  <string>File Details</string>
+                                 </property>
+                                 <layout class="QHBoxLayout" name="horizontalLayout_17">
+                                  <item>
+                                   <widget class="QTreeWidget" name="tbl_fileInfo">
+                                    <column>
+                                     <property name="text">
+                                      <string>Property</string>
+                                     </property>
+                                    </column>
+                                    <column>
+                                     <property name="text">
+                                      <string>Value</string>
+                                     </property>
+                                    </column>
+                                   </widget>
+                                  </item>
+                                 </layout>
+                                </widget>
+                               </item>
+                               <item>
+                                <widget class="QProgressBar" name="progressBar">
+                                 <property name="value">
+                                  <number>24</number>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item>
+                                <widget class="QGroupBox" name="groupBox_fileScanResult">
+                                 <property name="title">
+                                  <string>Analysis Results</string>
+                                 </property>
+                                 <layout class="QVBoxLayout" name="verticalLayout_22">
+                                  <item>
+                                   <layout class="QHBoxLayout" name="horizontalLayout_7">
+                                    <item>
+                                     <widget class="QLabel" name="label_5">
+                                      <property name="text">
+                                       <string>Status:</string>
+                                      </property>
+                                     </widget>
+                                    </item>
+                                    <item>
+                                     <widget class="QLabel" name="label_fileScanStatus">
+                                      <property name="text">
+                                       <string/>
+                                      </property>
+                                     </widget>
+                                    </item>
+                                    <item>
+                                     <spacer name="horizontalSpacer_3">
+                                      <property name="orientation">
+                                       <enum>Qt::Orientation::Horizontal</enum>
+                                      </property>
+                                      <property name="sizeHint" stdset="0">
+                                       <size>
+                                        <width>40</width>
+                                        <height>20</height>
+                                       </size>
+                                      </property>
+                                     </spacer>
+                                    </item>
+                                    <item>
+                                     <widget class="QLabel" name="label_4">
+                                      <property name="font">
+                                       <font>
+                                        <family>Segoe UI</family>
+                                        <pointsize>10</pointsize>
+                                        <italic>false</italic>
+                                        <bold>false</bold>
+                                       </font>
+                                      </property>
+                                      <property name="text">
+                                       <string>Detection:</string>
+                                      </property>
+                                     </widget>
+                                    </item>
+                                    <item>
+                                     <widget class="QLabel" name="label_fileScanDetection">
+                                      <property name="text">
+                                       <string/>
+                                      </property>
+                                     </widget>
+                                    </item>
+                                    <item>
+                                     <spacer name="horizontalSpacer_2">
+                                      <property name="orientation">
+                                       <enum>Qt::Orientation::Horizontal</enum>
+                                      </property>
+                                      <property name="sizeHint" stdset="0">
+                                       <size>
+                                        <width>40</width>
+                                        <height>20</height>
+                                       </size>
+                                      </property>
+                                     </spacer>
+                                    </item>
+                                   </layout>
+                                  </item>
+                                  <item>
+                                   <widget class="QTreeWidget" name="tbl_fileScanResult">
+                                    <property name="alternatingRowColors">
+                                     <bool>true</bool>
+                                    </property>
+                                    <column>
+                                     <property name="text">
+                                      <string>Engine</string>
+                                     </property>
+                                    </column>
+                                    <column>
+                                     <property name="text">
+                                      <string>Result</string>
+                                     </property>
+                                    </column>
+                                   </widget>
+                                  </item>
+                                  <item>
+                                   <layout class="QHBoxLayout" name="horizontalLayout_8">
+                                    <item>
+                                     <spacer name="horizontalSpacer_4">
+                                      <property name="orientation">
+                                       <enum>Qt::Orientation::Horizontal</enum>
+                                      </property>
+                                      <property name="sizeHint" stdset="0">
+                                       <size>
+                                        <width>40</width>
+                                        <height>20</height>
+                                       </size>
+                                      </property>
+                                     </spacer>
+                                    </item>
+                                    <item>
+                                     <widget class="QLabel" name="label">
+                                      <property name="text">
+                                       <string>Elapsed time:</string>
+                                      </property>
+                                     </widget>
+                                    </item>
+                                    <item>
+                                     <widget class="QLabel" name="label_fileScanElapsedTime">
+                                      <property name="text">
+                                       <string/>
+                                      </property>
+                                     </widget>
+                                    </item>
+                                   </layout>
+                                  </item>
+                                 </layout>
+                                </widget>
+                               </item>
+                              </layout>
+                             </widget>
+                             <widget class="QWidget" name="page_4">
+                              <layout class="QVBoxLayout" name="verticalLayout_20">
+                               <property name="leftMargin">
+                                <number>0</number>
+                               </property>
+                               <property name="topMargin">
+                                <number>0</number>
+                               </property>
+                               <property name="rightMargin">
+                                <number>0</number>
+                               </property>
+                               <property name="bottomMargin">
+                                <number>0</number>
+                               </property>
+                               <item>
+                                <widget class="QWidget" name="widget_dirScan_2" native="true">
+                                 <layout class="QVBoxLayout" name="verticalLayout_25">
+                                  <item>
+                                   <layout class="QHBoxLayout" name="horizontalLayout_19">
+                                    <item>
+                                     <widget class="QLabel" name="label_11">
+                                      <property name="text">
+                                       <string>Status:</string>
+                                      </property>
+                                     </widget>
+                                    </item>
+                                    <item>
+                                     <widget class="QLabel" name="label_urlScanStatus_3">
+                                      <property name="text">
+                                       <string/>
+                                      </property>
+                                     </widget>
+                                    </item>
+                                    <item>
+                                     <spacer name="horizontalSpacer_13">
+                                      <property name="orientation">
+                                       <enum>Qt::Orientation::Horizontal</enum>
+                                      </property>
+                                      <property name="sizeHint" stdset="0">
+                                       <size>
+                                        <width>40</width>
+                                        <height>20</height>
+                                       </size>
+                                      </property>
+                                     </spacer>
+                                    </item>
+                                    <item>
+                                     <widget class="QLabel" name="label_12">
+                                      <property name="font">
+                                       <font>
+                                        <family>Segoe UI</family>
+                                        <pointsize>10</pointsize>
+                                        <italic>false</italic>
+                                        <bold>false</bold>
+                                       </font>
+                                      </property>
+                                      <property name="text">
+                                       <string>Detection:</string>
+                                      </property>
+                                     </widget>
+                                    </item>
+                                    <item>
+                                     <widget class="QLabel" name="label_urlScanDetection_3">
+                                      <property name="text">
+                                       <string/>
+                                      </property>
+                                     </widget>
+                                    </item>
+                                    <item>
+                                     <spacer name="horizontalSpacer_14">
+                                      <property name="orientation">
+                                       <enum>Qt::Orientation::Horizontal</enum>
+                                      </property>
+                                      <property name="sizeHint" stdset="0">
+                                       <size>
+                                        <width>40</width>
+                                        <height>20</height>
+                                       </size>
+                                      </property>
+                                     </spacer>
+                                    </item>
+                                   </layout>
+                                  </item>
+                                  <item>
+                                   <widget class="QTreeWidget" name="tree_fileScan">
+                                    <property name="alternatingRowColors">
+                                     <bool>true</bool>
+                                    </property>
+                                    <column>
+                                     <property name="text">
+                                      <string>Filename</string>
+                                     </property>
+                                    </column>
+                                    <column>
+                                     <property name="text">
+                                      <string>Type</string>
+                                     </property>
+                                    </column>
+                                    <column>
+                                     <property name="text">
+                                      <string>Size</string>
+                                     </property>
+                                    </column>
+                                    <column>
+                                     <property name="text">
+                                      <string>Status</string>
+                                     </property>
+                                    </column>
+                                   </widget>
+                                  </item>
+                                  <item>
+                                   <layout class="QHBoxLayout" name="horizontalLayout_20">
+                                    <item>
+                                     <spacer name="horizontalSpacer_15">
+                                      <property name="orientation">
+                                       <enum>Qt::Orientation::Horizontal</enum>
+                                      </property>
+                                      <property name="sizeHint" stdset="0">
+                                       <size>
+                                        <width>40</width>
+                                        <height>20</height>
+                                       </size>
+                                      </property>
+                                     </spacer>
+                                    </item>
+                                    <item>
+                                     <widget class="QLabel" name="label_13">
+                                      <property name="text">
+                                       <string>Elapsed time:</string>
+                                      </property>
+                                     </widget>
+                                    </item>
+                                    <item>
+                                     <widget class="QLabel" name="label_urlScanElapsedTime_3">
+                                      <property name="text">
+                                       <string/>
+                                      </property>
+                                     </widget>
+                                    </item>
+                                   </layout>
+                                  </item>
+                                 </layout>
+                                </widget>
+                               </item>
+                              </layout>
+                             </widget>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
+                      <widget class="QWidget" name="page_dirScan">
+                       <layout class="QVBoxLayout" name="verticalLayout_17">
+                        <item>
+                         <widget class="QFrame" name="frame_2">
+                          <property name="frameShape">
+                           <enum>QFrame::Shape::StyledPanel</enum>
+                          </property>
+                          <property name="frameShadow">
+                           <enum>QFrame::Shadow::Raised</enum>
+                          </property>
+                          <layout class="QVBoxLayout" name="verticalLayout_16">
+                           <item alignment="Qt::AlignmentFlag::AlignTop">
+                            <widget class="QGroupBox" name="groupBox_3">
+                             <property name="title">
+                              <string>Open directory</string>
+                             </property>
+                             <layout class="QHBoxLayout" name="horizontalLayout_12">
+                              <item>
+                               <widget class="QPushButton" name="btn_dirBrowse">
+                                <property name="text">
+                                 <string>Browse...</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="lbl_dirSelected">
+                                <property name="text">
+                                 <string>No directory selected</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <spacer name="horizontalSpacer_8">
+                                <property name="orientation">
+                                 <enum>Qt::Orientation::Horizontal</enum>
+                                </property>
+                                <property name="sizeHint" stdset="0">
+                                 <size>
+                                  <width>40</width>
+                                  <height>20</height>
+                                 </size>
+                                </property>
+                               </spacer>
+                              </item>
+                              <item>
+                               <widget class="QPushButton" name="btn_dirScan">
+                                <property name="enabled">
+                                 <bool>false</bool>
+                                </property>
+                                <property name="text">
+                                 <string>Scan</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QGroupBox" name="groupBox_dirScan">
+                             <property name="title">
+                              <string>Directory</string>
+                             </property>
+                             <layout class="QVBoxLayout" name="verticalLayout_24">
+                              <item>
+                               <layout class="QHBoxLayout" name="horizontalLayout_13">
+                                <item>
+                                 <widget class="QLabel" name="label_8">
+                                  <property name="text">
+                                   <string>Status:</string>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QLabel" name="label_urlScanStatus_2">
+                                  <property name="text">
+                                   <string/>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <spacer name="horizontalSpacer_9">
+                                  <property name="orientation">
+                                   <enum>Qt::Orientation::Horizontal</enum>
+                                  </property>
+                                  <property name="sizeHint" stdset="0">
+                                   <size>
+                                    <width>40</width>
+                                    <height>20</height>
+                                   </size>
+                                  </property>
+                                 </spacer>
+                                </item>
+                                <item>
+                                 <widget class="QLabel" name="label_9">
+                                  <property name="font">
+                                   <font>
+                                    <family>Segoe UI</family>
+                                    <pointsize>10</pointsize>
+                                    <italic>false</italic>
+                                    <bold>false</bold>
+                                   </font>
+                                  </property>
+                                  <property name="text">
+                                   <string>Detection:</string>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QLabel" name="label_urlScanDetection_2">
+                                  <property name="text">
+                                   <string/>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <spacer name="horizontalSpacer_10">
+                                  <property name="orientation">
+                                   <enum>Qt::Orientation::Horizontal</enum>
+                                  </property>
+                                  <property name="sizeHint" stdset="0">
+                                   <size>
+                                    <width>40</width>
+                                    <height>20</height>
+                                   </size>
+                                  </property>
+                                 </spacer>
+                                </item>
+                               </layout>
+                              </item>
+                              <item>
+                               <widget class="QTreeWidget" name="tree_dirScan">
+                                <property name="alternatingRowColors">
+                                 <bool>true</bool>
+                                </property>
+                                <column>
+                                 <property name="text">
+                                  <string>Name</string>
+                                 </property>
+                                </column>
+                                <column>
+                                 <property name="text">
+                                  <string>Type</string>
+                                 </property>
+                                </column>
+                                <column>
+                                 <property name="text">
+                                  <string>Size</string>
+                                 </property>
+                                </column>
+                                <column>
+                                 <property name="text">
+                                  <string>Result</string>
+                                 </property>
+                                </column>
+                               </widget>
+                              </item>
+                              <item>
+                               <layout class="QHBoxLayout" name="horizontalLayout_14">
+                                <item>
+                                 <spacer name="horizontalSpacer_11">
+                                  <property name="orientation">
+                                   <enum>Qt::Orientation::Horizontal</enum>
+                                  </property>
+                                  <property name="sizeHint" stdset="0">
+                                   <size>
+                                    <width>40</width>
+                                    <height>20</height>
+                                   </size>
+                                  </property>
+                                 </spacer>
+                                </item>
+                                <item>
+                                 <widget class="QLabel" name="label_10">
+                                  <property name="text">
+                                   <string>Elapsed time:</string>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QLabel" name="label_urlScanElapsedTime_2">
+                                  <property name="text">
+                                   <string/>
+                                  </property>
+                                 </widget>
+                                </item>
+                               </layout>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
+                      <widget class="QWidget" name="page_urlScan">
+                       <layout class="QVBoxLayout" name="verticalLayout_18">
+                        <item>
+                         <widget class="QFrame" name="frame_3">
+                          <property name="frameShape">
+                           <enum>QFrame::Shape::StyledPanel</enum>
+                          </property>
+                          <property name="frameShadow">
+                           <enum>QFrame::Shadow::Raised</enum>
+                          </property>
+                          <layout class="QVBoxLayout" name="verticalLayout_19">
+                           <item>
+                            <widget class="QGroupBox" name="groupBox_2">
+                             <property name="title">
+                              <string>URL Scan</string>
+                             </property>
+                             <layout class="QHBoxLayout" name="horizontalLayout_9">
+                              <item>
+                               <widget class="QLineEdit" name="input_url">
+                                <property name="placeholderText">
+                                 <string>https://</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QPushButton" name="btn_UrlScan">
+                                <property name="enabled">
+                                 <bool>false</bool>
+                                </property>
+                                <property name="text">
+                                 <string>Scan</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QGroupBox" name="groupBox_urlScanResult">
+                             <property name="title">
+                              <string>Analysis Results</string>
+                             </property>
+                             <layout class="QVBoxLayout" name="verticalLayout_23">
+                              <item>
+                               <layout class="QHBoxLayout" name="horizontalLayout_10">
+                                <item>
+                                 <widget class="QLabel" name="label_6">
+                                  <property name="text">
+                                   <string>Status:</string>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QLabel" name="label_urlScanStatus">
+                                  <property name="text">
+                                   <string/>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <spacer name="horizontalSpacer_5">
+                                  <property name="orientation">
+                                   <enum>Qt::Orientation::Horizontal</enum>
+                                  </property>
+                                  <property name="sizeHint" stdset="0">
+                                   <size>
+                                    <width>40</width>
+                                    <height>20</height>
+                                   </size>
+                                  </property>
+                                 </spacer>
+                                </item>
+                                <item>
+                                 <widget class="QLabel" name="label_7">
+                                  <property name="font">
+                                   <font>
+                                    <family>Segoe UI</family>
+                                    <pointsize>10</pointsize>
+                                    <italic>false</italic>
+                                    <bold>false</bold>
+                                   </font>
+                                  </property>
+                                  <property name="text">
+                                   <string>Detection:</string>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QLabel" name="label_urlScanDetection">
+                                  <property name="text">
+                                   <string/>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <spacer name="horizontalSpacer_6">
+                                  <property name="orientation">
+                                   <enum>Qt::Orientation::Horizontal</enum>
+                                  </property>
+                                  <property name="sizeHint" stdset="0">
+                                   <size>
+                                    <width>40</width>
+                                    <height>20</height>
+                                   </size>
+                                  </property>
+                                 </spacer>
+                                </item>
+                               </layout>
+                              </item>
+                              <item>
+                               <widget class="QTreeWidget" name="tbl_urlScanResult">
+                                <property name="alternatingRowColors">
+                                 <bool>true</bool>
+                                </property>
+                                <column>
+                                 <property name="text">
+                                  <string>Vendor</string>
+                                 </property>
+                                </column>
+                                <column>
+                                 <property name="text">
+                                  <string>Result</string>
+                                 </property>
+                                </column>
+                               </widget>
+                              </item>
+                              <item>
+                               <layout class="QHBoxLayout" name="horizontalLayout_11">
+                                <item>
+                                 <spacer name="horizontalSpacer_7">
+                                  <property name="orientation">
+                                   <enum>Qt::Orientation::Horizontal</enum>
+                                  </property>
+                                  <property name="sizeHint" stdset="0">
+                                   <size>
+                                    <width>40</width>
+                                    <height>20</height>
+                                   </size>
+                                  </property>
+                                 </spacer>
+                                </item>
+                                <item>
+                                 <widget class="QLabel" name="label_3">
+                                  <property name="text">
+                                   <string>Elapsed time:</string>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QLabel" name="label_urlScanElapsedTime">
+                                  <property name="text">
+                                   <string/>
+                                  </property>
+                                 </widget>
+                                </item>
+                               </layout>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
                      </widget>
-                     <widget class="QWidget" name="page_dirScan">
-                      <layout class="QVBoxLayout" name="verticalLayout_17">
-                       <item>
-                        <widget class="QFrame" name="frame_2">
-                         <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
-                         </property>
-                         <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
-                         </property>
-                         <layout class="QVBoxLayout" name="verticalLayout_16">
-                          <item alignment="Qt::AlignTop">
-                           <widget class="QGroupBox" name="groupBox_3">
-                            <property name="title">
-                             <string>Open directory</string>
-                            </property>
-                            <layout class="QHBoxLayout" name="horizontalLayout_12">
-                             <item>
-                              <widget class="QPushButton" name="btn_dirBrowse">
-                               <property name="text">
-                                <string>Browse...</string>
-                               </property>
-                              </widget>
-                             </item>
-                             <item>
-                              <widget class="QLabel" name="lbl_dirSelected">
-                               <property name="text">
-                                <string>No directory selected</string>
-                               </property>
-                              </widget>
-                             </item>
-                             <item>
-                              <spacer name="horizontalSpacer_8">
-                               <property name="orientation">
-                                <enum>Qt::Horizontal</enum>
-                               </property>
-                               <property name="sizeHint" stdset="0">
-                                <size>
-                                 <width>40</width>
-                                 <height>20</height>
-                                </size>
-                               </property>
-                              </spacer>
-                             </item>
-                             <item>
-                              <widget class="QPushButton" name="btn_dirScan">
-                               <property name="enabled">
-                                <bool>false</bool>
-                               </property>
-                               <property name="text">
-                                <string>Scan</string>
-                               </property>
-                              </widget>
-                             </item>
-                            </layout>
-                           </widget>
-                          </item>
-                          <item>
-                           <widget class="QGroupBox" name="groupBox_dirScan">
-                            <property name="title">
-                             <string>Directory</string>
-                            </property>
-                            <layout class="QVBoxLayout" name="verticalLayout_24">
-                             <item>
-                              <layout class="QHBoxLayout" name="horizontalLayout_13">
-                               <item>
-                                <widget class="QLabel" name="label_8">
-                                 <property name="text">
-                                  <string>Status:</string>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item>
-                                <widget class="QLabel" name="label_urlScanStatus_2">
-                                 <property name="text">
-                                  <string/>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item>
-                                <spacer name="horizontalSpacer_9">
-                                 <property name="orientation">
-                                  <enum>Qt::Horizontal</enum>
-                                 </property>
-                                 <property name="sizeHint" stdset="0">
-                                  <size>
-                                   <width>40</width>
-                                   <height>20</height>
-                                  </size>
-                                 </property>
-                                </spacer>
-                               </item>
-                               <item>
-                                <widget class="QLabel" name="label_9">
-                                 <property name="font">
-                                  <font>
-                                   <family>Segoe UI</family>
-                                   <pointsize>10</pointsize>
-                                   <weight>50</weight>
-                                   <italic>false</italic>
-                                   <bold>false</bold>
-                                  </font>
-                                 </property>
-                                 <property name="text">
-                                  <string>Detection:</string>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item>
-                                <widget class="QLabel" name="label_urlScanDetection_2">
-                                 <property name="text">
-                                  <string/>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item>
-                                <spacer name="horizontalSpacer_10">
-                                 <property name="orientation">
-                                  <enum>Qt::Horizontal</enum>
-                                 </property>
-                                 <property name="sizeHint" stdset="0">
-                                  <size>
-                                   <width>40</width>
-                                   <height>20</height>
-                                  </size>
-                                 </property>
-                                </spacer>
-                               </item>
-                              </layout>
-                             </item>
-                             <item>
-                              <widget class="QTreeWidget" name="tree_dirScan">
-                               <property name="alternatingRowColors">
-                                <bool>true</bool>
-                               </property>
-                               <column>
-                                <property name="text">
-                                 <string>Name</string>
-                                </property>
-                               </column>
-                               <column>
-                                <property name="text">
-                                 <string>Type</string>
-                                </property>
-                               </column>
-                               <column>
-                                <property name="text">
-                                 <string>Size</string>
-                                </property>
-                               </column>
-                               <column>
-                                <property name="text">
-                                 <string>Result</string>
-                                </property>
-                               </column>
-                              </widget>
-                             </item>
-                             <item>
-                              <layout class="QHBoxLayout" name="horizontalLayout_14">
-                               <item>
-                                <spacer name="horizontalSpacer_11">
-                                 <property name="orientation">
-                                  <enum>Qt::Horizontal</enum>
-                                 </property>
-                                 <property name="sizeHint" stdset="0">
-                                  <size>
-                                   <width>40</width>
-                                   <height>20</height>
-                                  </size>
-                                 </property>
-                                </spacer>
-                               </item>
-                               <item>
-                                <widget class="QLabel" name="label_10">
-                                 <property name="text">
-                                  <string>Elapsed time:</string>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item>
-                                <widget class="QLabel" name="label_urlScanElapsedTime_2">
-                                 <property name="text">
-                                  <string/>
-                                 </property>
-                                </widget>
-                               </item>
-                              </layout>
-                             </item>
-                            </layout>
-                           </widget>
-                          </item>
-                         </layout>
-                        </widget>
-                       </item>
-                      </layout>
-                     </widget>
-                     <widget class="QWidget" name="page_urlScan">
-                      <layout class="QVBoxLayout" name="verticalLayout_18">
-                       <item>
-                        <widget class="QFrame" name="frame_3">
-                         <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
-                         </property>
-                         <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
-                         </property>
-                         <layout class="QVBoxLayout" name="verticalLayout_19">
-                          <item>
-                           <widget class="QGroupBox" name="groupBox_2">
-                            <property name="title">
-                             <string>URL Scan</string>
-                            </property>
-                            <layout class="QHBoxLayout" name="horizontalLayout_9">
-                             <item>
-                              <widget class="QLineEdit" name="input_url">
-                               <property name="placeholderText">
-                                <string>https://</string>
-                               </property>
-                              </widget>
-                             </item>
-                             <item>
-                              <widget class="QPushButton" name="btn_UrlScan">
-                               <property name="enabled">
-                                <bool>false</bool>
-                               </property>
-                               <property name="text">
-                                <string>Scan</string>
-                               </property>
-                              </widget>
-                             </item>
-                            </layout>
-                           </widget>
-                          </item>
-                          <item>
-                           <widget class="QGroupBox" name="groupBox_urlScanResult">
-                            <property name="title">
-                             <string>Analysis Results</string>
-                            </property>
-                            <layout class="QVBoxLayout" name="verticalLayout_23">
-                             <item>
-                              <layout class="QHBoxLayout" name="horizontalLayout_10">
-                               <item>
-                                <widget class="QLabel" name="label_6">
-                                 <property name="text">
-                                  <string>Status:</string>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item>
-                                <widget class="QLabel" name="label_urlScanStatus">
-                                 <property name="text">
-                                  <string/>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item>
-                                <spacer name="horizontalSpacer_5">
-                                 <property name="orientation">
-                                  <enum>Qt::Horizontal</enum>
-                                 </property>
-                                 <property name="sizeHint" stdset="0">
-                                  <size>
-                                   <width>40</width>
-                                   <height>20</height>
-                                  </size>
-                                 </property>
-                                </spacer>
-                               </item>
-                               <item>
-                                <widget class="QLabel" name="label_7">
-                                 <property name="font">
-                                  <font>
-                                   <family>Segoe UI</family>
-                                   <pointsize>10</pointsize>
-                                   <weight>50</weight>
-                                   <italic>false</italic>
-                                   <bold>false</bold>
-                                  </font>
-                                 </property>
-                                 <property name="text">
-                                  <string>Detection:</string>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item>
-                                <widget class="QLabel" name="label_urlScanDetection">
-                                 <property name="text">
-                                  <string/>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item>
-                                <spacer name="horizontalSpacer_6">
-                                 <property name="orientation">
-                                  <enum>Qt::Horizontal</enum>
-                                 </property>
-                                 <property name="sizeHint" stdset="0">
-                                  <size>
-                                   <width>40</width>
-                                   <height>20</height>
-                                  </size>
-                                 </property>
-                                </spacer>
-                               </item>
-                              </layout>
-                             </item>
-                             <item>
-                              <widget class="QTreeWidget" name="tbl_urlScanResult">
-                               <property name="alternatingRowColors">
-                                <bool>true</bool>
-                               </property>
-                               <column>
-                                <property name="text">
-                                 <string>Vendor</string>
-                                </property>
-                               </column>
-                               <column>
-                                <property name="text">
-                                 <string>Result</string>
-                                </property>
-                               </column>
-                              </widget>
-                             </item>
-                             <item>
-                              <layout class="QHBoxLayout" name="horizontalLayout_11">
-                               <item>
-                                <spacer name="horizontalSpacer_7">
-                                 <property name="orientation">
-                                  <enum>Qt::Horizontal</enum>
-                                 </property>
-                                 <property name="sizeHint" stdset="0">
-                                  <size>
-                                   <width>40</width>
-                                   <height>20</height>
-                                  </size>
-                                 </property>
-                                </spacer>
-                               </item>
-                               <item>
-                                <widget class="QLabel" name="label_3">
-                                 <property name="text">
-                                  <string>Elapsed time:</string>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item>
-                                <widget class="QLabel" name="label_urlScanElapsedTime">
-                                 <property name="text">
-                                  <string/>
-                                 </property>
-                                </widget>
-                               </item>
-                              </layout>
-                             </item>
-                            </layout>
-                           </widget>
-                          </item>
-                         </layout>
-                        </widget>
-                       </item>
-                      </layout>
-                     </widget>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QFrame" name="extraRightBox">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>0</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="frameShape">
-                   <enum>QFrame::NoFrame</enum>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
-                  </property>
-                  <layout class="QVBoxLayout" name="verticalLayout_7">
-                   <property name="spacing">
-                    <number>0</number>
-                   </property>
-                   <property name="leftMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="topMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="rightMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="bottomMargin">
-                    <number>0</number>
-                   </property>
-                   <item>
-                    <widget class="QFrame" name="contentSettings">
-                     <property name="frameShape">
-                      <enum>QFrame::NoFrame</enum>
-                     </property>
-                     <property name="frameShadow">
-                      <enum>QFrame::Raised</enum>
-                     </property>
-                     <layout class="QVBoxLayout" name="verticalLayout_13">
-                      <property name="spacing">
-                       <number>0</number>
-                      </property>
-                      <property name="leftMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="topMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="rightMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="bottomMargin">
-                       <number>0</number>
-                      </property>
-                      <item alignment="Qt::AlignTop">
-                       <widget class="QFrame" name="topMenus">
-                        <property name="frameShape">
-                         <enum>QFrame::NoFrame</enum>
-                        </property>
-                        <property name="frameShadow">
-                         <enum>QFrame::Raised</enum>
-                        </property>
-                        <layout class="QVBoxLayout" name="verticalLayout_14">
-                         <property name="spacing">
-                          <number>0</number>
-                         </property>
-                         <property name="leftMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="topMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="rightMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="bottomMargin">
-                          <number>0</number>
-                         </property>
-                         <item>
-                          <widget class="QPushButton" name="btn_logout">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                           <property name="minimumSize">
-                            <size>
-                             <width>0</width>
-                             <height>45</height>
-                            </size>
-                           </property>
-                           <property name="font">
-                            <font>
-                             <family>Segoe UI</family>
-                             <pointsize>10</pointsize>
-                             <weight>50</weight>
-                             <italic>false</italic>
-                             <bold>false</bold>
-                            </font>
-                           </property>
-                           <property name="cursor">
-                            <cursorShape>PointingHandCursor</cursorShape>
-                           </property>
-                           <property name="layoutDirection">
-                            <enum>Qt::LeftToRight</enum>
-                           </property>
-                           <property name="styleSheet">
-                            <string notr="true">background-image: url(:/resources/images/icons/icon_close_black.png);</string>
-                           </property>
-                           <property name="text">
-                            <string>Logout</string>
-                           </property>
-                          </widget>
-                         </item>
-                        </layout>
-                       </widget>
-                      </item>
-                     </layout>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-               </layout>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
               </widget>
              </item>
              <item>
@@ -2326,10 +2681,10 @@ background-repeat: no-repeat;</string>
                 </size>
                </property>
                <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
+                <enum>QFrame::Shape::NoFrame</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
+                <enum>QFrame::Shadow::Raised</enum>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_5">
                 <property name="spacing">
@@ -2359,7 +2714,6 @@ background-repeat: no-repeat;</string>
                    <font>
                     <family>Segoe UI</family>
                     <pointsize>-1</pointsize>
-                    <weight>50</weight>
                     <italic>false</italic>
                     <bold>false</bold>
                    </font>
@@ -2368,17 +2722,17 @@ background-repeat: no-repeat;</string>
                    <string>Created &amp; Developed by 220327019@stu.vtc.edu.hk</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
                 <item>
                  <widget class="QLabel" name="version">
                   <property name="text">
-                   <string>v1.0.1</string>
+                   <string>Scan-X v1.0.0</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -2397,10 +2751,10 @@ background-repeat: no-repeat;</string>
                    </size>
                   </property>
                   <property name="frameShape">
-                   <enum>QFrame::NoFrame</enum>
+                   <enum>QFrame::Shape::NoFrame</enum>
                   </property>
                   <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
+                   <enum>QFrame::Shadow::Raised</enum>
                   </property>
                  </widget>
                 </item>
@@ -2419,6 +2773,14 @@ background-repeat: no-repeat;</string>
    </layout>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>FileDropWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="resources.qrc"/>
  </resources>
