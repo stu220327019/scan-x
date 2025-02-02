@@ -211,18 +211,18 @@ Content App */
 }
 
 /* Top Buttons */
-#rightButtons .QPushButton { background-color: rgba(255, 255, 255, 0); border: none;  border-radius: 5px; }
-#rightButtons .QPushButton:hover { background-color: #f2f6ff; border-style: solid; border-radius: 4px; }
-#rightButtons .QPushButton:pressed { background-color: #2f93e1; border-style: solid; border-radius: 4px; }
+#rightButtons QPushButton { background-color: rgba(255, 255, 255, 0); border: none;  border-radius: 5px; }
+#rightButtons QPushButton:hover { background-color: #f2f6ff; border-style: solid; border-radius: 4px; }
+#rightButtons QPushButton:pressed { background-color: #2f93e1; border-style: solid; border-radius: 4px; }
 
 /* Theme Settings */
-#extraRightBox {
+#extraRightBoxBg {
 	background-color: #ffffff;
 }
 
-#extraRightBoxTopBar .QPushButton { background-color: rgba(255, 255, 255, 0); border: none;  border-radius: 5px; }
-#extraRightBoxTopBar .QPushButton:hover { background-color: #f2f6ff; border-style: solid; border-radius: 4px; }
-#extraRightBoxTopBar .QPushButton:pressed { background-color: #2f93e1; border-style: solid; border-radius: 4px; }
+#extraRightBoxTopBar QPushButton { background-color: rgba(255, 255, 255, 0); border: none;  border-radius: 5px; }
+#extraRightBoxTopBar QPushButton:hover { background-color: #f2f6ff; border-style: solid; border-radius: 4px; }
+#extraRightBoxTopBar QPushButton:pressed { background-color: #2f93e1; border-style: solid; border-radius: 4px; }
 
 
 /* Bottom Bar */
@@ -1568,13 +1568,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
                 <number>1</number>
                </property>
                <widget class="QWidget" name="contentPage2">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
                 <property name="styleSheet">
                  <string notr="true">background: rgba(64,64,64,64)</string>
                 </property>
-                <layout class="QHBoxLayout" name="horizontalLayout_16">
+                <layout class="QHBoxLayout" name="horizontalLayout_21">
                  <property name="spacing">
                   <number>0</number>
                  </property>
@@ -1591,17 +1588,23 @@ li.checked::marker { content: &quot;\2612&quot;; }
                   <number>0</number>
                  </property>
                  <item>
-                  <spacer name="horizontalSpacer_12">
-                   <property name="orientation">
-                    <enum>Qt::Orientation::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
+                  <widget class="QWidget" name="extraRightBoxBackdrop" native="true">
+                   <layout class="QHBoxLayout" name="horizontalLayout_16">
+                    <item>
+                     <spacer name="horizontalSpacer_12">
+                      <property name="orientation">
+                       <enum>Qt::Orientation::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </widget>
                  </item>
                  <item>
                   <widget class="QWidget" name="extraRightBoxBg" native="true">
@@ -1612,7 +1615,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">background:#ffffff</string>
+                    <string notr="true">background:white</string>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_7" stretch="0,1">
                     <property name="spacing">
@@ -1631,7 +1634,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                      <number>0</number>
                     </property>
                     <item>
-                     <widget class="QWidget" name="extraRightBoxTopBar" native="true">
+                     <widget class="QFrame" name="extraRightBoxTopBar">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>1</horstretch>
@@ -1649,16 +1652,16 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         <number>0</number>
                        </property>
                        <item>
-                        <widget class="QLabel" name="label_2">
+                        <widget class="QLabel" name="label_extraRightBoxTitle">
                          <property name="text">
-                          <string>TextLabel</string>
+                          <string/>
                          </property>
                         </widget>
                        </item>
                        <item>
-                        <widget class="QPushButton" name="pushButton">
+                        <widget class="QPushButton" name="btn_extraRightBoxClose">
                          <property name="sizePolicy">
-                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                            <horstretch>0</horstretch>
                            <verstretch>0</verstretch>
                           </sizepolicy>
@@ -1688,17 +1691,19 @@ li.checked::marker { content: &quot;\2612&quot;; }
                           <iconset resource="resources.qrc">
                            <normaloff>:/resources/images/icons/icon_close_black.png</normaloff>:/resources/images/icons/icon_close_black.png</iconset>
                          </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>20</width>
+                           <height>20</height>
+                          </size>
+                         </property>
                         </widget>
                        </item>
                       </layout>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QWidget" name="extraRightBox" native="true">
-                      <property name="enabled">
-                       <bool>false</bool>
-                      </property>
-                     </widget>
+                     <widget class="QWidget" name="extraRightBox" native="true"/>
                     </item>
                    </layout>
                   </widget>
@@ -1802,7 +1807,7 @@ background-repeat: no-repeat;</string>
                                     </sizepolicy>
                                    </property>
                                    <property name="text">
-                                    <string>Browse file...</string>
+                                    <string>Select file...</string>
                                    </property>
                                    <property name="icon">
                                     <iconset resource="resources.qrc">
@@ -1817,9 +1822,12 @@ background-repeat: no-repeat;</string>
                             </widget>
                            </item>
                            <item>
-                            <widget class="QTreeView" name="tree_filelist">
+                            <widget class="CustomTreeView" name="tree_filelist">
                              <property name="alternatingRowColors">
                               <bool>true</bool>
+                             </property>
+                             <property name="selectionMode">
+                              <enum>QAbstractItemView::SelectionMode::ContiguousSelection</enum>
                              </property>
                             </widget>
                            </item>
@@ -2779,6 +2787,11 @@ background-repeat: no-repeat;</string>
    <extends>QWidget</extends>
    <header>widgets</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CustomTreeView</class>
+   <extends>QTreeView</extends>
+   <header>widgets</header>
   </customwidget>
  </customwidgets>
  <resources>

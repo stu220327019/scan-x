@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>FileDetails</class>
+ <widget class="QWidget" name="FileDetails">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -109,7 +109,7 @@
           <item>
            <spacer name="horizontalSpacer_3">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -125,7 +125,6 @@
              <font>
               <family>Segoe UI</family>
               <pointsize>10</pointsize>
-              <weight>50</weight>
               <italic>false</italic>
               <bold>false</bold>
              </font>
@@ -145,7 +144,7 @@
           <item>
            <spacer name="horizontalSpacer_2">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -179,7 +178,7 @@
           <item>
            <spacer name="horizontalSpacer_4">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>

@@ -15,14 +15,14 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QGroupBox,
-    QHBoxLayout, QHeaderView, QLabel, QLayout,
-    QLineEdit, QMainWindow, QProgressBar, QPushButton,
-    QSizePolicy, QSpacerItem, QStackedWidget, QTextEdit,
-    QTreeView, QTreeWidget, QTreeWidgetItem, QVBoxLayout,
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QFrame, QGridLayout,
+    QGroupBox, QHBoxLayout, QHeaderView, QLabel,
+    QLayout, QLineEdit, QMainWindow, QProgressBar,
+    QPushButton, QSizePolicy, QSpacerItem, QStackedWidget,
+    QTextEdit, QTreeWidget, QTreeWidgetItem, QVBoxLayout,
     QWidget)
 
-from widgets import FileDropWidget
+from widgets import (CustomTreeView, FileDropWidget)
 import resources_rc
 
 class Ui_MainWindow(object):
@@ -222,19 +222,19 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "/* Top Buttons */\n"
-"#rightButtons .QPushButton { background-color: rgba(255, 255, 255, 0); border: none;  border-radius: 5px; }\n"
-"#rightButtons .QPushButton:hover { background-color: #f2f6ff; border-style: solid; border-radius: 4px; }\n"
-"#rightButtons .QPushButton:pressed { background-c"
-                        "olor: #2f93e1; border-style: solid; border-radius: 4px; }\n"
+"#rightButtons QPushButton { background-color: rgba(255, 255, 255, 0); border: none;  border-radius: 5px; }\n"
+"#rightButtons QPushButton:hover { background-color: #f2f6ff; border-style: solid; border-radius: 4px; }\n"
+"#rightButtons QPushButton:pressed { background-colo"
+                        "r: #2f93e1; border-style: solid; border-radius: 4px; }\n"
 "\n"
 "/* Theme Settings */\n"
-"#extraRightBox {\n"
+"#extraRightBoxBg {\n"
 "	background-color: #ffffff;\n"
 "}\n"
 "\n"
-"#extraRightBoxTopBar .QPushButton { background-color: rgba(255, 255, 255, 0); border: none;  border-radius: 5px; }\n"
-"#extraRightBoxTopBar .QPushButton:hover { background-color: #f2f6ff; border-style: solid; border-radius: 4px; }\n"
-"#extraRightBoxTopBar .QPushButton:pressed { background-color: #2f93e1; border-style: solid; border-radius: 4px; }\n"
+"#extraRightBoxTopBar QPushButton { background-color: rgba(255, 255, 255, 0); border: none;  border-radius: 5px; }\n"
+"#extraRightBoxTopBar QPushButton:hover { background-color: #f2f6ff; border-style: solid; border-radius: 4px; }\n"
+"#extraRightBoxTopBar QPushButton:pressed { background-color: #2f93e1; border-style: solid; border-radius: 4px; }\n"
 "\n"
 "\n"
 "/* Bottom Bar */\n"
@@ -866,25 +866,31 @@ class Ui_MainWindow(object):
         self.content.setFrameShadow(QFrame.Shadow.Raised)
         self.contentPage2 = QWidget()
         self.contentPage2.setObjectName(u"contentPage2")
-        self.contentPage2.setEnabled(False)
         self.contentPage2.setStyleSheet(u"background: rgba(64,64,64,64)")
-        self.horizontalLayout_16 = QHBoxLayout(self.contentPage2)
-        self.horizontalLayout_16.setSpacing(0)
+        self.horizontalLayout_21 = QHBoxLayout(self.contentPage2)
+        self.horizontalLayout_21.setSpacing(0)
+        self.horizontalLayout_21.setObjectName(u"horizontalLayout_21")
+        self.horizontalLayout_21.setContentsMargins(0, 0, 0, 0)
+        self.extraRightBoxBackdrop = QWidget(self.contentPage2)
+        self.extraRightBoxBackdrop.setObjectName(u"extraRightBoxBackdrop")
+        self.horizontalLayout_16 = QHBoxLayout(self.extraRightBoxBackdrop)
         self.horizontalLayout_16.setObjectName(u"horizontalLayout_16")
-        self.horizontalLayout_16.setContentsMargins(0, 0, 0, 0)
         self.horizontalSpacer_12 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_16.addItem(self.horizontalSpacer_12)
 
+
+        self.horizontalLayout_21.addWidget(self.extraRightBoxBackdrop)
+
         self.extraRightBoxBg = QWidget(self.contentPage2)
         self.extraRightBoxBg.setObjectName(u"extraRightBoxBg")
         self.extraRightBoxBg.setMaximumSize(QSize(0, 16777215))
-        self.extraRightBoxBg.setStyleSheet(u"background:#ffffff")
+        self.extraRightBoxBg.setStyleSheet(u"background:white")
         self.verticalLayout_7 = QVBoxLayout(self.extraRightBoxBg)
         self.verticalLayout_7.setSpacing(0)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
         self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
-        self.extraRightBoxTopBar = QWidget(self.extraRightBoxBg)
+        self.extraRightBoxTopBar = QFrame(self.extraRightBoxBg)
         self.extraRightBoxTopBar.setObjectName(u"extraRightBoxTopBar")
         sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy3.setHorizontalStretch(1)
@@ -895,24 +901,25 @@ class Ui_MainWindow(object):
         self.horizontalLayout_18 = QHBoxLayout(self.extraRightBoxTopBar)
         self.horizontalLayout_18.setSpacing(0)
         self.horizontalLayout_18.setObjectName(u"horizontalLayout_18")
-        self.label_2 = QLabel(self.extraRightBoxTopBar)
-        self.label_2.setObjectName(u"label_2")
+        self.label_extraRightBoxTitle = QLabel(self.extraRightBoxTopBar)
+        self.label_extraRightBoxTitle.setObjectName(u"label_extraRightBoxTitle")
 
-        self.horizontalLayout_18.addWidget(self.label_2)
+        self.horizontalLayout_18.addWidget(self.label_extraRightBoxTitle)
 
-        self.pushButton = QPushButton(self.extraRightBoxTopBar)
-        self.pushButton.setObjectName(u"pushButton")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
+        self.btn_extraRightBoxClose = QPushButton(self.extraRightBoxTopBar)
+        self.btn_extraRightBoxClose.setObjectName(u"btn_extraRightBoxClose")
+        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         sizePolicy4.setHorizontalStretch(0)
         sizePolicy4.setVerticalStretch(0)
-        sizePolicy4.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
-        self.pushButton.setSizePolicy(sizePolicy4)
-        self.pushButton.setMinimumSize(QSize(16, 16))
-        self.pushButton.setMaximumSize(QSize(16, 16))
-        self.pushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        self.pushButton.setIcon(icon4)
+        sizePolicy4.setHeightForWidth(self.btn_extraRightBoxClose.sizePolicy().hasHeightForWidth())
+        self.btn_extraRightBoxClose.setSizePolicy(sizePolicy4)
+        self.btn_extraRightBoxClose.setMinimumSize(QSize(16, 16))
+        self.btn_extraRightBoxClose.setMaximumSize(QSize(16, 16))
+        self.btn_extraRightBoxClose.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.btn_extraRightBoxClose.setIcon(icon4)
+        self.btn_extraRightBoxClose.setIconSize(QSize(20, 20))
 
-        self.horizontalLayout_18.addWidget(self.pushButton)
+        self.horizontalLayout_18.addWidget(self.btn_extraRightBoxClose)
 
         self.horizontalLayout_18.setStretch(0, 1)
 
@@ -920,13 +927,12 @@ class Ui_MainWindow(object):
 
         self.extraRightBox = QWidget(self.extraRightBoxBg)
         self.extraRightBox.setObjectName(u"extraRightBox")
-        self.extraRightBox.setEnabled(False)
 
         self.verticalLayout_7.addWidget(self.extraRightBox)
 
         self.verticalLayout_7.setStretch(1, 1)
 
-        self.horizontalLayout_16.addWidget(self.extraRightBoxBg)
+        self.horizontalLayout_21.addWidget(self.extraRightBoxBg)
 
         self.content.addWidget(self.contentPage2)
         self.contentPage1 = QWidget()
@@ -972,11 +978,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_15.setObjectName(u"horizontalLayout_15")
         self.btn_fileSelect = QPushButton(self.fileScanDrop)
         self.btn_fileSelect.setObjectName(u"btn_fileSelect")
-        sizePolicy5 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
-        sizePolicy5.setHorizontalStretch(0)
-        sizePolicy5.setVerticalStretch(0)
-        sizePolicy5.setHeightForWidth(self.btn_fileSelect.sizePolicy().hasHeightForWidth())
-        self.btn_fileSelect.setSizePolicy(sizePolicy5)
+        sizePolicy4.setHeightForWidth(self.btn_fileSelect.sizePolicy().hasHeightForWidth())
+        self.btn_fileSelect.setSizePolicy(sizePolicy4)
         icon5 = QIcon()
         icon5.addFile(u":/resources/images/icons/file_plus_white.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.btn_fileSelect.setIcon(icon5)
@@ -989,9 +992,10 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_26.addWidget(self.fileScanDropContainer)
 
-        self.tree_filelist = QTreeView(self.groupBox_4)
+        self.tree_filelist = CustomTreeView(self.groupBox_4)
         self.tree_filelist.setObjectName(u"tree_filelist")
         self.tree_filelist.setAlternatingRowColors(True)
+        self.tree_filelist.setSelectionMode(QAbstractItemView.SelectionMode.ContiguousSelection)
 
         self.verticalLayout_26.addWidget(self.tree_filelist)
 
@@ -1007,8 +1011,8 @@ class Ui_MainWindow(object):
 
         self.btn_startFileScan = QPushButton(self.page_fileScan2)
         self.btn_startFileScan.setObjectName(u"btn_startFileScan")
-        sizePolicy5.setHeightForWidth(self.btn_startFileScan.sizePolicy().hasHeightForWidth())
-        self.btn_startFileScan.setSizePolicy(sizePolicy5)
+        sizePolicy4.setHeightForWidth(self.btn_startFileScan.sizePolicy().hasHeightForWidth())
+        self.btn_startFileScan.setSizePolicy(sizePolicy4)
         self.btn_startFileScan.setMinimumSize(QSize(100, 0))
         icon6 = QIcon()
         icon6.addFile(u":/resources/images/icons/play_white.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
@@ -1018,8 +1022,8 @@ class Ui_MainWindow(object):
 
         self.btn_stopFileScan = QPushButton(self.page_fileScan2)
         self.btn_stopFileScan.setObjectName(u"btn_stopFileScan")
-        sizePolicy5.setHeightForWidth(self.btn_stopFileScan.sizePolicy().hasHeightForWidth())
-        self.btn_stopFileScan.setSizePolicy(sizePolicy5)
+        sizePolicy4.setHeightForWidth(self.btn_stopFileScan.sizePolicy().hasHeightForWidth())
+        self.btn_stopFileScan.setSizePolicy(sizePolicy4)
         self.btn_stopFileScan.setMinimumSize(QSize(100, 0))
         icon7 = QIcon()
         icon7.addFile(u":/resources/images/icons/rectangle_white.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
@@ -1570,13 +1574,13 @@ class Ui_MainWindow(object):
         self.closeAppBtn.setToolTip(QCoreApplication.translate("MainWindow", u"Close", None))
 #endif // QT_CONFIG(tooltip)
         self.closeAppBtn.setText("")
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.label_extraRightBoxTitle.setText("")
 #if QT_CONFIG(tooltip)
-        self.pushButton.setToolTip(QCoreApplication.translate("MainWindow", u"Close", None))
+        self.btn_extraRightBoxClose.setToolTip(QCoreApplication.translate("MainWindow", u"Close", None))
 #endif // QT_CONFIG(tooltip)
-        self.pushButton.setText("")
+        self.btn_extraRightBoxClose.setText("")
         self.groupBox_4.setTitle(QCoreApplication.translate("MainWindow", u"Scan files", None))
-        self.btn_fileSelect.setText(QCoreApplication.translate("MainWindow", u"Browse file...", None))
+        self.btn_fileSelect.setText(QCoreApplication.translate("MainWindow", u"Select file...", None))
         self.btn_startFileScan.setText(QCoreApplication.translate("MainWindow", u"Start", None))
         self.btn_stopFileScan.setText(QCoreApplication.translate("MainWindow", u"Stop", None))
         self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"File Upload", None))

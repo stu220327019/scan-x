@@ -1,20 +1,17 @@
-from PySide6.QtWidgets import QMainWindow, QGraphicsDropShadowEffect, QSizeGrip, QPushButton, QStackedLayout
-from PySide6.QtCore import Qt, QPropertyAnimation, QEasingCurve, QParallelAnimationGroup, QFile
+from PySide6.QtWidgets import QMainWindow, QGraphicsDropShadowEffect, QSizeGrip, QPushButton, QStackedLayout, QWidget, QHBoxLayout
+from PySide6.QtCore import Qt, QPropertyAnimation, QEasingCurve, QParallelAnimationGroup, QFile, Signal
 from PySide6.QtGui import QIcon, QColor
 from PySide6.QtUiTools import QUiLoader
 from widgets import CustomGrip
 from .ui.ui_main import Ui_MainWindow
-from .panels.file_scan import FileScan
-from .panels.dir_scan import DirScan
-from .panels.url_scan import URLScan
-from .panels.file_scan2 import FileScan2
-
+from .ui.ui_file_details import Ui_FileDetails
+from .pages import FileScan, FileScan2, DirScan, URLScan
 
 class View(QMainWindow):
     ENABLE_CUSTOM_TITLE_BAR = True
     MENU_WIDTH = 240
     LEFT_BOX_WIDTH = 240
-    RIGHT_BOX_WIDTH = 240
+    RIGHT_BOX_WIDTH = 400
     TIME_ANIMATION = 500
 
     # BTNS LEFT AND RIGHT BOX COLORS
@@ -26,6 +23,10 @@ class View(QMainWindow):
     border-left: 18px solid qlineargradient(spread:pad, x1:0.034, y1:0, x2:0.216, y2:0, stop:0.499 rgba(121, 135, 255, 255), stop:0.5 rgba(85, 170, 255, 0));
     background-color: #f2f6ff;
     """
+
+    toggleRightBoxSignal = Signal()
+    openRightBoxSignal = Signal(str, object, object)
+    closeRightBoxSignal = Signal()
 
     def __init__(self, model):
         super(View, self).__init__()
@@ -40,10 +41,16 @@ class View(QMainWindow):
 
         self.uiDefinitions()
 
+        signals = {
+            'toggleRightBox': self.toggleRightBoxSignal,
+            'openRightBox': self.openRightBoxSignal,
+            'closeRightBox': self.closeRightBoxSignal
+        }
+
         self.fileScan = FileScan(self.ui)
         self.dirScan = DirScan(self.ui)
         self.urlScan = URLScan(self.ui)
-        self.fileScan2 = FileScan2(self.ui)
+        self.fileScan2 = FileScan2(self.ui, signals=signals)
 
 
     # TOGGLE MENU
@@ -98,9 +105,13 @@ class View(QMainWindow):
 
     # TOGGLE RIGHT BOX
     # ///////////////////////////////////////////////////////////////
-    def toggleRightBox(self, event):
+    def toggleRightBox(self, expanding=None):
         # GET WIDTH
-        width = self.ui.extraRightBoxBg.width()
+        if expanding is not None:
+            width = 0 if expanding else self.RIGHT_BOX_WIDTH
+        else:
+            width = self.ui.extraRightBoxBg.width()
+            expanding = width == 0
         widthLeftBox = self.ui.extraLeftBox.width()
         maxExtend = self.RIGHT_BOX_WIDTH
         color = self.BTN_RIGHT_BOX_COLOR
@@ -110,7 +121,7 @@ class View(QMainWindow):
         style = self.ui.settingsTopBtn.styleSheet()
 
         # SET MAX WIDTH
-        if width == 0:
+        if expanding:
             widthExtended = maxExtend
             # SELECT BTN
             self.ui.settingsTopBtn.setStyleSheet(style + color)
@@ -122,8 +133,22 @@ class View(QMainWindow):
             # RESET BTN
             self.ui.settingsTopBtn.setStyleSheet(style.replace(color, ''))
 
-        hide_right_box = width != 0
+        hide_right_box = not expanding
         self.start_box_animation(widthLeftBox, width, "right", hide_right_box)
+
+    def openRightBox(self, title, cls, args):
+        if not hasattr(self, 'rightBoxLayout'):
+            self.rightBoxLayout = QHBoxLayout(self.ui.extraRightBox)
+        if hasattr(self, 'rightBoxContent'):
+            self.rightBoxContent.deleteLater()
+        self.ui.label_extraRightBoxTitle.setText(title)
+        self.rightBoxContent = cls(self.ui.extraRightBox, **args)
+        self.rightBoxLayout.addWidget(self.rightBoxContent)
+        self.rightBoxContent.show()
+        self.toggleRightBox(True)
+
+    def closeRightBox(self):
+        self.toggleRightBox(False)
 
     def start_box_animation(self, left_box_width, right_box_width, direction, hide_right_box = True):
         right_width = 0
@@ -131,12 +156,12 @@ class View(QMainWindow):
 
         # Check values
         if left_box_width == 0 and direction == "left":
-            left_width = 240
+            left_width = self.LEFT_BOX_WIDTH
         else:
             left_width = 0
         # Check values
         if right_box_width == 0 and direction == "right":
-            right_width = 400
+            right_width = self.RIGHT_BOX_WIDTH
         else:
             right_width = 0
 
@@ -201,12 +226,12 @@ class View(QMainWindow):
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
 
-        loader = QUiLoader()
-        uifile = QFile('./res/file_details.ui')
-        uifile.open(QFile.ReadOnly)
-        # print(uifile)
-        loader.load(uifile, self.ui.extraRightBox)
-        uifile.close()
+        # loader = QUiLoader()
+        # uifile = QFile('./res/file_details.ui')
+        # uifile.open(QFile.ReadOnly)
+        # # print(uifile)
+        # loader.load(uifile, self.ui.extraRightBox)
+        # uifile.close()
 
         # MOVE WINDOW / MAXIMIZE / RESTORE
         def moveWindow(event):
