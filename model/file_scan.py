@@ -30,7 +30,16 @@ class FileScanModel(QAbstractTableModel):
         fileInfo = self.files[row]
 
         if role == Qt.DisplayRole:
-            return fileInfo.get(['path', 'filename', 'status'][col])
+            if col == 2:
+                status = fileInfo.get('status')
+                if status == File.STATUS_INFECTED:
+                    results = fileInfo.get('analysis').last_analysis_results.values()
+                    detection = [x for x in results if x['result'] is not None]
+                    return status.format(len(detection))
+                else:
+                    return status
+            else:
+                return fileInfo.get(['path', 'filename'][col])
         elif role == Qt.DecorationRole:
             if col == 2:
                 def getIcon(status):
@@ -38,7 +47,7 @@ class FileScanModel(QAbstractTableModel):
                         return ':/resources/images/icons/check-circle.svg'
                     # elif status == File.STATUS_ATTENTION:
                     #     return ':/resources/images/icons/alert-triangle.svg'
-                    elif status in [File.STATUS_FAILED, File.STATUS_ATTENTION]:
+                    elif status in [File.STATUS_FAILED, File.STATUS_INFECTED]:
                         return ':/resources/images/icons/exclaimation-circle.svg'
                     else:
                         return ':/resources/images/icons/info-circle.svg'
@@ -52,7 +61,7 @@ class FileScanModel(QAbstractTableModel):
                         return Color.SUCCESS
                     # elif status == File.STATUS_ATTENTION:
                     #     return Color.WARNING
-                    elif status in [File.STATUS_FAILED, File.STATUS_ATTENTION]:
+                    elif status in [File.STATUS_FAILED, File.STATUS_INFECTED]:
                         return Color.DANGER
                     else:
                         return Color.INFO

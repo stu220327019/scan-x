@@ -36,6 +36,6 @@ class FileDetailsContainer(QWidget):
             statusTxt, color = ('No virus detected', '#00ff00') if len(detection) == 0 else ('Virus detected', '#ff0000')
             self.ui.label_fileScanStatus.setText(statusTxt)
             self.ui.label_fileScanStatus.setStyleSheet('color: {}'.format(color))
-            self.ui.label_fileScanElapsedTime.setText('{} seconds'.format(fileInfo.get('finishedTime') - fileInfo.get('startedTime')))
+            self.ui.label_fileScanElapsedTime.setText('{:.6f} seconds'.format(fileInfo.get('finishedTime') - fileInfo.get('startedTime')))
         else:
             self.ui.label_fileScanStatus.setText(status)

@@ -4,5 +4,6 @@ class File:
     STATUS_SCANNING = 'Scanning'
     STATUS_COMPLETED = 'Completed'
     STATUS_ATTENTION = 'Attention'
+    STATUS_INFECTED = 'Virus detected ({})'
     STATUS_FAILED = 'Failed'
     STATUS_CANCELED = 'Canceled'

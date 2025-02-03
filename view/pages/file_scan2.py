@@ -5,6 +5,7 @@ from qasync import asyncSlot
 import time
 import hashlib
 import vt
+import os
 
 from model import FileScanModel, File
 from view.ui.ui_main import Ui_MainWindow
@@ -36,6 +37,7 @@ class FileScan2(QObject):
         self.ui.tree_filelist.doubleClicked.connect(self.filelistItemClick)
         self.ui.tree_filelist.keyPressed.connect(self.filelistkeyPressed)
         self.ui.btn_startFileScan.clicked.connect(self.startFileScan)
+        self.ui.btn_stopFileScan.clicked.connect(self.cancelFileScan)
 
     def fileBrowse(self):
         dlg = QFileDialog()
@@ -47,7 +49,8 @@ class FileScan2(QObject):
 
     def filesDropped(self, filepaths):
         for filepath in filepaths:
-            self.model.addFile(filepath)
+            if os.path.isfile(filepath):
+                self.model.addFile(filepath)
 
     def filelistkeyPressed(self, event):
         if event.key() == Qt.Key_Delete:
@@ -77,13 +80,19 @@ class FileScan2(QObject):
                 task = asyncio.create_task(worker.run())
                 self.workerTasks.append(task)
 
+    def cancelFileScan(self):
+        files = [f for f in self.model.files
+                 if f.get('status') == File.STATUS_QUEUED]
+        for f in files:
+            self.model.updateFile(f.get('filepath'), status=File.STATUS_CANCELED)
+
     def workerStarted(self, filepath):
         self.model.updateFile(filepath, status=File.STATUS_SCANNING, startedTime=time.time())
 
     def workerFinished(self, filepath, analysis):
         results = analysis.last_analysis_results.values()
         detection = [x for x in results if x['result'] is not None]
-        status = File.STATUS_COMPLETED if len(detection) == 0 else File.STATUS_ATTENTION
+        status = File.STATUS_COMPLETED if len(detection) == 0 else File.STATUS_INFECTED
         self.model.updateFile(filepath, status=status, analysis=analysis, finishedTime=time.time())
 
 
@@ -100,17 +109,21 @@ class FileScanWorker(QObject):
     async def run(self):
         while True:
             fileInfo = await self.queue.get()
-            filepath = fileInfo.get('filepath')
-            self.started.emit(filepath)
-            with open(filepath, 'rb') as f:
-                sha1 = hashlib.sha1(f.read()).hexdigest()
-                async with vt.Client(self.virustotalApiKey) as client:
-                    analysis = await client.scan_file_async(f)
-                    while True:
-                        analysis = await client.get_object_async('/analyses/{}', analysis.id)
-                        if analysis.status == 'completed':
-                            break
-                        await asyncio.sleep(10)
-                    analysis = await client.get_object_async('/files/{}', sha1)
-                    self.queue.task_done()
-                    self.finished.emit(filepath, analysis)
+            filepath, status = fileInfo.get('filepath'), fileInfo.get('status')
+            if status == File.STATUS_QUEUED:
+                self.started.emit(filepath)
+                with open(filepath, 'rb') as f:
+                    sha1 = hashlib.sha1(f.read()).hexdigest()
+                    async with vt.Client(self.virustotalApiKey) as client:
+                        analysis = await client.scan_file_async(f)
+                        while True:
+                            analysis = await client.get_object_async('/analyses/{}', analysis.id)
+                            # print(f'/analyses/{analysis.id} - {analysis.status}')
+                            if analysis.status == 'completed':
+                                break
+                            await asyncio.sleep(10)
+                        analysis = await client.get_object_async('/files/{}', sha1)
+                        self.queue.task_done()
+                        self.finished.emit(filepath, analysis)
+            else:
+                self.queue.task_done()
