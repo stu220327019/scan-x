@@ -36,9 +36,9 @@ class FileScanModel(QAbstractTableModel):
                 def getIcon(status):
                     if status == File.STATUS_COMPLETED:
                         return ':/resources/images/icons/check-circle.svg'
-                    elif status == File.STATUS_ATTENTION:
-                        return ':/resources/images/icons/alert-triangle.svg'
-                    elif status == File.STATUS_FAILED:
+                    # elif status == File.STATUS_ATTENTION:
+                    #     return ':/resources/images/icons/alert-triangle.svg'
+                    elif status in [File.STATUS_FAILED, File.STATUS_ATTENTION]:
                         return ':/resources/images/icons/exclaimation-circle.svg'
                     else:
                         return ':/resources/images/icons/info-circle.svg'
@@ -50,9 +50,9 @@ class FileScanModel(QAbstractTableModel):
                 def getColor(status):
                     if status == File.STATUS_COMPLETED:
                         return Color.SUCCESS
-                    elif status == File.STATUS_ATTENTION:
-                        return Color.WARNING
-                    elif status == File.STATUS_FAILED:
+                    # elif status == File.STATUS_ATTENTION:
+                    #     return Color.WARNING
+                    elif status in [File.STATUS_FAILED, File.STATUS_ATTENTION]:
                         return Color.DANGER
                     else:
                         return Color.INFO

@@ -1,4 +1,5 @@
 from PySide6.QtWidgets import QWidget, QTreeWidgetItem
+from PySide6.QtGui import QIcon
 from view.ui.ui_file_details import Ui_FileDetails
 
 class FileDetailsContainer(QWidget):
@@ -7,6 +8,7 @@ class FileDetailsContainer(QWidget):
         self.ui = Ui_FileDetails()
         self.ui.setupUi(self)
         self.updateFileInfo(fileInfo)
+        self.updateFileScanResult(fileInfo)
 
     def updateFileInfo(self, fileInfo: dict):
         for label, key in [['Filename', 'filename'], ['Path', 'path'], ['MD5', 'md5'], ['SHA1', 'sha1'],
@@ -16,3 +18,24 @@ class FileDetailsContainer(QWidget):
             value = '{} Bytes'.format(fileInfo.get(key)) if key == 'size' else fileInfo.get(key)
             item.setText(1, value)
         # self.ui.groupBox_fileInfo.show()
+
+    def updateFileScanResult(self, fileInfo: dict):
+        status, analysis = fileInfo.get('status'), fileInfo.get('analysis')
+        if analysis:
+            results = analysis.last_analysis_results.values()
+            detection = [x for x in results if x['result'] is not None]
+            for result in results:
+                item = QTreeWidgetItem(self.ui.tbl_fileScanResult)
+                item.setText(0, result['engine_name'])
+                detected = result['result'] is not None
+                value = result['result'] if detected else 'Undetected'
+                item.setText(1, value)
+                icon = QIcon(':/resources/images/icons/exclaimation-circle.svg' if detected else ':/resources/images/icons/check-circle.svg')
+                item.setIcon(1, icon)
+            self.ui.label_fileScanDetection.setText('{} / {}'.format(len(detection), len(results)))
+            statusTxt, color = ('No virus detected', '#00ff00') if len(detection) == 0 else ('Virus detected', '#ff0000')
+            self.ui.label_fileScanStatus.setText(statusTxt)
+            self.ui.label_fileScanStatus.setStyleSheet('color: {}'.format(color))
+            self.ui.label_fileScanElapsedTime.setText('{} seconds'.format(fileInfo.get('finishedTime') - fileInfo.get('startedTime')))
+        else:
+            self.ui.label_fileScanStatus.setText(status)
