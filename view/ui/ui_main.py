@@ -995,7 +995,7 @@ class Ui_MainWindow(object):
         self.tree_filelist = CustomTreeView(self.groupBox_4)
         self.tree_filelist.setObjectName(u"tree_filelist")
         self.tree_filelist.setAlternatingRowColors(True)
-        self.tree_filelist.setSelectionMode(QAbstractItemView.SelectionMode.ContiguousSelection)
+        self.tree_filelist.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
 
         self.verticalLayout_26.addWidget(self.tree_filelist)
 
@@ -1641,7 +1641,7 @@ class Ui_MainWindow(object):
         ___qtreewidgetitem4.setText(0, QCoreApplication.translate("MainWindow", u"Vendor", None));
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"Elapsed time:", None))
         self.label_urlScanElapsedTime.setText("")
-        self.creditsLabel.setText(QCoreApplication.translate("MainWindow", u"Created & Developed by 220327019@stu.vtc.edu.hk", None))
-        self.version.setText(QCoreApplication.translate("MainWindow", u"Scan-X v1.0.0", None))
+        self.creditsLabel.setText(QCoreApplication.translate("MainWindow", u"Developed by Pang Hoi Him (220327019@stu.vtc.edu.hk)", None))
+        self.version.setText(QCoreApplication.translate("MainWindow", u"Scan-X version 1.0.0", None))
     # retranslateUi
 

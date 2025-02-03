@@ -1,9 +1,11 @@
-from PySide6.QtCore import Qt, QThread, QAbstractTableModel, QModelIndex, Signal
+from PySide6.QtCore import QThread, QAbstractTableModel, QModelIndex, Signal
+from PySide6.QtGui import Qt, QIcon, QColor
 import hashlib
 import magic
 import os
 
 from .file import File
+from .color import Color
 
 class FileScanModel(QAbstractTableModel):
     def __init__(self, parent=None):
@@ -20,12 +22,43 @@ class FileScanModel(QAbstractTableModel):
         return 3  # Path, Filename, Status
 
     def data(self, index, role=Qt.DisplayRole):
-        if not index.isValid() or role not in (Qt.DisplayRole, Qt.EditRole):
+        if not index.isValid() or role not in (Qt.DisplayRole, Qt.DecorationRole, Qt.ForegroundRole):
             return None
         row = index.row()
         col = index.column()
 
-        return self.files[row].get(['path', 'filename', 'status'][col])
+        fileInfo = self.files[row]
+
+        if role == Qt.DisplayRole:
+            return fileInfo.get(['path', 'filename', 'status'][col])
+        elif role == Qt.DecorationRole:
+            if col == 2:
+                def getIcon(status):
+                    if status == File.STATUS_COMPLETED:
+                        return ':/resources/images/icons/check-circle.svg'
+                    elif status == File.STATUS_ATTENTION:
+                        return ':/resources/images/icons/alert-triangle.svg'
+                    elif status == File.STATUS_FAILED:
+                        return ':/resources/images/icons/exclaimation-circle.svg'
+                    else:
+                        return ':/resources/images/icons/info-circle.svg'
+                return QIcon(getIcon(fileInfo.get('status')))
+            else:
+                return None
+        elif role == Qt.ForegroundRole:
+            if col == 2:
+                def getColor(status):
+                    if status == File.STATUS_COMPLETED:
+                        return Color.SUCCESS
+                    elif status == File.STATUS_ATTENTION:
+                        return Color.WARNING
+                    elif status == File.STATUS_FAILED:
+                        return Color.DANGER
+                    else:
+                        return Color.INFO
+                return QColor(getColor(fileInfo.get('status')))
+            else:
+                return None
 
     def headerData(self, section, orientation, role=Qt.DisplayRole):
         if role == Qt.DisplayRole and orientation == Qt.Horizontal:
@@ -72,20 +105,23 @@ class FileScanModel(QAbstractTableModel):
     # def updateFileInfo(self, fileInfo: dict):
     #     print(fileInfo)
 
+    def updateFile(self, filepath, **kwargs):
+        row = next(iter([i for i, j in enumerate(self.files) if j['filepath'] == filepath]), None)
+        if row is not None:
+            fileInfo = self.files[row]
+            for k, w in kwargs.items():
+                fileInfo[k] = w
+            self.files[row] = fileInfo
+            top_left = self.index(row, 0)
+            bottom_right = self.index(row, 2)
+            self.dataChanged.emit(top_left, bottom_right)
+            return True
+        return False
 
-    # def update_user(self, row, first, last, email):
-    #     if 0 <= row < self.rowCount():
-    #         self.users[row] = {'first': first, 'last': last, 'email': email}
-    #         top_left = self.index(row, 0)
-    #         bottom_right = self.index(row, 2)
-    #         self.dataChanged.emit(top_left, bottom_right)
-    #         return True
-    #     return False
-
-    def removeFile(self, index):
-        self.beginRemoveRows(QModelIndex(), index.row(), index.row())
-        file = self.files[index.row()]
-        del self.files[index.row()]
+    def removeFile(self, row):
+        self.beginRemoveRows(QModelIndex(), row, row)
+        file = self.files[row]
+        del self.files[row]
         self.added.remove(file['filepath'])
         self.endRemoveRows()
 

@@ -5,4 +5,4 @@ class File:
     STATUS_COMPLETED = 'Completed'
     STATUS_ATTENTION = 'Attention'
     STATUS_FAILED = 'Failed'
-
+    STATUS_CANCELED = 'Canceled'

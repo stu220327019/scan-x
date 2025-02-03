@@ -44,6 +44,8 @@ class Ui_FileDetails(object):
         self.verticalLayout_21.setObjectName(u"verticalLayout_21")
         self.tbl_fileInfo = QTreeWidget(self.groupBox_fileInfo)
         self.tbl_fileInfo.setObjectName(u"tbl_fileInfo")
+        self.tbl_fileInfo.setMaximumSize(QSize(16777215, 150))
+        self.tbl_fileInfo.setAlternatingRowColors(True)
 
         self.verticalLayout_21.addWidget(self.tbl_fileInfo)
 
