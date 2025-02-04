@@ -2,6 +2,8 @@ from PySide6.QtWidgets import QWidget, QTreeWidgetItem
 from PySide6.QtGui import QIcon
 from view.ui.ui_file_details import Ui_FileDetails
 
+from model import File, Color
+
 class FileDetailsContainer(QWidget):
     def __init__(self, parent=None, fileInfo=None, **kwargs):
         super().__init__(parent, **kwargs)
@@ -33,9 +35,11 @@ class FileDetailsContainer(QWidget):
                 icon = QIcon(':/resources/images/icons/exclaimation-circle.svg' if detected else ':/resources/images/icons/check-circle.svg')
                 item.setIcon(1, icon)
             self.ui.label_fileScanDetection.setText('{} / {}'.format(len(detection), len(results)))
-            statusTxt, color = ('No virus detected', '#00ff00') if len(detection) == 0 else ('Virus detected', '#ff0000')
+            statusTxt, color = ('No virus detected', Color.SUCCESS) if len(detection) == 0 else ('Virus detected', Color.DANGER)
             self.ui.label_fileScanStatus.setText(statusTxt)
             self.ui.label_fileScanStatus.setStyleSheet('color: {}'.format(color))
             self.ui.label_fileScanElapsedTime.setText('{:.6f} seconds'.format(fileInfo.get('finishedTime') - fileInfo.get('startedTime')))
         else:
-            self.ui.label_fileScanStatus.setText(status)
+            statusTxt, color = (status, Color.SUCCESS) if status != File.STATUS_FAILED else ('Failed', Color.DANGER)
+            self.ui.label_fileScanStatus.setText(statusTxt)
+            self.ui.label_fileScanStatus.setStyleSheet('color: {}'.format(color))
