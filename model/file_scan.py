@@ -116,8 +116,16 @@ class FileScanModel(QAbstractTableModel):
     # def updateFileInfo(self, fileInfo: dict):
     #     print(fileInfo)
 
+    def getFileRow(self, filepath):
+        return next(iter([i for i, j in enumerate(self.files) if j['filepath'] == filepath]), None)
+
+    def getFile(self, filepath):
+        row = self.getFileRow()
+        if row is not None:
+            return self.files[row]
+
     def updateFile(self, filepath, **kwargs):
-        row = next(iter([i for i, j in enumerate(self.files) if j['filepath'] == filepath]), None)
+        row = self.getFileRow(filepath)
         if row is not None:
             fileInfo = self.files[row]
             for k, w in kwargs.items():
@@ -126,7 +134,7 @@ class FileScanModel(QAbstractTableModel):
             top_left = self.index(row, 0)
             bottom_right = self.index(row, 2)
             self.dataChanged.emit(top_left, bottom_right)
-            return True
+            return fileInfo
         return False
 
     def removeFile(self, row):

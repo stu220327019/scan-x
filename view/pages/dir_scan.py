@@ -37,7 +37,7 @@ def build_tree_widget_items(tree):
 
 
 class DirScan(QObject):
-    def __init__(self, ui: Ui_MainWindow):
+    def __init__(self, ui: Ui_MainWindow, *args, **kwargs):
         super().__init__()
         self.ui = ui
         self.ui.groupBox_dirScan.hide()

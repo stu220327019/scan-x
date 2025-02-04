@@ -28,7 +28,7 @@ class View(QMainWindow):
     openRightBoxSignal = Signal(str, object, object)
     closeRightBoxSignal = Signal()
 
-    def __init__(self, model):
+    def __init__(self, model, ctx):
         super(View, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
@@ -47,11 +47,13 @@ class View(QMainWindow):
             'closeRightBox': self.closeRightBoxSignal
         }
 
-        self.fileScan = FileScan(self.ui)
-        self.dirScan = DirScan(self.ui)
-        self.urlScan = URLScan(self.ui)
-        self.fileScan2 = FileScan2(self.ui, signals=signals)
+        # self.fileScan = FileScan(self.ui)
+        # self.dirScan = DirScan(self.ui)
+        # self.urlScan = URLScan(self.ui)
+        # self.fileScan2 = FileScan2(self.ui, signals=signals)
 
+        for (pageName, pageClass) in [('pageScan', FileScan2), ('urlScan', URLScan)]:
+            setattr(self, pageName, pageClass(self.ui, signals=signals, ctx=ctx))
 
     # TOGGLE MENU
     # ///////////////////////////////////////////////////////////////

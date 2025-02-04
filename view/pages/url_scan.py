@@ -15,7 +15,7 @@ URL_PATTERN = r'((http|https)\:\/\/)?[a-zA-Z0-9\.\/\?\:@\-_=#]+\.([a-zA-Z]){2,6}
 
 
 class URLScan(QObject):
-    def __init__(self, ui: Ui_MainWindow):
+    def __init__(self, ui: Ui_MainWindow, *args, **kwargs):
         super().__init__()
         self.ui = ui
         self.connect_slots_and_signals()

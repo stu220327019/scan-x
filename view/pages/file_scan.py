@@ -13,7 +13,7 @@ from ..ui.ui_main import Ui_MainWindow
 from core.config import VIRUS_TOTAL_API_KEY
 
 class FileScan(QObject):
-    def __init__(self, ui: Ui_MainWindow):
+    def __init__(self, ui: Ui_MainWindow, *args, **kwargs):
         super().__init__()
         self.ui = ui
         self.ui.groupBox_fileInfo.hide()

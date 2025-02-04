@@ -7,6 +7,13 @@ import sys
 import asyncio
 import os
 from qasync import QEventLoop
+from core import config, DB
+
+def initDB(db: DB):
+    with open('res/create_tables.sql', 'r') as f:
+        cur = db.conn.cursor()
+        cur.executescript(f.read())
+        cur.execute('PRAGMA foreign_keys = ON')
 
 def main():
     # os.putenv('QT_QPA_PLATFORM','windows:darkmode=0')
@@ -14,8 +21,15 @@ def main():
     loop = QEventLoop(app)
     asyncio.set_event_loop(loop)
 
+    db = DB(config.DB_FILE)
+    initDB(db)
+
+    ctx = {
+        'db': db
+    }
+
     model = Model()
-    view = View(model)
+    view = View(model, ctx)
     controller = Controller(view, model)
 
     view.show()

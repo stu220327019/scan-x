@@ -10,3 +10,4 @@ htmlcov
 
 /.envrc
 /config.ini
+/app.db

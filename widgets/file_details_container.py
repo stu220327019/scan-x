@@ -40,6 +40,6 @@ class FileDetailsContainer(QWidget):
             self.ui.label_fileScanStatus.setStyleSheet('color: {}'.format(color))
             self.ui.label_fileScanElapsedTime.setText('{:.6f} seconds'.format(fileInfo.get('finishedTime') - fileInfo.get('startedTime')))
         else:
-            statusTxt, color = (status, Color.SUCCESS) if status != File.STATUS_FAILED else ('Failed', Color.DANGER)
+            statusTxt, color = (status, Color.INFO) if status != File.STATUS_FAILED else ('Failed', Color.DANGER)
             self.ui.label_fileScanStatus.setText(statusTxt)
             self.ui.label_fileScanStatus.setStyleSheet('color: {}'.format(color))
