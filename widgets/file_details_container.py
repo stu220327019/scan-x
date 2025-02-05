@@ -22,11 +22,10 @@ class FileDetailsContainer(QWidget):
         # self.ui.groupBox_fileInfo.show()
 
     def updateFileScanResult(self, fileInfo: dict):
-        status, analysis = fileInfo.get('status'), fileInfo.get('analysis')
-        if analysis:
-            results = analysis.last_analysis_results.values()
-            detection = [x for x in results if x['result'] is not None]
-            for result in results:
+        status, analysisResults = fileInfo.get('status'), fileInfo.get('analysisResults')
+        if analysisResults:
+            detection = [x for x in analysisResults if x['result'] is not None]
+            for result in analysisResults:
                 item = QTreeWidgetItem(self.ui.tbl_fileScanResult)
                 item.setText(0, result['engine_name'])
                 detected = result['result'] is not None
@@ -34,7 +33,7 @@ class FileDetailsContainer(QWidget):
                 item.setText(1, value)
                 icon = QIcon(':/resources/images/icons/exclaimation-circle.svg' if detected else ':/resources/images/icons/check-circle.svg')
                 item.setIcon(1, icon)
-            self.ui.label_fileScanDetection.setText('{} / {}'.format(len(detection), len(results)))
+            self.ui.label_fileScanDetection.setText('{} / {}'.format(len(detection), len(analysisResults)))
             statusTxt, color = ('No virus detected', Color.SUCCESS) if len(detection) == 0 else ('Virus detected', Color.DANGER)
             self.ui.label_fileScanStatus.setText(statusTxt)
             self.ui.label_fileScanStatus.setStyleSheet('color: {}'.format(color))

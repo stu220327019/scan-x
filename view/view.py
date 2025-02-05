@@ -5,7 +5,7 @@ from PySide6.QtUiTools import QUiLoader
 from widgets import CustomGrip
 from .ui.ui_main import Ui_MainWindow
 from .ui.ui_file_details import Ui_FileDetails
-from .pages import FileScan, FileScan2, DirScan, URLScan
+from .pages import Home, FileScan, FileScan2, DirScan, URLScan
 
 class View(QMainWindow):
     ENABLE_CUSTOM_TITLE_BAR = True
@@ -52,7 +52,7 @@ class View(QMainWindow):
         # self.urlScan = URLScan(self.ui)
         # self.fileScan2 = FileScan2(self.ui, signals=signals)
 
-        for (pageName, pageClass) in [('pageScan', FileScan2), ('urlScan', URLScan)]:
+        for (pageName, pageClass) in [('pageHome', Home), ('pageScan', FileScan2), ('urlScan', URLScan)]:
             setattr(self, pageName, pageClass(self.ui, signals=signals, ctx=ctx))
 
     # TOGGLE MENU

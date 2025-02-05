@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS file_scan_result (
   file_id INTEGER NOT NULL,
   analysis_stats TEXT NOT NULL,
   analysis_results TEXT NOT NULL,
+  clean BOOLEAN NOT NULL,
   started_at DATETIME NOT NULL,
   finished_at DATETIME NOT NULL,
   created_at DATETIME NOT NULL,
@@ -36,7 +37,7 @@ CREATE TABLE IF NOT EXISTS virus (
   name TEXT NOT NULL UNIQUE
 );
 
-CREATE TABLE IF NOT EXISTS analysis_stats (
+CREATE TABLE IF NOT EXISTS analysis (
   id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   engine_id INTEGER NOT NULL,
   virus_id INTEGER,

@@ -33,7 +33,7 @@ class FileScanModel(QAbstractTableModel):
             if col == 2:
                 status = fileInfo.get('status')
                 if status == File.STATUS_INFECTED:
-                    results = fileInfo.get('analysis').last_analysis_results.values()
+                    results = fileInfo.get('analysisResults')
                     detection = [x for x in results if x['result'] is not None]
                     return status.format(len(detection))
                 elif status == File.STATUS_FAILED:

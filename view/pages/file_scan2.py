@@ -7,6 +7,7 @@ import hashlib
 import vt
 import os
 import json
+import sqlite3
 
 from model import FileScanModel, File
 from view.ui.ui_main import Ui_MainWindow
@@ -94,35 +95,55 @@ class FileScan2(QObject):
         self.model.updateFile(filepath, status=File.STATUS_SCANNING, startedTime=time.time())
 
     def workerFinished(self, filepath, analysis):
-        results = analysis.last_analysis_results.values()
-        detection = [x for x in results if x['result'] is not None]
+        analysisStats = analysis.last_analysis_stats
+        analysisResults = analysis.last_analysis_results.values()
+        detection = [x for x in analysisResults if x['result'] is not None]
         status = File.STATUS_COMPLETED if len(detection) == 0 else File.STATUS_INFECTED
-        file = self.model.updateFile(filepath, status=status, analysis=analysis, finishedTime=time.time())
-        dbRowFile = self.db.fetchOne(
-            'SELECT id FROM file WHERE filepath = ? AND sha1 = ?',
-            [file.get('filepath'), file.get('sha1')]
-        )
-        if dbRowFile:
-            fileId = dbRowFile.get('id')
-        else:
+        file = self.model.updateFile(filepath, status=status, analysisResults=analysisResults, finishedTime=time.time())
+        try:
+            self.db.beginTransaction()
+            fileId = self.db.fetchOneCol(
+                'SELECT id FROM file WHERE filepath = ? AND sha1 = ?',
+                [file.get('filepath'), file.get('sha1')]
+            )
+            if not fileId:
+                cur = self.db.exec("""
+                INSERT INTO file (filename, filepath, path, sha1, sha256, md5, size, type, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                                   [file.get('filename'), file.get('filepath'), file.get('path'),
+                                    file.get('sha1'), file.get('sha256'), file.get('md5'),
+                                    file.get('size'), file.get('type'), time.time()])
+                fileId = cur.lastrowid
             cur = self.db.exec("""
-            INSERT INTO file (filename, filepath, path, sha1, sha256, md5, size, type, created_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO file_scan_result (file_id, analysis_stats, analysis_results, clean, started_at, finished_at, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
             """,
-                               [file.get('filename'), file.get('filepath'), file.get('path'),
-                                file.get('sha1'), file.get('sha256'), file.get('md5'),
-                                file.get('size'), file.get('type'), time.time()],
-                               True)
-            fileId = cur.lastrowid
-        self.db.exec("""
-        INSERT INTO file_scan_result (file_id, analysis_stats, analysis_results, started_at, finished_at, created_at)
-        VALUES (?, ?, ?, ?, ?, ?)
-        """,
-                     [fileId,
-                      json.dumps(dict(analysis.last_analysis_stats)),
-                      json.dumps([dict(res) for res in analysis.last_analysis_results.values()]),
-                      file.get('startedTime'), file.get('finishedTime'), time.time()],
-                     True)
+                         [fileId,
+                          json.dumps(dict(analysisStats)),
+                          json.dumps([dict(res) for res in analysisResults]),
+                          detection == 0, file.get('startedTime'), file.get('finishedTime'), time.time()])
+            scanResultId = cur.lastrowid
+            for analysisResult in analysisResults:
+                engineName, virusName = analysisResult.get('engine_name'), analysisResult.get('result')
+                engineId = self.db.fetchOneCol('SELECT id FROM engine WHERE name = ?',[engineName])
+                virusId = None
+                if not engineId:
+                    cur = self.db.exec('INSERT INTO engine (name) VALUES (?)', [engineName])
+                    engineId = cur.lastrowid
+                if virusName:
+                    virusId = self.db.fetchOneCol('SELECT id FROM virus WHERE name = ?',[virusName])
+                    if not virusId:
+                        cur = self.db.exec('INSERT INTO virus (name) VALUES (?)', [virusName])
+                        virusId = cur.lastrowid
+                self.db.exec("""
+                INSERT INTO analysis (engine_id, virus_id, category, type, file_scan_result_id)
+                VALUES (?, ?, ?, ?, ?)
+                """, [engineId, virusId, analysisResult.get('category'), 'file', scanResultId])
+            self.db.commit()
+        except sqlite3.Error as e:
+            print(f"DB error: {e}")
+            self.db.rollback()
 
     def workerError(self, filepath, err):
         self.model.updateFile(filepath, status=File.STATUS_FAILED, err=err)

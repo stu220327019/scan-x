@@ -7,3 +7,5 @@ class File:
     STATUS_INFECTED = 'Virus detected ({})'
     STATUS_FAILED = 'Failed: {}'
     STATUS_CANCELED = 'Canceled'
+
+    STATUS_CLEAN = 'Clean'

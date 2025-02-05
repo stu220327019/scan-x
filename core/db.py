@@ -28,6 +28,11 @@ class DB:
         cur = self.exec(sql, params)
         return cur.fetchone()
 
+    def fetchOneCol(self, sql, params=()):
+        res = self.fetchOne(sql, params)
+        if res:
+            return next(iter(res.values()))
+
     def fetchAll(self, sql, params=()):
         cur = self.exec(sql, params)
         return cur.fetchall()

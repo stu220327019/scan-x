@@ -15,12 +15,12 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractItemView, QApplication, QFrame, QGridLayout,
-    QGroupBox, QHBoxLayout, QHeaderView, QLabel,
-    QLayout, QLineEdit, QMainWindow, QProgressBar,
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QFormLayout, QFrame,
+    QGridLayout, QGroupBox, QHBoxLayout, QHeaderView,
+    QLabel, QLayout, QLineEdit, QMainWindow,
     QPushButton, QSizePolicy, QSpacerItem, QStackedWidget,
-    QTextEdit, QTreeWidget, QTreeWidgetItem, QVBoxLayout,
-    QWidget)
+    QTabWidget, QTextEdit, QTreeView, QTreeWidget,
+    QTreeWidgetItem, QVBoxLayout, QWidget)
 
 from widgets import (CustomTreeView, FileDropWidget)
 import resources_rc
@@ -551,14 +551,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_8.addWidget(self.nav_btn_fileScan)
 
-        self.nav_btn_dirScan = QPushButton(self.topMenu)
-        self.nav_btn_dirScan.setObjectName(u"nav_btn_dirScan")
-        self.nav_btn_dirScan.setMinimumSize(QSize(0, 45))
-        self.nav_btn_dirScan.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        self.nav_btn_dirScan.setStyleSheet(u"background-image: url(:/heroicons/FolderOpen.svg);")
-
-        self.verticalLayout_8.addWidget(self.nav_btn_dirScan)
-
         self.nav_btn_urlScan = QPushButton(self.topMenu)
         self.nav_btn_urlScan.setObjectName(u"nav_btn_urlScan")
         self.nav_btn_urlScan.setMinimumSize(QSize(0, 45))
@@ -953,9 +945,127 @@ class Ui_MainWindow(object):
         self.stackedWidget.setObjectName(u"stackedWidget")
         self.home = QWidget()
         self.home.setObjectName(u"home")
-        self.home.setStyleSheet(u"background-image: url(:/resources/images/media/Gino_vertical.png);\n"
-"background-position: center;\n"
-"background-repeat: no-repeat;")
+        self.verticalLayout_28 = QVBoxLayout(self.home)
+        self.verticalLayout_28.setObjectName(u"verticalLayout_28")
+        self.groupBox_6 = QGroupBox(self.home)
+        self.groupBox_6.setObjectName(u"groupBox_6")
+        self.horizontalLayout_23 = QHBoxLayout(self.groupBox_6)
+        self.horizontalLayout_23.setObjectName(u"horizontalLayout_23")
+        self.groupBox_7 = QGroupBox(self.groupBox_6)
+        self.groupBox_7.setObjectName(u"groupBox_7")
+        self.verticalLayout_30 = QVBoxLayout(self.groupBox_7)
+        self.verticalLayout_30.setObjectName(u"verticalLayout_30")
+        self.formLayout = QFormLayout()
+        self.formLayout.setObjectName(u"formLayout")
+        self.label = QLabel(self.groupBox_7)
+        self.label.setObjectName(u"label")
+
+        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label)
+
+        self.label_filesScanned = QLabel(self.groupBox_7)
+        self.label_filesScanned.setObjectName(u"label_filesScanned")
+        self.label_filesScanned.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+
+        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.label_filesScanned)
+
+        self.label_4 = QLabel(self.groupBox_7)
+        self.label_4.setObjectName(u"label_4")
+
+        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_4)
+
+        self.label_5 = QLabel(self.groupBox_7)
+        self.label_5.setObjectName(u"label_5")
+        self.label_5.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+
+        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.label_5)
+
+        self.label_8 = QLabel(self.groupBox_7)
+        self.label_8.setObjectName(u"label_8")
+
+        self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_8)
+
+        self.label_threatsDetected = QLabel(self.groupBox_7)
+        self.label_threatsDetected.setObjectName(u"label_threatsDetected")
+        self.label_threatsDetected.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+
+        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.label_threatsDetected)
+
+
+        self.verticalLayout_30.addLayout(self.formLayout)
+
+
+        self.horizontalLayout_23.addWidget(self.groupBox_7)
+
+        self.groupBox_8 = QGroupBox(self.groupBox_6)
+        self.groupBox_8.setObjectName(u"groupBox_8")
+        self.verticalLayout = QVBoxLayout(self.groupBox_8)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.tabWidget = QTabWidget(self.groupBox_8)
+        self.tabWidget.setObjectName(u"tabWidget")
+        self.tab = QWidget()
+        self.tab.setObjectName(u"tab")
+        self.verticalLayout_13 = QVBoxLayout(self.tab)
+        self.verticalLayout_13.setObjectName(u"verticalLayout_13")
+        self.tree_mostDetectedVirus = QTreeView(self.tab)
+        self.tree_mostDetectedVirus.setObjectName(u"tree_mostDetectedVirus")
+        self.tree_mostDetectedVirus.setAlternatingRowColors(True)
+
+        self.verticalLayout_13.addWidget(self.tree_mostDetectedVirus)
+
+        self.tabWidget.addTab(self.tab, "")
+        self.tab_2 = QWidget()
+        self.tab_2.setObjectName(u"tab_2")
+        self.verticalLayout_14 = QVBoxLayout(self.tab_2)
+        self.verticalLayout_14.setObjectName(u"verticalLayout_14")
+        self.tree_recentlyDetectedVirus = QTreeView(self.tab_2)
+        self.tree_recentlyDetectedVirus.setObjectName(u"tree_recentlyDetectedVirus")
+        self.tree_recentlyDetectedVirus.setAlternatingRowColors(True)
+
+        self.verticalLayout_14.addWidget(self.tree_recentlyDetectedVirus)
+
+        self.tabWidget.addTab(self.tab_2, "")
+
+        self.verticalLayout.addWidget(self.tabWidget)
+
+
+        self.horizontalLayout_23.addWidget(self.groupBox_8)
+
+        self.horizontalLayout_23.setStretch(0, 1)
+        self.horizontalLayout_23.setStretch(1, 2)
+
+        self.verticalLayout_28.addWidget(self.groupBox_6)
+
+        self.horizontalLayout_24 = QHBoxLayout()
+        self.horizontalLayout_24.setObjectName(u"horizontalLayout_24")
+        self.groupBox_5 = QGroupBox(self.home)
+        self.groupBox_5.setObjectName(u"groupBox_5")
+        self.verticalLayout_29 = QVBoxLayout(self.groupBox_5)
+        self.verticalLayout_29.setObjectName(u"verticalLayout_29")
+        self.tree_fileScanResults = QTreeView(self.groupBox_5)
+        self.tree_fileScanResults.setObjectName(u"tree_fileScanResults")
+        self.tree_fileScanResults.setAlternatingRowColors(True)
+
+        self.verticalLayout_29.addWidget(self.tree_fileScanResults)
+
+
+        self.horizontalLayout_24.addWidget(self.groupBox_5)
+
+        self.groupBox_9 = QGroupBox(self.home)
+        self.groupBox_9.setObjectName(u"groupBox_9")
+        self.verticalLayout_31 = QVBoxLayout(self.groupBox_9)
+        self.verticalLayout_31.setObjectName(u"verticalLayout_31")
+        self.treeView_2 = QTreeView(self.groupBox_9)
+        self.treeView_2.setObjectName(u"treeView_2")
+        self.treeView_2.setAlternatingRowColors(True)
+
+        self.verticalLayout_31.addWidget(self.treeView_2)
+
+
+        self.horizontalLayout_24.addWidget(self.groupBox_9)
+
+
+        self.verticalLayout_28.addLayout(self.horizontalLayout_24)
+
         self.stackedWidget.addWidget(self.home)
         self.page_fileScan2 = QWidget()
         self.page_fileScan2.setObjectName(u"page_fileScan2")
@@ -1039,323 +1149,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_27.addLayout(self.horizontalLayout_22)
 
         self.stackedWidget.addWidget(self.page_fileScan2)
-        self.page_fileScan = QWidget()
-        self.page_fileScan.setObjectName(u"page_fileScan")
-        self.verticalLayout_13 = QVBoxLayout(self.page_fileScan)
-        self.verticalLayout_13.setObjectName(u"verticalLayout_13")
-        self.frame = QFrame(self.page_fileScan)
-        self.frame.setObjectName(u"frame")
-        self.frame.setStyleSheet(u"")
-        self.frame.setFrameShape(QFrame.Shape.StyledPanel)
-        self.frame.setFrameShadow(QFrame.Shadow.Raised)
-        self.verticalLayout = QVBoxLayout(self.frame)
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.groupBox = QGroupBox(self.frame)
-        self.groupBox.setObjectName(u"groupBox")
-        self.horizontalLayout_6 = QHBoxLayout(self.groupBox)
-        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.btn_fileBrowse = QPushButton(self.groupBox)
-        self.btn_fileBrowse.setObjectName(u"btn_fileBrowse")
-
-        self.horizontalLayout_6.addWidget(self.btn_fileBrowse)
-
-        self.lbl_fileSelected = QLabel(self.groupBox)
-        self.lbl_fileSelected.setObjectName(u"lbl_fileSelected")
-
-        self.horizontalLayout_6.addWidget(self.lbl_fileSelected)
-
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_6.addItem(self.horizontalSpacer)
-
-        self.btn_fileScan = QPushButton(self.groupBox)
-        self.btn_fileScan.setObjectName(u"btn_fileScan")
-        self.btn_fileScan.setEnabled(False)
-
-        self.horizontalLayout_6.addWidget(self.btn_fileScan)
-
-
-        self.verticalLayout.addWidget(self.groupBox)
-
-        self.stackedWidget_2 = QStackedWidget(self.frame)
-        self.stackedWidget_2.setObjectName(u"stackedWidget_2")
-        self.page_3 = QWidget()
-        self.page_3.setObjectName(u"page_3")
-        self.verticalLayout_14 = QVBoxLayout(self.page_3)
-        self.verticalLayout_14.setSpacing(6)
-        self.verticalLayout_14.setObjectName(u"verticalLayout_14")
-        self.verticalLayout_14.setContentsMargins(0, 0, 0, 0)
-        self.groupBox_fileInfo = QGroupBox(self.page_3)
-        self.groupBox_fileInfo.setObjectName(u"groupBox_fileInfo")
-        self.horizontalLayout_17 = QHBoxLayout(self.groupBox_fileInfo)
-        self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
-        self.tbl_fileInfo = QTreeWidget(self.groupBox_fileInfo)
-        self.tbl_fileInfo.setObjectName(u"tbl_fileInfo")
-
-        self.horizontalLayout_17.addWidget(self.tbl_fileInfo)
-
-
-        self.verticalLayout_14.addWidget(self.groupBox_fileInfo)
-
-        self.progressBar = QProgressBar(self.page_3)
-        self.progressBar.setObjectName(u"progressBar")
-        self.progressBar.setValue(24)
-
-        self.verticalLayout_14.addWidget(self.progressBar)
-
-        self.groupBox_fileScanResult = QGroupBox(self.page_3)
-        self.groupBox_fileScanResult.setObjectName(u"groupBox_fileScanResult")
-        self.verticalLayout_22 = QVBoxLayout(self.groupBox_fileScanResult)
-        self.verticalLayout_22.setObjectName(u"verticalLayout_22")
-        self.horizontalLayout_7 = QHBoxLayout()
-        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
-        self.label_5 = QLabel(self.groupBox_fileScanResult)
-        self.label_5.setObjectName(u"label_5")
-
-        self.horizontalLayout_7.addWidget(self.label_5)
-
-        self.label_fileScanStatus = QLabel(self.groupBox_fileScanResult)
-        self.label_fileScanStatus.setObjectName(u"label_fileScanStatus")
-
-        self.horizontalLayout_7.addWidget(self.label_fileScanStatus)
-
-        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_7.addItem(self.horizontalSpacer_3)
-
-        self.label_4 = QLabel(self.groupBox_fileScanResult)
-        self.label_4.setObjectName(u"label_4")
-        self.label_4.setFont(font)
-
-        self.horizontalLayout_7.addWidget(self.label_4)
-
-        self.label_fileScanDetection = QLabel(self.groupBox_fileScanResult)
-        self.label_fileScanDetection.setObjectName(u"label_fileScanDetection")
-
-        self.horizontalLayout_7.addWidget(self.label_fileScanDetection)
-
-        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_7.addItem(self.horizontalSpacer_2)
-
-
-        self.verticalLayout_22.addLayout(self.horizontalLayout_7)
-
-        self.tbl_fileScanResult = QTreeWidget(self.groupBox_fileScanResult)
-        self.tbl_fileScanResult.setObjectName(u"tbl_fileScanResult")
-        self.tbl_fileScanResult.setAlternatingRowColors(True)
-
-        self.verticalLayout_22.addWidget(self.tbl_fileScanResult)
-
-        self.horizontalLayout_8 = QHBoxLayout()
-        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
-        self.horizontalSpacer_4 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_8.addItem(self.horizontalSpacer_4)
-
-        self.label = QLabel(self.groupBox_fileScanResult)
-        self.label.setObjectName(u"label")
-
-        self.horizontalLayout_8.addWidget(self.label)
-
-        self.label_fileScanElapsedTime = QLabel(self.groupBox_fileScanResult)
-        self.label_fileScanElapsedTime.setObjectName(u"label_fileScanElapsedTime")
-
-        self.horizontalLayout_8.addWidget(self.label_fileScanElapsedTime)
-
-
-        self.verticalLayout_22.addLayout(self.horizontalLayout_8)
-
-
-        self.verticalLayout_14.addWidget(self.groupBox_fileScanResult)
-
-        self.stackedWidget_2.addWidget(self.page_3)
-        self.page_4 = QWidget()
-        self.page_4.setObjectName(u"page_4")
-        self.verticalLayout_20 = QVBoxLayout(self.page_4)
-        self.verticalLayout_20.setObjectName(u"verticalLayout_20")
-        self.verticalLayout_20.setContentsMargins(0, 0, 0, 0)
-        self.widget_dirScan_2 = QWidget(self.page_4)
-        self.widget_dirScan_2.setObjectName(u"widget_dirScan_2")
-        self.verticalLayout_25 = QVBoxLayout(self.widget_dirScan_2)
-        self.verticalLayout_25.setObjectName(u"verticalLayout_25")
-        self.horizontalLayout_19 = QHBoxLayout()
-        self.horizontalLayout_19.setObjectName(u"horizontalLayout_19")
-        self.label_11 = QLabel(self.widget_dirScan_2)
-        self.label_11.setObjectName(u"label_11")
-
-        self.horizontalLayout_19.addWidget(self.label_11)
-
-        self.label_urlScanStatus_3 = QLabel(self.widget_dirScan_2)
-        self.label_urlScanStatus_3.setObjectName(u"label_urlScanStatus_3")
-
-        self.horizontalLayout_19.addWidget(self.label_urlScanStatus_3)
-
-        self.horizontalSpacer_13 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_19.addItem(self.horizontalSpacer_13)
-
-        self.label_12 = QLabel(self.widget_dirScan_2)
-        self.label_12.setObjectName(u"label_12")
-        self.label_12.setFont(font)
-
-        self.horizontalLayout_19.addWidget(self.label_12)
-
-        self.label_urlScanDetection_3 = QLabel(self.widget_dirScan_2)
-        self.label_urlScanDetection_3.setObjectName(u"label_urlScanDetection_3")
-
-        self.horizontalLayout_19.addWidget(self.label_urlScanDetection_3)
-
-        self.horizontalSpacer_14 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_19.addItem(self.horizontalSpacer_14)
-
-
-        self.verticalLayout_25.addLayout(self.horizontalLayout_19)
-
-        self.tree_fileScan = QTreeWidget(self.widget_dirScan_2)
-        self.tree_fileScan.setObjectName(u"tree_fileScan")
-        self.tree_fileScan.setAlternatingRowColors(True)
-
-        self.verticalLayout_25.addWidget(self.tree_fileScan)
-
-        self.horizontalLayout_20 = QHBoxLayout()
-        self.horizontalLayout_20.setObjectName(u"horizontalLayout_20")
-        self.horizontalSpacer_15 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_20.addItem(self.horizontalSpacer_15)
-
-        self.label_13 = QLabel(self.widget_dirScan_2)
-        self.label_13.setObjectName(u"label_13")
-
-        self.horizontalLayout_20.addWidget(self.label_13)
-
-        self.label_urlScanElapsedTime_3 = QLabel(self.widget_dirScan_2)
-        self.label_urlScanElapsedTime_3.setObjectName(u"label_urlScanElapsedTime_3")
-
-        self.horizontalLayout_20.addWidget(self.label_urlScanElapsedTime_3)
-
-
-        self.verticalLayout_25.addLayout(self.horizontalLayout_20)
-
-
-        self.verticalLayout_20.addWidget(self.widget_dirScan_2)
-
-        self.stackedWidget_2.addWidget(self.page_4)
-
-        self.verticalLayout.addWidget(self.stackedWidget_2)
-
-
-        self.verticalLayout_13.addWidget(self.frame)
-
-        self.stackedWidget.addWidget(self.page_fileScan)
-        self.page_dirScan = QWidget()
-        self.page_dirScan.setObjectName(u"page_dirScan")
-        self.verticalLayout_17 = QVBoxLayout(self.page_dirScan)
-        self.verticalLayout_17.setObjectName(u"verticalLayout_17")
-        self.frame_2 = QFrame(self.page_dirScan)
-        self.frame_2.setObjectName(u"frame_2")
-        self.frame_2.setFrameShape(QFrame.Shape.StyledPanel)
-        self.frame_2.setFrameShadow(QFrame.Shadow.Raised)
-        self.verticalLayout_16 = QVBoxLayout(self.frame_2)
-        self.verticalLayout_16.setObjectName(u"verticalLayout_16")
-        self.groupBox_3 = QGroupBox(self.frame_2)
-        self.groupBox_3.setObjectName(u"groupBox_3")
-        self.horizontalLayout_12 = QHBoxLayout(self.groupBox_3)
-        self.horizontalLayout_12.setObjectName(u"horizontalLayout_12")
-        self.btn_dirBrowse = QPushButton(self.groupBox_3)
-        self.btn_dirBrowse.setObjectName(u"btn_dirBrowse")
-
-        self.horizontalLayout_12.addWidget(self.btn_dirBrowse)
-
-        self.lbl_dirSelected = QLabel(self.groupBox_3)
-        self.lbl_dirSelected.setObjectName(u"lbl_dirSelected")
-
-        self.horizontalLayout_12.addWidget(self.lbl_dirSelected)
-
-        self.horizontalSpacer_8 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_12.addItem(self.horizontalSpacer_8)
-
-        self.btn_dirScan = QPushButton(self.groupBox_3)
-        self.btn_dirScan.setObjectName(u"btn_dirScan")
-        self.btn_dirScan.setEnabled(False)
-
-        self.horizontalLayout_12.addWidget(self.btn_dirScan)
-
-
-        self.verticalLayout_16.addWidget(self.groupBox_3, 0, Qt.AlignmentFlag.AlignTop)
-
-        self.groupBox_dirScan = QGroupBox(self.frame_2)
-        self.groupBox_dirScan.setObjectName(u"groupBox_dirScan")
-        self.verticalLayout_24 = QVBoxLayout(self.groupBox_dirScan)
-        self.verticalLayout_24.setObjectName(u"verticalLayout_24")
-        self.horizontalLayout_13 = QHBoxLayout()
-        self.horizontalLayout_13.setObjectName(u"horizontalLayout_13")
-        self.label_8 = QLabel(self.groupBox_dirScan)
-        self.label_8.setObjectName(u"label_8")
-
-        self.horizontalLayout_13.addWidget(self.label_8)
-
-        self.label_urlScanStatus_2 = QLabel(self.groupBox_dirScan)
-        self.label_urlScanStatus_2.setObjectName(u"label_urlScanStatus_2")
-
-        self.horizontalLayout_13.addWidget(self.label_urlScanStatus_2)
-
-        self.horizontalSpacer_9 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_13.addItem(self.horizontalSpacer_9)
-
-        self.label_9 = QLabel(self.groupBox_dirScan)
-        self.label_9.setObjectName(u"label_9")
-        self.label_9.setFont(font)
-
-        self.horizontalLayout_13.addWidget(self.label_9)
-
-        self.label_urlScanDetection_2 = QLabel(self.groupBox_dirScan)
-        self.label_urlScanDetection_2.setObjectName(u"label_urlScanDetection_2")
-
-        self.horizontalLayout_13.addWidget(self.label_urlScanDetection_2)
-
-        self.horizontalSpacer_10 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_13.addItem(self.horizontalSpacer_10)
-
-
-        self.verticalLayout_24.addLayout(self.horizontalLayout_13)
-
-        self.tree_dirScan = QTreeWidget(self.groupBox_dirScan)
-        self.tree_dirScan.setObjectName(u"tree_dirScan")
-        self.tree_dirScan.setAlternatingRowColors(True)
-
-        self.verticalLayout_24.addWidget(self.tree_dirScan)
-
-        self.horizontalLayout_14 = QHBoxLayout()
-        self.horizontalLayout_14.setObjectName(u"horizontalLayout_14")
-        self.horizontalSpacer_11 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_14.addItem(self.horizontalSpacer_11)
-
-        self.label_10 = QLabel(self.groupBox_dirScan)
-        self.label_10.setObjectName(u"label_10")
-
-        self.horizontalLayout_14.addWidget(self.label_10)
-
-        self.label_urlScanElapsedTime_2 = QLabel(self.groupBox_dirScan)
-        self.label_urlScanElapsedTime_2.setObjectName(u"label_urlScanElapsedTime_2")
-
-        self.horizontalLayout_14.addWidget(self.label_urlScanElapsedTime_2)
-
-
-        self.verticalLayout_24.addLayout(self.horizontalLayout_14)
-
-
-        self.verticalLayout_16.addWidget(self.groupBox_dirScan)
-
-
-        self.verticalLayout_17.addWidget(self.frame_2)
-
-        self.stackedWidget.addWidget(self.page_dirScan)
         self.page_urlScan = QWidget()
         self.page_urlScan.setObjectName(u"page_urlScan")
         self.verticalLayout_18 = QVBoxLayout(self.page_urlScan)
@@ -1518,8 +1311,8 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         self.content.setCurrentIndex(1)
-        self.stackedWidget.setCurrentIndex(1)
-        self.stackedWidget_2.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -1531,7 +1324,6 @@ class Ui_MainWindow(object):
         self.titleLeftDescription.setText(QCoreApplication.translate("MainWindow", u"Invoice App", None))
         self.nav_btn_home.setText(QCoreApplication.translate("MainWindow", u"Home", None))
         self.nav_btn_fileScan.setText(QCoreApplication.translate("MainWindow", u"File Scan", None))
-        self.nav_btn_dirScan.setText(QCoreApplication.translate("MainWindow", u"Folder Scan", None))
         self.nav_btn_urlScan.setText(QCoreApplication.translate("MainWindow", u"URL Scan", None))
         self.toggleLeftBox.setText(QCoreApplication.translate("MainWindow", u"Left Box", None))
         self.extraLabel.setText(QCoreApplication.translate("MainWindow", u"Settings", None))
@@ -1557,7 +1349,7 @@ class Ui_MainWindow(object):
 "<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0"
                         "px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; color:#483d37;\">pyside6-rcc resources.qrc -o resources_rc.py</span></p></body></html>", None))
         self.toggleButton.setText("")
-        self.titleRightInfo.setText(QCoreApplication.translate("MainWindow", u"Scan-X // Malware Analysis and Report Tool", None))
+        self.titleRightInfo.setText(QCoreApplication.translate("MainWindow", u"Scan-X // Malware Scanning and Analysis Tool", None))
 #if QT_CONFIG(tooltip)
         self.settingsTopBtn.setToolTip(QCoreApplication.translate("MainWindow", u"Settings", None))
 #endif // QT_CONFIG(tooltip)
@@ -1579,55 +1371,23 @@ class Ui_MainWindow(object):
         self.btn_extraRightBoxClose.setToolTip(QCoreApplication.translate("MainWindow", u"Close", None))
 #endif // QT_CONFIG(tooltip)
         self.btn_extraRightBoxClose.setText("")
+        self.groupBox_6.setTitle(QCoreApplication.translate("MainWindow", u"Analysis Stats", None))
+        self.groupBox_7.setTitle(QCoreApplication.translate("MainWindow", u"Summary", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"Files scanned:", None))
+        self.label_filesScanned.setText(QCoreApplication.translate("MainWindow", u"999", None))
+        self.label_4.setText(QCoreApplication.translate("MainWindow", u"URLs scanned:", None))
+        self.label_5.setText(QCoreApplication.translate("MainWindow", u"999", None))
+        self.label_8.setText(QCoreApplication.translate("MainWindow", u"Threats detected:", None))
+        self.label_threatsDetected.setText(QCoreApplication.translate("MainWindow", u"999,999", None))
+        self.groupBox_8.setTitle(QCoreApplication.translate("MainWindow", u"Top Threats", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"Most detected", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"Recently detected", None))
+        self.groupBox_5.setTitle(QCoreApplication.translate("MainWindow", u"Latest File Scan Results", None))
+        self.groupBox_9.setTitle(QCoreApplication.translate("MainWindow", u"Latest URL Scan Results", None))
         self.groupBox_4.setTitle(QCoreApplication.translate("MainWindow", u"Scan files", None))
         self.btn_fileSelect.setText(QCoreApplication.translate("MainWindow", u"Select file...", None))
         self.btn_startFileScan.setText(QCoreApplication.translate("MainWindow", u"Start", None))
         self.btn_stopFileScan.setText(QCoreApplication.translate("MainWindow", u"Stop", None))
-        self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"File Upload", None))
-        self.btn_fileBrowse.setText(QCoreApplication.translate("MainWindow", u"Browse...", None))
-        self.lbl_fileSelected.setText(QCoreApplication.translate("MainWindow", u"No file selected", None))
-        self.btn_fileScan.setText(QCoreApplication.translate("MainWindow", u"Scan", None))
-        self.groupBox_fileInfo.setTitle(QCoreApplication.translate("MainWindow", u"File Details", None))
-        ___qtreewidgetitem = self.tbl_fileInfo.headerItem()
-        ___qtreewidgetitem.setText(1, QCoreApplication.translate("MainWindow", u"Value", None));
-        ___qtreewidgetitem.setText(0, QCoreApplication.translate("MainWindow", u"Property", None));
-        self.groupBox_fileScanResult.setTitle(QCoreApplication.translate("MainWindow", u"Analysis Results", None))
-        self.label_5.setText(QCoreApplication.translate("MainWindow", u"Status:", None))
-        self.label_fileScanStatus.setText("")
-        self.label_4.setText(QCoreApplication.translate("MainWindow", u"Detection:", None))
-        self.label_fileScanDetection.setText("")
-        ___qtreewidgetitem1 = self.tbl_fileScanResult.headerItem()
-        ___qtreewidgetitem1.setText(1, QCoreApplication.translate("MainWindow", u"Result", None));
-        ___qtreewidgetitem1.setText(0, QCoreApplication.translate("MainWindow", u"Engine", None));
-        self.label.setText(QCoreApplication.translate("MainWindow", u"Elapsed time:", None))
-        self.label_fileScanElapsedTime.setText("")
-        self.label_11.setText(QCoreApplication.translate("MainWindow", u"Status:", None))
-        self.label_urlScanStatus_3.setText("")
-        self.label_12.setText(QCoreApplication.translate("MainWindow", u"Detection:", None))
-        self.label_urlScanDetection_3.setText("")
-        ___qtreewidgetitem2 = self.tree_fileScan.headerItem()
-        ___qtreewidgetitem2.setText(3, QCoreApplication.translate("MainWindow", u"Status", None));
-        ___qtreewidgetitem2.setText(2, QCoreApplication.translate("MainWindow", u"Size", None));
-        ___qtreewidgetitem2.setText(1, QCoreApplication.translate("MainWindow", u"Type", None));
-        ___qtreewidgetitem2.setText(0, QCoreApplication.translate("MainWindow", u"Filename", None));
-        self.label_13.setText(QCoreApplication.translate("MainWindow", u"Elapsed time:", None))
-        self.label_urlScanElapsedTime_3.setText("")
-        self.groupBox_3.setTitle(QCoreApplication.translate("MainWindow", u"Open directory", None))
-        self.btn_dirBrowse.setText(QCoreApplication.translate("MainWindow", u"Browse...", None))
-        self.lbl_dirSelected.setText(QCoreApplication.translate("MainWindow", u"No directory selected", None))
-        self.btn_dirScan.setText(QCoreApplication.translate("MainWindow", u"Scan", None))
-        self.groupBox_dirScan.setTitle(QCoreApplication.translate("MainWindow", u"Directory", None))
-        self.label_8.setText(QCoreApplication.translate("MainWindow", u"Status:", None))
-        self.label_urlScanStatus_2.setText("")
-        self.label_9.setText(QCoreApplication.translate("MainWindow", u"Detection:", None))
-        self.label_urlScanDetection_2.setText("")
-        ___qtreewidgetitem3 = self.tree_dirScan.headerItem()
-        ___qtreewidgetitem3.setText(3, QCoreApplication.translate("MainWindow", u"Result", None));
-        ___qtreewidgetitem3.setText(2, QCoreApplication.translate("MainWindow", u"Size", None));
-        ___qtreewidgetitem3.setText(1, QCoreApplication.translate("MainWindow", u"Type", None));
-        ___qtreewidgetitem3.setText(0, QCoreApplication.translate("MainWindow", u"Name", None));
-        self.label_10.setText(QCoreApplication.translate("MainWindow", u"Elapsed time:", None))
-        self.label_urlScanElapsedTime_2.setText("")
         self.groupBox_2.setTitle(QCoreApplication.translate("MainWindow", u"URL Scan", None))
         self.input_url.setPlaceholderText(QCoreApplication.translate("MainWindow", u"https://", None))
         self.btn_UrlScan.setText(QCoreApplication.translate("MainWindow", u"Scan", None))
@@ -1636,12 +1396,12 @@ class Ui_MainWindow(object):
         self.label_urlScanStatus.setText("")
         self.label_7.setText(QCoreApplication.translate("MainWindow", u"Detection:", None))
         self.label_urlScanDetection.setText("")
-        ___qtreewidgetitem4 = self.tbl_urlScanResult.headerItem()
-        ___qtreewidgetitem4.setText(1, QCoreApplication.translate("MainWindow", u"Result", None));
-        ___qtreewidgetitem4.setText(0, QCoreApplication.translate("MainWindow", u"Vendor", None));
+        ___qtreewidgetitem = self.tbl_urlScanResult.headerItem()
+        ___qtreewidgetitem.setText(1, QCoreApplication.translate("MainWindow", u"Result", None));
+        ___qtreewidgetitem.setText(0, QCoreApplication.translate("MainWindow", u"Vendor", None));
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"Elapsed time:", None))
         self.label_urlScanElapsedTime.setText("")
-        self.creditsLabel.setText(QCoreApplication.translate("MainWindow", u"Developed by Pang Hoi Him (220327019@stu.vtc.edu.hk)", None))
+        self.creditsLabel.setText(QCoreApplication.translate("MainWindow", u"Developed by Pang Hoi Him (220327019)", None))
         self.version.setText(QCoreApplication.translate("MainWindow", u"Scan-X version 1.0.0", None))
     # retranslateUi
 
