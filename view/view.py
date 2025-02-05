@@ -1,11 +1,10 @@
 from PySide6.QtWidgets import QMainWindow, QGraphicsDropShadowEffect, QSizeGrip, QPushButton, QStackedLayout, QWidget, QHBoxLayout
 from PySide6.QtCore import Qt, QPropertyAnimation, QEasingCurve, QParallelAnimationGroup, QFile, Signal
 from PySide6.QtGui import QIcon, QColor
-from PySide6.QtUiTools import QUiLoader
 from widgets import CustomGrip
 from .ui.ui_main import Ui_MainWindow
 from .ui.ui_file_details import Ui_FileDetails
-from .pages import Home, FileScan, FileScan2, DirScan, URLScan
+from .pages import Home, FileScan, URLScan
 
 class View(QMainWindow):
     ENABLE_CUSTOM_TITLE_BAR = True
@@ -49,12 +48,9 @@ class View(QMainWindow):
             'pageChanged': self.pageChangedSignal
         }
 
-        # self.fileScan = FileScan(self.ui)
-        # self.dirScan = DirScan(self.ui)
-        # self.urlScan = URLScan(self.ui)
-        # self.fileScan2 = FileScan2(self.ui, signals=signals)
-
-        for (pageName, pageClass) in [('pageHome', Home), ('pageScan', FileScan2), ('urlScan', URLScan)]:
+        for (pageName, pageClass) in [('pageHome', Home),
+                                      ('pageScan', FileScan),
+                                      ('urlScan', URLScan)]:
             setattr(self, pageName, pageClass(self.ui, signals=signals, ctx=ctx))
 
     # TOGGLE MENU
@@ -229,13 +225,6 @@ class View(QMainWindow):
         #STANDARD TITLE BAR
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
-
-        # loader = QUiLoader()
-        # uifile = QFile('./res/file_details.ui')
-        # uifile.open(QFile.ReadOnly)
-        # # print(uifile)
-        # loader.load(uifile, self.ui.extraRightBox)
-        # uifile.close()
 
         # MOVE WINDOW / MAXIMIZE / RESTORE
         def moveWindow(event):

@@ -1,145 +1,186 @@
-from PySide6.QtCore import QObject, QThread, Signal
+from PySide6.QtCore import QObject, QThread, Signal, Qt, QModelIndex
 from PySide6.QtWidgets import QFileDialog, QTreeWidgetItem
-from PySide6.QtGui import Qt, QIcon
-import os
+import asyncio
+from qasync import asyncSlot
+import time
 import hashlib
 import vt
+import os
 import json
-import time
-import asyncio
-import magic
-from qasync import asyncSlot
-from ..ui.ui_main import Ui_MainWindow
-from core.config import VIRUS_TOTAL_API_KEY
+import sqlite3
 
-class FileScan(QObject):
-    def __init__(self, ui: Ui_MainWindow, *args, **kwargs):
-        super().__init__()
+from model import FileScanModel, File
+from view.ui.ui_main import Ui_MainWindow
+from widgets import FileDetailsContainer
+from core.config import VIRUS_TOTAL_API_KEY, NUM_SCAN_WORKERS
+from core import DB
+from .base import Base
+
+class FileScan(Base):
+    model = FileScanModel()
+    files = []
+    queue = asyncio.Queue()
+    workerTasks = []
+
+    def __init__(self, ui: Ui_MainWindow, signals=None, ctx=None, *args, **kwargs):
         self.ui = ui
-        self.ui.groupBox_fileInfo.hide()
-        self.ui.progressBar.hide()
-        self.ui.groupBox_fileScanResult.hide()
-        self.connect_slots_and_signals()
+        self.signals = signals
+        self.db: DB = ctx.get('db')
+        super().__init__(*args, **kwargs)
 
-    def connect_slots_and_signals(self):
-        self.ui.btn_fileBrowse.clicked.connect(self.fileBrowse)
-        self.ui.btn_fileScan.clicked.connect(self.startFileScan)
+    def uiDefinitions(self):
+        self.ui.tree_filelist.setModel(self.model)
+        self.ui.tree_filelist.setColumnWidth(0, 300)
+        self.ui.tree_filelist.setColumnWidth(1, 150)
+
+    def connectSlotsAndSignals(self):
+        self.ui.btn_fileSelect.clicked.connect(self.fileBrowse)
+        self.ui.fileScanDrop.dropSignal.connect(self.filesDropped)
+        self.ui.tree_filelist.doubleClicked.connect(self.filelistItemClick)
+        self.ui.tree_filelist.keyPressed.connect(self.filelistkeyPressed)
+        self.ui.btn_startFileScan.clicked.connect(self.startFileScan)
+        self.ui.btn_stopFileScan.clicked.connect(self.cancelFileScan)
 
     def fileBrowse(self):
         dlg = QFileDialog()
         dlg.setFileMode(QFileDialog.ExistingFiles)
         if dlg.exec_():
             selectedFiles = dlg.selectedFiles()
-            if len(selectedFiles) == 1:
-                self.ui.stackedWidget_2.setCurrentIndex(0)
-                self.filepath = selectedFiles[0]
-                self.ui.lbl_fileSelected.setText(self.filepath)
-                self.ui.lbl_fileSelected.setStyleSheet("color: #0000ff")
-                self.ui.btn_fileScan.setEnabled(True)
-                self.ui.groupBox_fileScanResult.hide()
+            for filepath in selectedFiles:
+                self.model.addFile(filepath)
 
-                self.ui.tbl_fileInfo.clear()
-                self.fileDetailsThread = FileDetailsThread(self.filepath)
-                self.fileDetailsThread.okSignal.connect(self.updateFileInfo)
-                self.fileDetailsThread.start()
-            else:
-                self.ui.stackedWidget_2.setCurrentIndex(1)
-                self.ui.tree_fileScan.clear()
-                items = [QTreeWidgetItem([f]) for f in selectedFiles]
-                self.ui.tree_fileScan.insertTopLevelItems(0, items)
+    def filesDropped(self, filepaths):
+        for filepath in filepaths:
+            if os.path.isfile(filepath):
+                self.model.addFile(filepath)
 
+    def filelistkeyPressed(self, event):
+        if event.key() == Qt.Key_Delete:
+            selectedIndexes = self.ui.tree_filelist.selectedIndexes()
+            rows = sorted(list(set([index.row() for index in selectedIndexes if index.isValid()])), reverse=True)
+            for row in rows:
+                self.model.removeFile(row)
 
-    def updateFileInfo(self, fileInfo: dict):
-        for label, key in [['Name', 'name'], ['Path', 'path'], ['MD5', 'md5'], ['SHA1', 'sha1'],
-                           ['SHA256', 'sha256'], ['Size', 'size'], ['Type', 'type']]:
-            item = QTreeWidgetItem(self.ui.tbl_fileInfo)
-            item.setText(0, label)
-            value = '{} Bytes'.format(fileInfo.get(key)) if key == 'size' else fileInfo.get(key)
-            item.setText(1, value)
-        self.ui.groupBox_fileInfo.show()
+    def filelistItemClick(self, index: QModelIndex):
+        row = index.row()
+        fileInfo = self.model.files[row]
+        self.signals['openRightBox'].emit(fileInfo.get('filename'), FileDetailsContainer, {'fileInfo': fileInfo})
 
-    @asyncSlot()
-    async def startFileScan(self):
-        self.ui.btn_fileScan.setEnabled(False)
-        self.ui.progressBar.show()
-        self.ui.progressBar.setValue(10)
-        self.ui.tbl_fileScanResult.clear()
-        self.startTime = time.time()
-        self.fileScanTask = FileScanTask(self.filepath)
-        self.fileScanTask.okSignal.connect(self.updateFileScanResult)
-        self.fileScanTask.progressSignal.connect(self.progressFileScanResult)
-        await self.fileScanTask.run()
+    # @asyncSlot()
+    def startFileScan(self):
+        files = [f for f in self.model.files
+                 if f.get('status') in (File.STATUS_PENDING, File.STATUS_FAILED)]
+        for f in files:
+            self.queue.put_nowait(f)
+            self.model.updateFile(f.get('filepath'), status=File.STATUS_QUEUED)
 
-    def progressFileScanResult(self):
-        self.ui.progressBar.setValue(self.ui.progressBar.value() + 5)
+        if len(self.workerTasks) == 0:
+            for i in range(NUM_SCAN_WORKERS):
+                worker = FileScanWorker(self.queue, VIRUS_TOTAL_API_KEY)
+                worker.started.connect(self.workerStarted)
+                worker.finished.connect(self.workerFinished)
+                worker.error.connect(self.workerError)
+                task = asyncio.create_task(worker.run())
+                self.workerTasks.append(task)
 
-    def updateFileScanResult(self, analysis):
-        self.ui.progressBar.hide()
-        results = analysis.last_analysis_results.values()
-        detection = [x for x in results if x['result'] is not None]
-        for result in results:
-            item = QTreeWidgetItem(self.ui.tbl_fileScanResult)
-            item.setText(0, result['engine_name'])
-            detected = result['result'] is not None
-            value = result['result'] if detected else 'Undetected'
-            item.setText(1, value)
-            icon = QIcon(':/resources/images/icons/exclaimation-circle.svg' if detected else ':/resources/images/icons/check-circle.svg')
-            item.setIcon(1, icon)
-        self.ui.label_fileScanDetection.setText('{} / {}'.format(len(detection), len(results)))
-        statusTxt, color = ('No virus detected', '#00ff00') if len(detection) == 0 else ('Virus detected', '#ff0000')
-        self.ui.label_fileScanStatus.setText(statusTxt)
-        self.ui.label_fileScanStatus.setStyleSheet('color: {}'.format(color))
-        self.ui.label_fileScanElapsedTime.setText('{} seconds'.format(time.time() - self.startTime))
-        self.ui.groupBox_fileScanResult.show()
+    def cancelFileScan(self):
+        files = [f for f in self.model.files
+                 if f.get('status') == File.STATUS_QUEUED]
+        for f in files:
+            self.model.updateFile(f.get('filepath'), status=File.STATUS_CANCELED)
 
+    def workerStarted(self, filepath):
+        self.model.updateFile(filepath, status=File.STATUS_SCANNING, startedTime=time.time())
 
-class FileDetailsThread(QThread):
-    okSignal = Signal(dict)
+    def workerFinished(self, filepath, analysis):
+        analysisStats = analysis.get('stats')
+        analysisResults = analysis.get('results').values()
+        detection = [x for x in analysisResults if x['result'] is not None]
+        status = File.STATUS_COMPLETED if len(detection) == 0 else File.STATUS_INFECTED
+        file = self.model.updateFile(filepath, status=status, analysisResults=analysisResults, finishedTime=time.time())
+        try:
+            self.db.beginTransaction()
+            fileId = self.db.fetchOneCol(
+                'SELECT id FROM file WHERE filepath = ? AND sha1 = ?',
+                [file.get('filepath'), file.get('sha1')]
+            )
+            if not fileId:
+                cur = self.db.exec("""
+                INSERT INTO file (filename, filepath, path, sha1, sha256, md5, size, type, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                                   [file.get('filename'), file.get('filepath'), file.get('path'),
+                                    file.get('sha1'), file.get('sha256'), file.get('md5'),
+                                    file.get('size'), file.get('type'), time.time()])
+                fileId = cur.lastrowid
+            cur = self.db.exec("""
+            INSERT INTO file_scan_result (file_id, analysis_stats, analysis_results, clean, started_at, finished_at, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            """,
+                         [fileId,
+                          json.dumps(dict(analysisStats)),
+                          json.dumps([dict(res) for res in analysisResults]),
+                          len(detection) == 0, file.get('startedTime'), file.get('finishedTime'), time.time()])
+            scanResultId = cur.lastrowid
+            for analysisResult in analysisResults:
+                engineName, virusName = analysisResult.get('engine_name'), analysisResult.get('result')
+                engineId = self.db.fetchOneCol('SELECT id FROM engine WHERE name = ?',[engineName])
+                virusId = None
+                if not engineId:
+                    cur = self.db.exec('INSERT INTO engine (name) VALUES (?)', [engineName])
+                    engineId = cur.lastrowid
+                if virusName:
+                    virusId = self.db.fetchOneCol('SELECT id FROM virus WHERE name = ?',[virusName])
+                    if not virusId:
+                        cur = self.db.exec('INSERT INTO virus (name) VALUES (?)', [virusName])
+                        virusId = cur.lastrowid
+                self.db.exec("""
+                INSERT INTO analysis (engine_id, virus_id, category, type, file_scan_result_id)
+                VALUES (?, ?, ?, ?, ?)
+                """, [engineId, virusId, analysisResult.get('category'), 'file', scanResultId])
+            self.db.commit()
+        except sqlite3.Error as e:
+            print(f"DB error: {e}")
+            self.db.rollback()
 
-    def __init__(self, filepath, parent=None):
-        super(FileDetailsThread, self).__init__(parent)
-        self.filepath = str(filepath)
+    def workerError(self, filepath, err):
+        self.model.updateFile(filepath, status=File.STATUS_FAILED, err=err)
 
-    @staticmethod
-    def getFileDetails(filepath):
-        with open(filepath, 'rb') as f:
-            cfile = f.read()
-            _, filename  = os.path.split(str(filepath))
-            return {
-                'name': filename,
-                'path': filepath,
-                'md5': hashlib.md5(cfile).hexdigest(),
-                'sha1': hashlib.sha1(cfile).hexdigest(),
-                'sha256': hashlib.sha256(cfile).hexdigest(),
-                'size': os.path.getsize(filepath),
-                'type': magic.from_file(filepath)
-            }
+class FileScanWorker(QObject):
+    started = Signal(str)
+    finished = Signal(str, object)
+    error = Signal(str, object)
 
-    def run(self):
-        fileDetails = FileDetailsThread.getFileDetails(self.filepath)
-        self.okSignal.emit(fileDetails)
-
-
-class FileScanTask(QObject):
-    okSignal = Signal(object)
-    progressSignal = Signal()
-
-    def __init__(self, filepath, parent=None):
-        super(FileScanTask, self).__init__(parent)
-        self.filepath = str(filepath)
+    def __init__(self, queue, virustotalApiKey, parent=None):
+        super(FileScanWorker, self).__init__(parent)
+        self.queue = queue
+        self.virustotalApiKey = virustotalApiKey
 
     async def run(self):
-        with open(self.filepath, 'rb') as f:
-            sha1 = hashlib.sha1(f.read()).hexdigest()
-            # sha1 = '9f101483662fc071b7c10f81c64bb34491ca4a877191d464ff46fd94c7247115'
-            async with vt.Client(VIRUS_TOTAL_API_KEY) as client:
-                analysis = await client.scan_file_async(f)
-                while True:
-                    analysis = await client.get_object_async('/analyses/{}', analysis.id)
-                    if analysis.status == 'completed':
-                        break
-                    self.progressSignal.emit()
-                    await asyncio.sleep(30)
-                result = await client.get_object_async('/files/{}', sha1)
-                # print(json.dumps(result, indent=4, default=vars))
-                self.okSignal.emit(result)
+        while True:
+            try:
+                fileInfo = await self.queue.get()
+                filepath, status = fileInfo.get('filepath'), fileInfo.get('status')
+                if status == File.STATUS_QUEUED:
+                    self.started.emit(filepath)
+                    with open(filepath, 'rb') as f:
+                        sha1 = hashlib.sha1(f.read()).hexdigest()
+                        async with vt.Client(self.virustotalApiKey) as client:
+                            try:
+                                analysis = await client.get_object_async('/files/{}', sha1)
+                                self.finished.emit(filepath, {
+                                    'stats': analysis.last_analysis_stats,
+                                    'results': analysis.last_analysis_results
+                                })
+                            except vt.APIError as e:
+                                if e.code == 'NotFoundError':
+                                    analysis = await client.scan_file_async(f, wait_for_completion=True)
+                                    self.finished.emit(filepath, analysis)
+                                else:
+                                    raise e
+                            self.queue.task_done()
+                else:
+                    self.queue.task_done()
+            except Exception as err:
+                self.error.emit(filepath, err)
+                self.queue.task_done()
