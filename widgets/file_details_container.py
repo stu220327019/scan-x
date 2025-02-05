@@ -3,6 +3,7 @@ from PySide6.QtGui import QIcon
 from view.ui.ui_file_details import Ui_FileDetails
 
 from model import File, Color
+from lib import utils
 
 class FileDetailsContainer(QWidget):
     def __init__(self, parent=None, fileInfo=None, **kwargs):
@@ -17,7 +18,8 @@ class FileDetailsContainer(QWidget):
                            ['SHA256', 'sha256'], ['Size', 'size'], ['Type', 'type']]:
             item = QTreeWidgetItem(self.ui.tbl_fileInfo)
             item.setText(0, label)
-            value = '{} Bytes'.format(fileInfo.get(key)) if key == 'size' else fileInfo.get(key)
+            value = '{} ({} Bytes)'.format(utils.sizeof_fmt(fileInfo.get(key)), fileInfo.get(key)) \
+                if key == 'size' else fileInfo.get(key)
             item.setText(1, value)
         # self.ui.groupBox_fileInfo.show()
 
