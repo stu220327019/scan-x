@@ -95,8 +95,8 @@ class FileScan2(QObject):
         self.model.updateFile(filepath, status=File.STATUS_SCANNING, startedTime=time.time())
 
     def workerFinished(self, filepath, analysis):
-        analysisStats = analysis.last_analysis_stats
-        analysisResults = analysis.last_analysis_results.values()
+        analysisStats = analysis.get('stats')
+        analysisResults = analysis.get('results').values()
         detection = [x for x in analysisResults if x['result'] is not None]
         status = File.STATUS_COMPLETED if len(detection) == 0 else File.STATUS_INFECTED
         file = self.model.updateFile(filepath, status=status, analysisResults=analysisResults, finishedTime=time.time())
@@ -122,7 +122,7 @@ class FileScan2(QObject):
                          [fileId,
                           json.dumps(dict(analysisStats)),
                           json.dumps([dict(res) for res in analysisResults]),
-                          detection == 0, file.get('startedTime'), file.get('finishedTime'), time.time()])
+                          len(detection) == 0, file.get('startedTime'), file.get('finishedTime'), time.time()])
             scanResultId = cur.lastrowid
             for analysisResult in analysisResults:
                 engineName, virusName = analysisResult.get('engine_name'), analysisResult.get('result')
@@ -168,16 +168,19 @@ class FileScanWorker(QObject):
                     with open(filepath, 'rb') as f:
                         sha1 = hashlib.sha1(f.read()).hexdigest()
                         async with vt.Client(self.virustotalApiKey) as client:
-                            analysis = await client.scan_file_async(f)
-                            while True:
-                                analysis = await client.get_object_async('/analyses/{}', analysis.id)
-                                # print(f'/analyses/{analysis.id} - {analysis.status}')
-                                if analysis.status == 'completed':
-                                    break
-                                await asyncio.sleep(10)
-                            analysis = await client.get_object_async('/files/{}', sha1)
+                            try:
+                                analysis = await client.get_object_async('/files/{}', sha1)
+                                self.finished.emit(filepath, {
+                                    'stats': analysis.last_analysis_stats,
+                                    'results': analysis.last_analysis_results
+                                })
+                            except vt.APIError as e:
+                                if e.code == 'NotFoundError':
+                                    analysis = await client.scan_file_async(f, wait_for_completion=True)
+                                    self.finished.emit(filepath, analysis)
+                                else:
+                                    raise e
                             self.queue.task_done()
-                            self.finished.emit(filepath, analysis)
                 else:
                     self.queue.task_done()
             except Exception as err:
