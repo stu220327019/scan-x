@@ -13,7 +13,6 @@ class FileScanResultModel(QAbstractTableModel):
     def __init__(self, db: DB, parent=None):
         super().__init__(parent)
         self.db = db
-        self.load_data()
 
     def rowCount(self, parent=QModelIndex()):
         return len(self.results) if not parent.isValid() else 0
@@ -60,13 +59,14 @@ class FileScanResultModel(QAbstractTableModel):
             else:
                 return None
 
-    def load_data(self):
+    def loadData(self):
         rows = self.db.fetchAll("""
         SELECT f.*, r.clean, r.analysis_stats, r.analysis_results, r.started_at, r.finished_at, r.created_at FROM file_scan_result r, file f
         WHERE f.id = r.file_id
         ORDER BY r.created_at DESC LIMIT 100
         """)
         self.beginResetModel()
+        self.results = []
         for row in rows:
             row['analysisStats'] = json.loads(row['analysis_stats'])
             row['analysisResults'] = json.loads(row['analysis_results'])

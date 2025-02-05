@@ -27,6 +27,7 @@ class View(QMainWindow):
     toggleRightBoxSignal = Signal()
     openRightBoxSignal = Signal(str, object, object)
     closeRightBoxSignal = Signal()
+    pageChangedSignal = Signal(int)
 
     def __init__(self, model, ctx):
         super(View, self).__init__()
@@ -44,7 +45,8 @@ class View(QMainWindow):
         signals = {
             'toggleRightBox': self.toggleRightBoxSignal,
             'openRightBox': self.openRightBoxSignal,
-            'closeRightBox': self.closeRightBoxSignal
+            'closeRightBox': self.closeRightBoxSignal,
+            'pageChanged': self.pageChangedSignal
         }
 
         # self.fileScan = FileScan(self.ui)
@@ -297,6 +299,7 @@ class View(QMainWindow):
     
     def changePage(self, button):
         idx = self.model.topMenuPageIdx(button)
+        self.pageChangedSignal.emit(idx)
         self.reset_topMenu_clicked_style()
         self.select_topMenu_clicked_style(button)
         self.ui.stackedWidget.setCurrentIndex(idx)

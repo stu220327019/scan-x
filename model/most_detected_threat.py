@@ -13,7 +13,6 @@ class MostDetectedThreatModel(QAbstractTableModel):
     def __init__(self, db: DB, parent=None):
         super().__init__(parent)
         self.db = db
-        self.load_data()
 
     def rowCount(self, parent=QModelIndex()):
         return len(self.threats) if not parent.isValid() else 0
@@ -33,7 +32,7 @@ class MostDetectedThreatModel(QAbstractTableModel):
         col = index.column()
         return self.threats[row][['name', 'detected'][col]]
 
-    def load_data(self):
+    def loadData(self):
         rows = self.db.fetchAll("""
         SELECT v.name, COUNT(*) AS detected FROM virus v, analysis a
         WHERE a.virus_id = v.id
@@ -41,6 +40,7 @@ class MostDetectedThreatModel(QAbstractTableModel):
         ORDER BY detected DESC LIMIT 100
         """)
         self.beginResetModel()
+        self.threats = []
         for row in rows:
             self.threats.append(row)
         self.endResetModel()

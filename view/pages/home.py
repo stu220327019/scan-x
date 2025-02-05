@@ -22,7 +22,18 @@ class Home(Base):
         self.ui.tree_fileScanResults.doubleClicked.connect(self.fileScanResultsItemClick)
         self.ui.tree_mostDetectedVirus.setModel(self.mostDetectedThreatModel)
         self.ui.tree_mostDetectedVirus.setColumnWidth(0, 250)
+
+    def connectSlotsAndSignals(self):
+        self.signals['pageChanged'].connect(self.pageChanged)
+
+    def loadData(self):
+        self.fileScanResultModel.loadData()
+        self.mostDetectedThreatModel.loadData()
         self.updateSummary()
+
+    def pageChanged(self, idx):
+        if idx == 0:
+            self.loadData()
 
     def fileScanResultsItemClick(self, index: QModelIndex):
         row = index.row()

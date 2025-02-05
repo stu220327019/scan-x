@@ -14,28 +14,26 @@ from view.ui.ui_main import Ui_MainWindow
 from widgets import FileDetailsContainer
 from core.config import VIRUS_TOTAL_API_KEY, NUM_SCAN_WORKERS
 from core import DB
+from .base import Base
 
-class FileScan2(QObject):
+class FileScan2(Base):
     model = FileScanModel()
     files = []
     queue = asyncio.Queue()
     workerTasks = []
 
     def __init__(self, ui: Ui_MainWindow, signals=None, ctx=None, *args, **kwargs):
-        super().__init__()
         self.ui = ui
         self.signals = signals
         self.db: DB = ctx.get('db')
-
-        self.uiDefinitions()
-        self.connect_slots_and_signals()
+        super().__init__(*args, **kwargs)
 
     def uiDefinitions(self):
         self.ui.tree_filelist.setModel(self.model)
         self.ui.tree_filelist.setColumnWidth(0, 300)
         self.ui.tree_filelist.setColumnWidth(1, 150)
 
-    def connect_slots_and_signals(self):
+    def connectSlotsAndSignals(self):
         self.ui.btn_fileSelect.clicked.connect(self.fileBrowse)
         self.ui.fileScanDrop.dropSignal.connect(self.filesDropped)
         self.ui.tree_filelist.doubleClicked.connect(self.filelistItemClick)
