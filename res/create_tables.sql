@@ -27,6 +27,37 @@ CREATE TABLE IF NOT EXISTS file_scan_result (
   FOREIGN KEY (file_id) REFERENCES file(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS url (
+  id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  url TEXT NOT NULL UNIQUE,
+  created_at DATETIME NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS url_http_response (
+  id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  url_id INTEGER NOT NULL,
+  status_code INT,
+  content_length INT,
+  content_sha256 TEXT,
+  title TEXT,
+  headers TEXT,
+  created_at DATETIME NOT NULL
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS ux_url_http_response_url_sha256 ON url_http_response(url_id, content_sha256);
+
+CREATE TABLE IF NOT EXISTS url_scan_result (
+  id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  url_id INTEGER NOT NULL,
+  analysis_stats TEXT NOT NULL,
+  analysis_results TEXT NOT NULL,
+  clean BOOLEAN NOT NULL,
+  started_at DATETIME NOT NULL,
+  finished_at DATETIME NOT NULL,
+  created_at DATETIME NOT NULL,
+  FOREIGN KEY (url_id) REFERENCES url(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS engine (
   id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   name TEXT NOT NULL UNIQUE
@@ -44,7 +75,9 @@ CREATE TABLE IF NOT EXISTS analysis (
   category TEXT /* CHECK( pType IN ('failure', 'harmless', 'malicious', 'suspicious', 'timeout', 'type-unsupported', 'undetected') ) */ NOT NULL,
   type TEXT /* CHECK( pType IN ('file', 'url') ) */ NOT NULL,
   file_scan_result_id INTEGER,
+  url_scan_result_id INTEGER,
   FOREIGN KEY (engine_id) REFERENCES engine(id) ON UPDATE CASCADE ON DELETE CASCADE,
   FOREIGN KEY (virus_id) REFERENCES virus(id) ON UPDATE CASCADE ON DELETE CASCADE,
-  FOREIGN KEY (file_scan_result_id) REFERENCES file_scan_result(id) ON UPDATE CASCADE ON DELETE CASCADE
+  FOREIGN KEY (file_scan_result_id) REFERENCES file_scan_result(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (url_scan_result_id) REFERENCES url_scan_result(id) ON UPDATE CASCADE ON DELETE CASCADE
 );

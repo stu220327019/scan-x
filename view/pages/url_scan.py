@@ -7,7 +7,7 @@ import time
 from qasync import asyncSlot
 import asyncio
 import json
-from pprint import pprint
+import sqlite3
 
 from view.ui.ui_main import Ui_MainWindow
 from .base import Base
@@ -18,8 +18,9 @@ URL_PATTERN = r'((http|https)\:\/\/)?[a-zA-Z0-9\.\/\?\:@\-_=#]+\.([a-zA-Z]){2,6}
 
 
 class URLScan(Base):
-    def __init__(self, ui: Ui_MainWindow, *args, **kwargs):
+    def __init__(self, ui: Ui_MainWindow, ctx=None, *args, **kwargs):
         self.ui = ui
+        self.db: DB = ctx.get('db')
         super().__init__(*args, **kwargs)
 
     def connectSlotsAndSignals(self):
@@ -76,9 +77,9 @@ class URLScan(Base):
                     item.addChild(childItem)
                     item.setExpanded(True)
         finishedTime = time.time()
-        results = scanResult.analysis.results.values()
-        detection = [x for x in results if x['result'] not in ('clean', 'unrated')]
-        for result in results:
+        analysisResults = scanResult.analysis.results.values()
+        detection = [x for x in analysisResults if x['result'] not in ('clean', 'unrated')]
+        for result in analysisResults:
             item = QTreeWidgetItem(self.ui.tbl_urlScanResult)
             item.setText(0, result['engine_name'])
             value = result['result']
@@ -86,12 +87,62 @@ class URLScan(Base):
             item.setText(1, value.title())
             icon = QIcon(':/resources/images/icons/exclaimation-circle.svg' if detected else ':/resources/images/icons/check-circle.svg')
             item.setIcon(1, icon)
-        self.ui.label_urlScanDetection.setText('{} / {}'.format(len(detection), len(results)))
+        self.ui.label_urlScanDetection.setText('{} / {}'.format(len(detection), len(analysisResults)))
         statusTxt, color = ('Safe', Color.SUCCESS) if len(detection) == 0 else ('Unsafe', Color.DANGER)
         self.ui.label_urlScanStatus.setText(statusTxt)
         self.ui.label_urlScanStatus.setStyleSheet('color: {}'.format(color))
         self.ui.label_urlScanElapsedTime.setText('{:.6f} seconds'.format(finishedTime - self.startedTime))
         self.resetUi()
+        try:
+            self.db.beginTransaction()
+            url = scanResult.url
+            urlId = self.db.fetchOneCol('SELECT id FROM url WHERE url = ?', [url.url])
+            if not urlId:
+                cur = self.db.exec('INSERT INTO url (url, created_at) VALUES (?, ?)', [url.url, time.time()])
+                urlId = cur.lastrowid
+            httpResponse = url.httpResponse
+            if not self.db.fetchOneCol('SELECT id FROM url_http_response WHERE url_id = ? AND content_sha256 = ?',
+                                       [urlId, httpResponse.get('contentSha256')]):
+                self.db.exec("""
+                INSERT INTO url_http_response (url_id, status_code, content_length, content_sha256, title, headers, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+                """,
+                             [urlId,
+                              httpResponse.get('statusCode'),
+                              httpResponse.get('contentLength'),
+                              httpResponse.get('contentSha256'),
+                              httpResponse.get('title'),
+                              json.dumps(dict(httpResponse.get('headers'))),
+                              time.time()])
+            cur = self.db.exec("""
+            INSERT INTO url_scan_result (url_id, analysis_stats, analysis_results, clean, started_at, finished_at, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            """,
+                         [urlId,
+                          json.dumps(dict(scanResult.analysis.stats)),
+                          json.dumps([dict(res) for res in analysisResults]),
+                          len(detection) == 0, self.startedTime, finishedTime, time.time()])
+            scanResultId = cur.lastrowid
+            for analysisResult in analysisResults:
+                engineName, virusName = analysisResult.get('engine_name'), analysisResult.get('result')
+                engineId = self.db.fetchOneCol('SELECT id FROM engine WHERE name = ?',[engineName])
+                virusId = None
+                if not engineId:
+                    cur = self.db.exec('INSERT INTO engine (name) VALUES (?)', [engineName])
+                    engineId = cur.lastrowid
+                if virusName:
+                    virusId = self.db.fetchOneCol('SELECT id FROM virus WHERE name = ?',[virusName])
+                    if not virusId:
+                        cur = self.db.exec('INSERT INTO virus (name) VALUES (?)', [virusName])
+                        virusId = cur.lastrowid
+                self.db.exec("""
+                INSERT INTO analysis (engine_id, virus_id, category, type, url_scan_result_id)
+                VALUES (?, ?, ?, ?, ?)
+                """, [engineId, virusId, analysisResult.get('category'), 'url', scanResultId])
+            self.db.commit()
+        except sqlite3.Error as e:
+            print(f"DB error: {e}")
+            self.db.rollback()
 
     def scanError(self, error):
         print(f'Error: {error}')
