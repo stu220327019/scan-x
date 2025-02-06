@@ -1065,6 +1065,10 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_13.addLayout(self.verticalLayout_18)
 
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_13.addItem(self.verticalSpacer_2)
+
 
         self.horizontalLayout_7.addLayout(self.verticalLayout_13)
 
@@ -1361,7 +1365,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         self.content.setCurrentIndex(1)
-        self.stackedWidget.setCurrentIndex(2)
+        self.stackedWidget.setCurrentIndex(0)
         self.tabWidget.setCurrentIndex(0)
 
 
