@@ -1735,7 +1735,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     <item>
                      <widget class="QStackedWidget" name="stackedWidget">
                       <property name="currentIndex">
-                       <number>0</number>
+                       <number>2</number>
                       </property>
                       <widget class="QWidget" name="home">
                        <layout class="QVBoxLayout" name="verticalLayout_28">
@@ -2144,7 +2144,21 @@ li.checked::marker { content: &quot;\2612&quot;; }
                             </property>
                             <layout class="QVBoxLayout" name="verticalLayout_17">
                              <item>
-                              <widget class="QTreeView" name="tbl_urlDetails"/>
+                              <widget class="QTreeWidget" name="tbl_urlDetails">
+                               <property name="alternatingRowColors">
+                                <bool>true</bool>
+                               </property>
+                               <column>
+                                <property name="text">
+                                 <string>Property</string>
+                                </property>
+                               </column>
+                               <column>
+                                <property name="text">
+                                 <string>Value</string>
+                                </property>
+                               </column>
+                              </widget>
                              </item>
                             </layout>
                            </widget>

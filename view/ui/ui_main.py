@@ -1218,8 +1218,9 @@ class Ui_MainWindow(object):
         self.groupBox.setObjectName(u"groupBox")
         self.verticalLayout_17 = QVBoxLayout(self.groupBox)
         self.verticalLayout_17.setObjectName(u"verticalLayout_17")
-        self.tbl_urlDetails = QTreeView(self.groupBox)
+        self.tbl_urlDetails = QTreeWidget(self.groupBox)
         self.tbl_urlDetails.setObjectName(u"tbl_urlDetails")
+        self.tbl_urlDetails.setAlternatingRowColors(True)
 
         self.verticalLayout_17.addWidget(self.tbl_urlDetails)
 
@@ -1360,7 +1361,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         self.content.setCurrentIndex(1)
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(2)
         self.tabWidget.setCurrentIndex(0)
 
 
@@ -1445,14 +1446,17 @@ class Ui_MainWindow(object):
         self.input_url.setPlaceholderText(QCoreApplication.translate("MainWindow", u"https://", None))
         self.btn_urlScan.setText(QCoreApplication.translate("MainWindow", u"Scan", None))
         self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"URL Details", None))
+        ___qtreewidgetitem = self.tbl_urlDetails.headerItem()
+        ___qtreewidgetitem.setText(1, QCoreApplication.translate("MainWindow", u"Value", None));
+        ___qtreewidgetitem.setText(0, QCoreApplication.translate("MainWindow", u"Property", None));
         self.groupBox_urlScanResult.setTitle(QCoreApplication.translate("MainWindow", u"Analysis Results", None))
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"Status:", None))
         self.label_urlScanStatus.setText("")
         self.label_7.setText(QCoreApplication.translate("MainWindow", u"Detection:", None))
         self.label_urlScanDetection.setText("")
-        ___qtreewidgetitem = self.tbl_urlScanResult.headerItem()
-        ___qtreewidgetitem.setText(1, QCoreApplication.translate("MainWindow", u"Result", None));
-        ___qtreewidgetitem.setText(0, QCoreApplication.translate("MainWindow", u"Vendor", None));
+        ___qtreewidgetitem1 = self.tbl_urlScanResult.headerItem()
+        ___qtreewidgetitem1.setText(1, QCoreApplication.translate("MainWindow", u"Result", None));
+        ___qtreewidgetitem1.setText(0, QCoreApplication.translate("MainWindow", u"Vendor", None));
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"Elapsed time:", None))
         self.label_urlScanElapsedTime.setText("")
         self.creditsLabel.setText(QCoreApplication.translate("MainWindow", u"Developed by Pang Hoi Him (220327019)", None))
