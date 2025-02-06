@@ -2,18 +2,18 @@ from PySide6.QtWidgets import QWidget, QTreeWidgetItem
 from PySide6.QtGui import QIcon
 from view.ui.ui_file_details import Ui_FileDetails
 
-from model import File, Color
+from lib.entity import File, Color, FileScanResult
 from lib import utils
 
 class FileDetailsContainer(QWidget):
-    def __init__(self, parent=None, fileInfo=None, **kwargs):
+    def __init__(self, parent=None, scanResult:FileScanResult=None, **kwargs):
         super().__init__(parent, **kwargs)
         self.ui = Ui_FileDetails()
         self.ui.setupUi(self)
-        self.updateFileInfo(fileInfo)
-        self.updateFileScanResult(fileInfo)
+        self.updateFileInfo(scanResult.file)
+        self.updateFileScanResult(scanResult)
 
-    def updateFileInfo(self, fileInfo: dict):
+    def updateFileInfo(self, fileInfo: File):
         for label, key in [['Filename', 'filename'], ['Path', 'path'], ['MD5', 'md5'], ['SHA1', 'sha1'],
                            ['SHA256', 'sha256'], ['Size', 'size'], ['Type', 'type']]:
             item = QTreeWidgetItem(self.ui.tbl_fileInfo)
@@ -23,9 +23,12 @@ class FileDetailsContainer(QWidget):
             item.setText(1, value)
         # self.ui.groupBox_fileInfo.show()
 
-    def updateFileScanResult(self, fileInfo: dict):
-        status, analysisResults = fileInfo.get('status'), fileInfo.get('analysisResults')
-        if analysisResults:
+    def updateFileScanResult(self, scanResult: FileScanResult):
+        status = scanResult.status
+        if scanResult.analysis:
+            analysisResults = scanResult.analysis.results
+            if not isinstance(analysisResults, list):
+                analysisResults = analysisResults.values()
             detection = [x for x in analysisResults if x['result'] is not None]
             for result in analysisResults:
                 item = QTreeWidgetItem(self.ui.tbl_fileScanResult)
@@ -39,8 +42,8 @@ class FileDetailsContainer(QWidget):
             statusTxt, color = ('No virus detected', Color.SUCCESS) if len(detection) == 0 else ('Virus detected', Color.DANGER)
             self.ui.label_fileScanStatus.setText(statusTxt)
             self.ui.label_fileScanStatus.setStyleSheet('color: {}'.format(color))
-            self.ui.label_fileScanElapsedTime.setText('{:.6f} seconds'.format(fileInfo.get('finishedTime') - fileInfo.get('startedTime')))
+            self.ui.label_fileScanElapsedTime.setText('{:.6f} seconds'.format(scanResult.finishedTime - scanResult.startedTime))
         else:
-            statusTxt, color = (status, Color.INFO) if status != File.STATUS_FAILED else ('Failed', Color.DANGER)
+            statusTxt, color = (status, Color.INFO) if status != FileScanResult.STATUS_FAILED else ('Failed', Color.DANGER)
             self.ui.label_fileScanStatus.setText(statusTxt)
             self.ui.label_fileScanStatus.setStyleSheet('color: {}'.format(color))

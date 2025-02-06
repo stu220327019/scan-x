@@ -4,19 +4,17 @@ import hashlib
 import magic
 import os
 
-from .file import File
-from .color import Color
+from lib.entity import File, FileScanResult, Color
 
 class FileScanModel(QAbstractTableModel):
+    results: list[FileScanResult] = []
+    added = set()
+
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.files = []
-        self.fileDetails = {}
-        self.fileScanResults = {}
-        self.added = set()
 
     def rowCount(self, parent=QModelIndex()):
-        return len(self.files) if not parent.isValid() else 0
+        return len(self.results) if not parent.isValid() else 0
 
     def columnCount(self, parent=QModelIndex()):
         return 3  # Path, Filename, Status
@@ -27,47 +25,46 @@ class FileScanModel(QAbstractTableModel):
         row = index.row()
         col = index.column()
 
-        fileInfo = self.files[row]
+        result = self.results[row]
 
         if role == Qt.DisplayRole:
             if col == 2:
-                status = fileInfo.get('status')
-                if status == File.STATUS_INFECTED:
-                    results = fileInfo.get('analysisResults')
-                    detection = [x for x in results if x['result'] is not None]
+                status = result.status
+                if status == FileScanResult.STATUS_INFECTED:
+                    detection = [x for x in result.analysis.results.values() if x['result'] is not None]
                     return status.format(len(detection))
-                elif status == File.STATUS_FAILED:
-                    return status.format(str(fileInfo.get('err')))
+                elif status == FileScanResult.STATUS_FAILED:
+                    return status.format(str(result.error))
                 else:
                     return status
             else:
-                return fileInfo.get(['path', 'filename'][col])
+                return result.file.get(['path', 'filename'][col])
         elif role == Qt.DecorationRole:
             if col == 2:
                 def getIcon(status):
-                    if status == File.STATUS_COMPLETED:
+                    if status == FileScanResult.STATUS_COMPLETED:
                         return ':/resources/images/icons/check-circle.svg'
                     # elif status == File.STATUS_ATTENTION:
                     #     return ':/resources/images/icons/alert-triangle.svg'
-                    elif status in [File.STATUS_FAILED, File.STATUS_INFECTED]:
+                    elif status in [FileScanResult.STATUS_FAILED, FileScanResult.STATUS_INFECTED]:
                         return ':/resources/images/icons/exclaimation-circle.svg'
                     else:
                         return ':/resources/images/icons/info-circle.svg'
-                return QIcon(getIcon(fileInfo.get('status')))
+                return QIcon(getIcon(result.status))
             else:
                 return None
         elif role == Qt.ForegroundRole:
             if col == 2:
                 def getColor(status):
-                    if status == File.STATUS_COMPLETED:
+                    if status == FileScanResult.STATUS_COMPLETED:
                         return Color.SUCCESS
                     # elif status == File.STATUS_ATTENTION:
                     #     return Color.WARNING
-                    elif status in [File.STATUS_FAILED, File.STATUS_INFECTED]:
+                    elif status in [FileScanResult.STATUS_FAILED, FileScanResult.STATUS_INFECTED]:
                         return Color.DANGER
                     else:
                         return Color.INFO
-                return QColor(getColor(fileInfo.get('status')))
+                return QColor(getColor(result.status))
             else:
                 return None
 
@@ -96,17 +93,20 @@ class FileScanModel(QAbstractTableModel):
                 cfile = f.read()
                 path, filename  = os.path.split(str(filepath))
                 self.beginInsertRows(QModelIndex(), self.rowCount(), self.rowCount())
-                self.files.append({
-                    'filepath': filepath,
-                    'filename': filename,
-                    'path': path,
-                    'md5': hashlib.md5(cfile).hexdigest(),
-                    'sha1': hashlib.sha1(cfile).hexdigest(),
-                    'sha256': hashlib.sha256(cfile).hexdigest(),
-                    'size': os.path.getsize(filepath),
-                    'type': magic.from_file(filepath),
-                    'status': File.STATUS_PENDING
-                })
+                self.results.append(FileScanResult({
+                    'file': File({
+                        'filepath': filepath,
+                        'filename': filename,
+                        'path': path,
+                        'md5': hashlib.md5(cfile).hexdigest(),
+                        'sha1': hashlib.sha1(cfile).hexdigest(),
+                        'sha256': hashlib.sha256(cfile).hexdigest(),
+                        'size': os.path.getsize(filepath),
+                        'type': magic.from_file(filepath)
+                    }),
+                    'status': FileScanResult.STATUS_PENDING,
+                    'id': filepath
+                }))
                 self.endInsertRows()
                 self.added.add(filepath)
             # fileDetailsThread = FileDetailsThread(filepath)
@@ -116,32 +116,32 @@ class FileScanModel(QAbstractTableModel):
     # def updateFileInfo(self, fileInfo: dict):
     #     print(fileInfo)
 
-    def getFileRow(self, filepath):
-        return next(iter([i for i, j in enumerate(self.files) if j['filepath'] == filepath]), None)
+    def getResultRow(self, id):
+        return next(iter([i for i, j in enumerate(self.results) if j['id'] == id]), None)
 
-    def getFile(self, filepath):
-        row = self.getFileRow()
+    def getResult(self, filepath):
+        row = self.getResultRow()
         if row is not None:
-            return self.files[row]
+            return self.results[row]
 
-    def updateFile(self, filepath, **kwargs):
-        row = self.getFileRow(filepath)
+    def updateResult(self, id, **kwargs) -> FileScanResult:
+        row = self.getResultRow(id)
         if row is not None:
-            fileInfo = self.files[row]
+            result = self.results[row]
             for k, w in kwargs.items():
-                fileInfo[k] = w
-            self.files[row] = fileInfo
+                result[k] = w
+            self.results[row] = result
             top_left = self.index(row, 0)
             bottom_right = self.index(row, 2)
             self.dataChanged.emit(top_left, bottom_right)
-            return fileInfo
+            return result
         return False
 
-    def removeFile(self, row):
+    def removeResult(self, row):
         self.beginRemoveRows(QModelIndex(), row, row)
-        file = self.files[row]
-        del self.files[row]
-        self.added.remove(file['filepath'])
+        result = self.results[row]
+        del self.results[row]
+        self.added.remove(result.id)
         self.endRemoveRows()
 
 
@@ -156,7 +156,7 @@ class FileDetailsThread(QThread):
     def getFileDetails(filepath):
         with open(filepath, 'rb') as f:
             cfile = f.read()
-            _, filename  = os.path.split(str(filepath))
+            _, filename  = os.pat1h.split(str(filepath))
             return {
                 'name': filename,
                 'path': filepath,

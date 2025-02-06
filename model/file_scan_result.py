@@ -4,11 +4,10 @@ import json
 from datetime import datetime
 
 from core import DB
-from .file import File
-from .color import Color
+from lib.entity import FileScanResult, File, Analysis, Color
 
 class FileScanResultModel(QAbstractTableModel):
-    results = []
+    results: list[FileScanResult] = []
 
     def __init__(self, db: DB, parent=None):
         super().__init__(parent)
@@ -36,16 +35,16 @@ class FileScanResultModel(QAbstractTableModel):
 
         if role == Qt.DisplayRole:
             if col == 1:
-                if result['clean'] == True:
-                    status = File.STATUS_CLEAN
+                if result.clean == True:
+                    status = result.STATUS_CLEAN
                 else:
-                    stats = result.get('analysisStats')
+                    stats = result.analysis.stats
                     detection = sum([v for k, v in stats.items() if k in ('malicious', 'suspicious')])
-                    status = File.STATUS_INFECTED.format(detection)
+                    status = result.STATUS_INFECTED.format(detection)
                 return status
             elif col == 2:
-                return datetime.fromtimestamp(result.get('created_at')).strftime('%Y-%m-%d %H:%M:%S')
-            return result[['filename'][col]]
+                return datetime.fromtimestamp(result.scannedAt).strftime('%Y-%m-%d %H:%M:%S')
+            return result.file.filename
         elif role == Qt.DecorationRole:
             if col == 1:
                 return QIcon(':/resources/images/icons/check-circle.svg' \
@@ -55,7 +54,7 @@ class FileScanResultModel(QAbstractTableModel):
                 return None
         elif role == Qt.ForegroundRole:
             if col == 1:
-                return QColor(Color.SUCCESS if result.get('clean') == True else Color.DANGER)
+                return QColor(Color.SUCCESS if result.clean == True else Color.DANGER)
             else:
                 return None
 
@@ -66,11 +65,27 @@ class FileScanResultModel(QAbstractTableModel):
         ORDER BY r.created_at DESC LIMIT 100
         """)
         self.beginResetModel()
-        self.results = []
+        self.results.clear()
         for row in rows:
-            row['analysisStats'] = json.loads(row['analysis_stats'])
-            row['analysisResults'] = json.loads(row['analysis_results'])
-            row['startedTime'] = row['started_at']
-            row['finishedTime'] = row['finished_at']
-            self.results.append(row)
+            result = FileScanResult({
+                'file': File({
+                    'filename': row['filename'],
+                    'filepath': row['filepath'],
+                    'path': row['path'],
+                    'sha1': row['sha1'],
+                    'sha256': row['sha256'],
+                    'md5': row['md5'],
+                    'size': row['size'],
+                    'type': row['type']
+                }),
+                'analysis': Analysis({
+                    'stats': json.loads(row['analysis_stats']),
+                    'results': json.loads(row['analysis_results'])
+                }),
+                'clean':row['clean'],
+                'startedTime': row['started_at'],
+                'finishedTime': row['finished_at'],
+                'scannedAt': row['created_at']
+            })
+            self.results.append(result)
         self.endResetModel()

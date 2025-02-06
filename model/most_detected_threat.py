@@ -4,8 +4,6 @@ import json
 from datetime import datetime
 
 from core import DB
-from .file import File
-from .color import Color
 
 class MostDetectedThreatModel(QAbstractTableModel):
     threats = []
@@ -40,7 +38,7 @@ class MostDetectedThreatModel(QAbstractTableModel):
         ORDER BY detected DESC LIMIT 100
         """)
         self.beginResetModel()
-        self.threats = []
+        self.threats.clear()
         for row in rows:
             self.threats.append(row)
         self.endResetModel()

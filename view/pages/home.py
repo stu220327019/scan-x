@@ -1,7 +1,8 @@
 from PySide6.QtCore import QObject, QThread, Signal, Qt, QModelIndex
 from PySide6.QtWidgets import QFileDialog, QTreeWidgetItem
 
-from model import FileScanResultModel, File, MostDetectedThreatModel
+from model import FileScanResultModel, MostDetectedThreatModel
+from lib.entity import File
 from view.ui.ui_main import Ui_MainWindow
 from widgets import FileDetailsContainer
 from core import DB
@@ -37,8 +38,8 @@ class Home(Base):
 
     def fileScanResultsItemClick(self, index: QModelIndex):
         row = index.row()
-        fileInfo = self.fileScanResultModel.results[row]
-        self.signals['openRightBox'].emit(fileInfo.get('filename'), FileDetailsContainer, {'fileInfo': fileInfo})
+        scanResult = self.fileScanResultModel.results[row]
+        self.signals['openRightBox'].emit(scanResult.file.filename, FileDetailsContainer, {'scanResult': scanResult})
 
     def updateSummary(self):
         filesScaned = self.db.fetchOneCol('SELECT COUNT(id) FROM file_scan_result')
