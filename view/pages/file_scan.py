@@ -29,15 +29,15 @@ class FileScan(Base):
         super().__init__(*args, **kwargs)
 
     def uiDefinitions(self):
-        self.ui.tree_filelist.setModel(self.model)
-        self.ui.tree_filelist.setColumnWidth(0, 300)
-        self.ui.tree_filelist.setColumnWidth(1, 150)
+        self.ui.tbl_fileScanList.setModel(self.model)
+        self.ui.tbl_fileScanList.setColumnWidth(0, 300)
+        self.ui.tbl_fileScanList.setColumnWidth(1, 150)
 
     def connectSlotsAndSignals(self):
         self.ui.btn_fileSelect.clicked.connect(self.fileBrowse)
         self.ui.fileScanDrop.dropSignal.connect(self.filesDropped)
-        self.ui.tree_filelist.doubleClicked.connect(self.filelistItemClick)
-        self.ui.tree_filelist.keyPressed.connect(self.filelistkeyPressed)
+        self.ui.tbl_fileScanList.doubleClicked.connect(self.filelistItemClick)
+        self.ui.tbl_fileScanList.keyPressed.connect(self.filelistkeyPressed)
         self.ui.btn_startFileScan.clicked.connect(self.startFileScan)
         self.ui.btn_stopFileScan.clicked.connect(self.cancelFileScan)
 

@@ -1814,7 +1814,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              <property name="title">
                               <string>Top Threats</string>
                              </property>
-                             <layout class="QVBoxLayout" name="verticalLayout">
+                             <layout class="QHBoxLayout" name="horizontalLayout_7">
                               <item>
                                <widget class="QTabWidget" name="tabWidget">
                                 <property name="currentIndex">
@@ -1824,9 +1824,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                  <attribute name="title">
                                   <string>Most detected</string>
                                  </attribute>
-                                 <layout class="QVBoxLayout" name="verticalLayout_13">
+                                 <layout class="QHBoxLayout" name="horizontalLayout_14">
                                   <item>
-                                   <widget class="QTreeView" name="tree_mostDetectedVirus">
+                                   <widget class="QTreeView" name="tbl_mostDetectedVirus">
                                     <property name="alternatingRowColors">
                                      <bool>true</bool>
                                     </property>
@@ -1840,7 +1840,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                  </attribute>
                                  <layout class="QVBoxLayout" name="verticalLayout_14">
                                   <item>
-                                   <widget class="QTreeView" name="tree_recentlyDetectedVirus">
+                                   <widget class="QTreeView" name="tbl_recentlyDetectedVirus">
                                     <property name="alternatingRowColors">
                                      <bool>true</bool>
                                     </property>
@@ -1849,6 +1849,67 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                  </layout>
                                 </widget>
                                </widget>
+                              </item>
+                              <item>
+                               <layout class="QVBoxLayout" name="verticalLayout_13">
+                                <item>
+                                 <spacer name="verticalSpacer">
+                                  <property name="orientation">
+                                   <enum>Qt::Orientation::Vertical</enum>
+                                  </property>
+                                  <property name="sizeHint" stdset="0">
+                                   <size>
+                                    <width>20</width>
+                                    <height>40</height>
+                                   </size>
+                                  </property>
+                                 </spacer>
+                                </item>
+                                <item>
+                                 <widget class="QLabel" name="label_2">
+                                  <property name="text">
+                                   <string>Filter By:</string>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <layout class="QVBoxLayout" name="verticalLayout_18">
+                                  <item>
+                                   <widget class="QRadioButton" name="op_TopThreatsfilterAll">
+                                    <property name="text">
+                                     <string>All</string>
+                                    </property>
+                                    <property name="checked">
+                                     <bool>true</bool>
+                                    </property>
+                                    <attribute name="buttonGroup">
+                                     <string notr="true">buttonGroup</string>
+                                    </attribute>
+                                   </widget>
+                                  </item>
+                                  <item>
+                                   <widget class="QRadioButton" name="op_TopThreatsfilterFiles">
+                                    <property name="text">
+                                     <string>Files</string>
+                                    </property>
+                                    <attribute name="buttonGroup">
+                                     <string notr="true">buttonGroup</string>
+                                    </attribute>
+                                   </widget>
+                                  </item>
+                                  <item>
+                                   <widget class="QRadioButton" name="op_TopThreatsfilterURLs">
+                                    <property name="text">
+                                     <string>URLs</string>
+                                    </property>
+                                    <attribute name="buttonGroup">
+                                     <string notr="true">buttonGroup</string>
+                                    </attribute>
+                                   </widget>
+                                  </item>
+                                 </layout>
+                                </item>
+                               </layout>
                               </item>
                              </layout>
                             </widget>
@@ -1865,7 +1926,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                             </property>
                             <layout class="QVBoxLayout" name="verticalLayout_29">
                              <item>
-                              <widget class="QTreeView" name="tree_fileScanResults">
+                              <widget class="QTreeView" name="tbl_fileScanResults">
                                <property name="alternatingRowColors">
                                 <bool>true</bool>
                                </property>
@@ -1881,7 +1942,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                             </property>
                             <layout class="QVBoxLayout" name="verticalLayout_31">
                              <item>
-                              <widget class="QTreeView" name="treeView_2">
+                              <widget class="QTreeView" name="tbl_latestURLScanResults">
                                <property name="alternatingRowColors">
                                 <bool>true</bool>
                                </property>
@@ -1953,7 +2014,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                             </widget>
                            </item>
                            <item>
-                            <widget class="CustomTreeView" name="tree_filelist">
+                            <widget class="CustomTreeView" name="tbl_fileScanList">
                              <property name="alternatingRowColors">
                               <bool>true</bool>
                              </property>
@@ -2047,167 +2108,171 @@ li.checked::marker { content: &quot;\2612&quot;; }
                        </layout>
                       </widget>
                       <widget class="QWidget" name="page_urlScan">
-                       <layout class="QVBoxLayout" name="verticalLayout_18">
+                       <layout class="QVBoxLayout" name="verticalLayout_16">
                         <item>
-                         <widget class="QFrame" name="frame_3">
-                          <property name="frameShape">
-                           <enum>QFrame::Shape::StyledPanel</enum>
+                         <widget class="QGroupBox" name="groupBox_2">
+                          <property name="title">
+                           <string>URL Scan</string>
                           </property>
-                          <property name="frameShadow">
-                           <enum>QFrame::Shadow::Raised</enum>
-                          </property>
-                          <layout class="QVBoxLayout" name="verticalLayout_19">
+                          <layout class="QHBoxLayout" name="horizontalLayout_9">
                            <item>
-                            <widget class="QGroupBox" name="groupBox_2">
-                             <property name="title">
-                              <string>URL Scan</string>
+                            <widget class="QLineEdit" name="input_url">
+                             <property name="placeholderText">
+                              <string>https://</string>
                              </property>
-                             <layout class="QHBoxLayout" name="horizontalLayout_9">
-                              <item>
-                               <widget class="QLineEdit" name="input_url">
-                                <property name="placeholderText">
-                                 <string>https://</string>
-                                </property>
-                               </widget>
-                              </item>
-                              <item>
-                               <widget class="QPushButton" name="btn_UrlScan">
-                                <property name="enabled">
-                                 <bool>false</bool>
-                                </property>
-                                <property name="text">
-                                 <string>Scan</string>
-                                </property>
-                               </widget>
-                              </item>
-                             </layout>
                             </widget>
                            </item>
                            <item>
-                            <widget class="QGroupBox" name="groupBox_urlScanResult">
-                             <property name="title">
-                              <string>Analysis Results</string>
+                            <widget class="QPushButton" name="btn_urlScan">
+                             <property name="enabled">
+                              <bool>false</bool>
                              </property>
-                             <layout class="QVBoxLayout" name="verticalLayout_23">
-                              <item>
-                               <layout class="QHBoxLayout" name="horizontalLayout_10">
-                                <item>
-                                 <widget class="QLabel" name="label_6">
-                                  <property name="text">
-                                   <string>Status:</string>
-                                  </property>
-                                 </widget>
-                                </item>
-                                <item>
-                                 <widget class="QLabel" name="label_urlScanStatus">
-                                  <property name="text">
-                                   <string/>
-                                  </property>
-                                 </widget>
-                                </item>
-                                <item>
-                                 <spacer name="horizontalSpacer_5">
-                                  <property name="orientation">
-                                   <enum>Qt::Orientation::Horizontal</enum>
-                                  </property>
-                                  <property name="sizeHint" stdset="0">
-                                   <size>
-                                    <width>40</width>
-                                    <height>20</height>
-                                   </size>
-                                  </property>
-                                 </spacer>
-                                </item>
-                                <item>
-                                 <widget class="QLabel" name="label_7">
-                                  <property name="font">
-                                   <font>
-                                    <family>Segoe UI</family>
-                                    <pointsize>10</pointsize>
-                                    <italic>false</italic>
-                                    <bold>false</bold>
-                                   </font>
-                                  </property>
-                                  <property name="text">
-                                   <string>Detection:</string>
-                                  </property>
-                                 </widget>
-                                </item>
-                                <item>
-                                 <widget class="QLabel" name="label_urlScanDetection">
-                                  <property name="text">
-                                   <string/>
-                                  </property>
-                                 </widget>
-                                </item>
-                                <item>
-                                 <spacer name="horizontalSpacer_6">
-                                  <property name="orientation">
-                                   <enum>Qt::Orientation::Horizontal</enum>
-                                  </property>
-                                  <property name="sizeHint" stdset="0">
-                                   <size>
-                                    <width>40</width>
-                                    <height>20</height>
-                                   </size>
-                                  </property>
-                                 </spacer>
-                                </item>
-                               </layout>
-                              </item>
-                              <item>
-                               <widget class="QTreeWidget" name="tbl_urlScanResult">
-                                <property name="alternatingRowColors">
-                                 <bool>true</bool>
-                                </property>
-                                <column>
-                                 <property name="text">
-                                  <string>Vendor</string>
-                                 </property>
-                                </column>
-                                <column>
-                                 <property name="text">
-                                  <string>Result</string>
-                                 </property>
-                                </column>
-                               </widget>
-                              </item>
-                              <item>
-                               <layout class="QHBoxLayout" name="horizontalLayout_11">
-                                <item>
-                                 <spacer name="horizontalSpacer_7">
-                                  <property name="orientation">
-                                   <enum>Qt::Orientation::Horizontal</enum>
-                                  </property>
-                                  <property name="sizeHint" stdset="0">
-                                   <size>
-                                    <width>40</width>
-                                    <height>20</height>
-                                   </size>
-                                  </property>
-                                 </spacer>
-                                </item>
-                                <item>
-                                 <widget class="QLabel" name="label_3">
-                                  <property name="text">
-                                   <string>Elapsed time:</string>
-                                  </property>
-                                 </widget>
-                                </item>
-                                <item>
-                                 <widget class="QLabel" name="label_urlScanElapsedTime">
-                                  <property name="text">
-                                   <string/>
-                                  </property>
-                                 </widget>
-                                </item>
-                               </layout>
-                              </item>
-                             </layout>
+                             <property name="text">
+                              <string>Scan</string>
+                             </property>
                             </widget>
                            </item>
                           </layout>
                          </widget>
+                        </item>
+                        <item>
+                         <layout class="QHBoxLayout" name="horizontalLayout_6">
+                          <item>
+                           <widget class="QGroupBox" name="groupBox">
+                            <property name="title">
+                             <string>URL Details</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_17">
+                             <item>
+                              <widget class="QTreeView" name="tbl_urlDetails"/>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QGroupBox" name="groupBox_urlScanResult">
+                            <property name="title">
+                             <string>Analysis Results</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_23">
+                             <item>
+                              <layout class="QHBoxLayout" name="horizontalLayout_10">
+                               <item>
+                                <widget class="QLabel" name="label_6">
+                                 <property name="text">
+                                  <string>Status:</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item>
+                                <widget class="QLabel" name="label_urlScanStatus">
+                                 <property name="text">
+                                  <string/>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item>
+                                <spacer name="horizontalSpacer_5">
+                                 <property name="orientation">
+                                  <enum>Qt::Orientation::Horizontal</enum>
+                                 </property>
+                                 <property name="sizeHint" stdset="0">
+                                  <size>
+                                   <width>40</width>
+                                   <height>20</height>
+                                  </size>
+                                 </property>
+                                </spacer>
+                               </item>
+                               <item>
+                                <widget class="QLabel" name="label_7">
+                                 <property name="font">
+                                  <font>
+                                   <family>Segoe UI</family>
+                                   <pointsize>10</pointsize>
+                                   <italic>false</italic>
+                                   <bold>false</bold>
+                                  </font>
+                                 </property>
+                                 <property name="text">
+                                  <string>Detection:</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item>
+                                <widget class="QLabel" name="label_urlScanDetection">
+                                 <property name="text">
+                                  <string/>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item>
+                                <spacer name="horizontalSpacer_6">
+                                 <property name="orientation">
+                                  <enum>Qt::Orientation::Horizontal</enum>
+                                 </property>
+                                 <property name="sizeHint" stdset="0">
+                                  <size>
+                                   <width>40</width>
+                                   <height>20</height>
+                                  </size>
+                                 </property>
+                                </spacer>
+                               </item>
+                              </layout>
+                             </item>
+                             <item>
+                              <widget class="QTreeWidget" name="tbl_urlScanResult">
+                               <property name="alternatingRowColors">
+                                <bool>true</bool>
+                               </property>
+                               <column>
+                                <property name="text">
+                                 <string>Vendor</string>
+                                </property>
+                               </column>
+                               <column>
+                                <property name="text">
+                                 <string>Result</string>
+                                </property>
+                               </column>
+                              </widget>
+                             </item>
+                             <item>
+                              <layout class="QHBoxLayout" name="horizontalLayout_11">
+                               <item>
+                                <spacer name="horizontalSpacer_7">
+                                 <property name="orientation">
+                                  <enum>Qt::Orientation::Horizontal</enum>
+                                 </property>
+                                 <property name="sizeHint" stdset="0">
+                                  <size>
+                                   <width>40</width>
+                                   <height>20</height>
+                                  </size>
+                                 </property>
+                                </spacer>
+                               </item>
+                               <item>
+                                <widget class="QLabel" name="label_3">
+                                 <property name="text">
+                                  <string>Elapsed time:</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item>
+                                <widget class="QLabel" name="label_urlScanElapsedTime">
+                                 <property name="text">
+                                  <string/>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                         </layout>
                         </item>
                        </layout>
                       </widget>
@@ -2344,4 +2409,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <include location="resources.qrc"/>
  </resources>
  <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
 </ui>

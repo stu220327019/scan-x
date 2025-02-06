@@ -15,12 +15,13 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractItemView, QApplication, QFormLayout, QFrame,
-    QGridLayout, QGroupBox, QHBoxLayout, QHeaderView,
-    QLabel, QLayout, QLineEdit, QMainWindow,
-    QPushButton, QSizePolicy, QSpacerItem, QStackedWidget,
-    QTabWidget, QTextEdit, QTreeView, QTreeWidget,
-    QTreeWidgetItem, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QButtonGroup, QFormLayout,
+    QFrame, QGridLayout, QGroupBox, QHBoxLayout,
+    QHeaderView, QLabel, QLayout, QLineEdit,
+    QMainWindow, QPushButton, QRadioButton, QSizePolicy,
+    QSpacerItem, QStackedWidget, QTabWidget, QTextEdit,
+    QTreeView, QTreeWidget, QTreeWidgetItem, QVBoxLayout,
+    QWidget)
 
 from widgets import (CustomTreeView, FileDropWidget)
 import resources_rc
@@ -998,34 +999,74 @@ class Ui_MainWindow(object):
 
         self.groupBox_8 = QGroupBox(self.groupBox_6)
         self.groupBox_8.setObjectName(u"groupBox_8")
-        self.verticalLayout = QVBoxLayout(self.groupBox_8)
-        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.horizontalLayout_7 = QHBoxLayout(self.groupBox_8)
+        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
         self.tabWidget = QTabWidget(self.groupBox_8)
         self.tabWidget.setObjectName(u"tabWidget")
         self.tab = QWidget()
         self.tab.setObjectName(u"tab")
-        self.verticalLayout_13 = QVBoxLayout(self.tab)
-        self.verticalLayout_13.setObjectName(u"verticalLayout_13")
-        self.tree_mostDetectedVirus = QTreeView(self.tab)
-        self.tree_mostDetectedVirus.setObjectName(u"tree_mostDetectedVirus")
-        self.tree_mostDetectedVirus.setAlternatingRowColors(True)
+        self.horizontalLayout_14 = QHBoxLayout(self.tab)
+        self.horizontalLayout_14.setObjectName(u"horizontalLayout_14")
+        self.tbl_mostDetectedVirus = QTreeView(self.tab)
+        self.tbl_mostDetectedVirus.setObjectName(u"tbl_mostDetectedVirus")
+        self.tbl_mostDetectedVirus.setAlternatingRowColors(True)
 
-        self.verticalLayout_13.addWidget(self.tree_mostDetectedVirus)
+        self.horizontalLayout_14.addWidget(self.tbl_mostDetectedVirus)
 
         self.tabWidget.addTab(self.tab, "")
         self.tab_2 = QWidget()
         self.tab_2.setObjectName(u"tab_2")
         self.verticalLayout_14 = QVBoxLayout(self.tab_2)
         self.verticalLayout_14.setObjectName(u"verticalLayout_14")
-        self.tree_recentlyDetectedVirus = QTreeView(self.tab_2)
-        self.tree_recentlyDetectedVirus.setObjectName(u"tree_recentlyDetectedVirus")
-        self.tree_recentlyDetectedVirus.setAlternatingRowColors(True)
+        self.tbl_recentlyDetectedVirus = QTreeView(self.tab_2)
+        self.tbl_recentlyDetectedVirus.setObjectName(u"tbl_recentlyDetectedVirus")
+        self.tbl_recentlyDetectedVirus.setAlternatingRowColors(True)
 
-        self.verticalLayout_14.addWidget(self.tree_recentlyDetectedVirus)
+        self.verticalLayout_14.addWidget(self.tbl_recentlyDetectedVirus)
 
         self.tabWidget.addTab(self.tab_2, "")
 
-        self.verticalLayout.addWidget(self.tabWidget)
+        self.horizontalLayout_7.addWidget(self.tabWidget)
+
+        self.verticalLayout_13 = QVBoxLayout()
+        self.verticalLayout_13.setObjectName(u"verticalLayout_13")
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_13.addItem(self.verticalSpacer)
+
+        self.label_2 = QLabel(self.groupBox_8)
+        self.label_2.setObjectName(u"label_2")
+
+        self.verticalLayout_13.addWidget(self.label_2)
+
+        self.verticalLayout_18 = QVBoxLayout()
+        self.verticalLayout_18.setObjectName(u"verticalLayout_18")
+        self.op_TopThreatsfilterAll = QRadioButton(self.groupBox_8)
+        self.buttonGroup = QButtonGroup(MainWindow)
+        self.buttonGroup.setObjectName(u"buttonGroup")
+        self.buttonGroup.addButton(self.op_TopThreatsfilterAll)
+        self.op_TopThreatsfilterAll.setObjectName(u"op_TopThreatsfilterAll")
+        self.op_TopThreatsfilterAll.setChecked(True)
+
+        self.verticalLayout_18.addWidget(self.op_TopThreatsfilterAll)
+
+        self.op_TopThreatsfilterFiles = QRadioButton(self.groupBox_8)
+        self.buttonGroup.addButton(self.op_TopThreatsfilterFiles)
+        self.op_TopThreatsfilterFiles.setObjectName(u"op_TopThreatsfilterFiles")
+
+        self.verticalLayout_18.addWidget(self.op_TopThreatsfilterFiles)
+
+        self.op_TopThreatsfilterURLs = QRadioButton(self.groupBox_8)
+        self.buttonGroup.addButton(self.op_TopThreatsfilterURLs)
+        self.op_TopThreatsfilterURLs.setObjectName(u"op_TopThreatsfilterURLs")
+
+        self.verticalLayout_18.addWidget(self.op_TopThreatsfilterURLs)
+
+
+        self.verticalLayout_13.addLayout(self.verticalLayout_18)
+
+
+        self.horizontalLayout_7.addLayout(self.verticalLayout_13)
 
 
         self.horizontalLayout_23.addWidget(self.groupBox_8)
@@ -1041,11 +1082,11 @@ class Ui_MainWindow(object):
         self.groupBox_5.setObjectName(u"groupBox_5")
         self.verticalLayout_29 = QVBoxLayout(self.groupBox_5)
         self.verticalLayout_29.setObjectName(u"verticalLayout_29")
-        self.tree_fileScanResults = QTreeView(self.groupBox_5)
-        self.tree_fileScanResults.setObjectName(u"tree_fileScanResults")
-        self.tree_fileScanResults.setAlternatingRowColors(True)
+        self.tbl_fileScanResults = QTreeView(self.groupBox_5)
+        self.tbl_fileScanResults.setObjectName(u"tbl_fileScanResults")
+        self.tbl_fileScanResults.setAlternatingRowColors(True)
 
-        self.verticalLayout_29.addWidget(self.tree_fileScanResults)
+        self.verticalLayout_29.addWidget(self.tbl_fileScanResults)
 
 
         self.horizontalLayout_24.addWidget(self.groupBox_5)
@@ -1054,11 +1095,11 @@ class Ui_MainWindow(object):
         self.groupBox_9.setObjectName(u"groupBox_9")
         self.verticalLayout_31 = QVBoxLayout(self.groupBox_9)
         self.verticalLayout_31.setObjectName(u"verticalLayout_31")
-        self.treeView_2 = QTreeView(self.groupBox_9)
-        self.treeView_2.setObjectName(u"treeView_2")
-        self.treeView_2.setAlternatingRowColors(True)
+        self.tbl_latestURLScanResults = QTreeView(self.groupBox_9)
+        self.tbl_latestURLScanResults.setObjectName(u"tbl_latestURLScanResults")
+        self.tbl_latestURLScanResults.setAlternatingRowColors(True)
 
-        self.verticalLayout_31.addWidget(self.treeView_2)
+        self.verticalLayout_31.addWidget(self.tbl_latestURLScanResults)
 
 
         self.horizontalLayout_24.addWidget(self.groupBox_9)
@@ -1102,12 +1143,12 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_26.addWidget(self.fileScanDropContainer)
 
-        self.tree_filelist = CustomTreeView(self.groupBox_4)
-        self.tree_filelist.setObjectName(u"tree_filelist")
-        self.tree_filelist.setAlternatingRowColors(True)
-        self.tree_filelist.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
+        self.tbl_fileScanList = CustomTreeView(self.groupBox_4)
+        self.tbl_fileScanList.setObjectName(u"tbl_fileScanList")
+        self.tbl_fileScanList.setAlternatingRowColors(True)
+        self.tbl_fileScanList.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
 
-        self.verticalLayout_26.addWidget(self.tree_filelist)
+        self.verticalLayout_26.addWidget(self.tbl_fileScanList)
 
 
         self.verticalLayout_27.addWidget(self.groupBox_4)
@@ -1151,15 +1192,9 @@ class Ui_MainWindow(object):
         self.stackedWidget.addWidget(self.page_fileScan2)
         self.page_urlScan = QWidget()
         self.page_urlScan.setObjectName(u"page_urlScan")
-        self.verticalLayout_18 = QVBoxLayout(self.page_urlScan)
-        self.verticalLayout_18.setObjectName(u"verticalLayout_18")
-        self.frame_3 = QFrame(self.page_urlScan)
-        self.frame_3.setObjectName(u"frame_3")
-        self.frame_3.setFrameShape(QFrame.Shape.StyledPanel)
-        self.frame_3.setFrameShadow(QFrame.Shadow.Raised)
-        self.verticalLayout_19 = QVBoxLayout(self.frame_3)
-        self.verticalLayout_19.setObjectName(u"verticalLayout_19")
-        self.groupBox_2 = QGroupBox(self.frame_3)
+        self.verticalLayout_16 = QVBoxLayout(self.page_urlScan)
+        self.verticalLayout_16.setObjectName(u"verticalLayout_16")
+        self.groupBox_2 = QGroupBox(self.page_urlScan)
         self.groupBox_2.setObjectName(u"groupBox_2")
         self.horizontalLayout_9 = QHBoxLayout(self.groupBox_2)
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
@@ -1168,16 +1203,30 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_9.addWidget(self.input_url)
 
-        self.btn_UrlScan = QPushButton(self.groupBox_2)
-        self.btn_UrlScan.setObjectName(u"btn_UrlScan")
-        self.btn_UrlScan.setEnabled(False)
+        self.btn_urlScan = QPushButton(self.groupBox_2)
+        self.btn_urlScan.setObjectName(u"btn_urlScan")
+        self.btn_urlScan.setEnabled(False)
 
-        self.horizontalLayout_9.addWidget(self.btn_UrlScan)
+        self.horizontalLayout_9.addWidget(self.btn_urlScan)
 
 
-        self.verticalLayout_19.addWidget(self.groupBox_2)
+        self.verticalLayout_16.addWidget(self.groupBox_2)
 
-        self.groupBox_urlScanResult = QGroupBox(self.frame_3)
+        self.horizontalLayout_6 = QHBoxLayout()
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.groupBox = QGroupBox(self.page_urlScan)
+        self.groupBox.setObjectName(u"groupBox")
+        self.verticalLayout_17 = QVBoxLayout(self.groupBox)
+        self.verticalLayout_17.setObjectName(u"verticalLayout_17")
+        self.tbl_urlDetails = QTreeView(self.groupBox)
+        self.tbl_urlDetails.setObjectName(u"tbl_urlDetails")
+
+        self.verticalLayout_17.addWidget(self.tbl_urlDetails)
+
+
+        self.horizontalLayout_6.addWidget(self.groupBox)
+
+        self.groupBox_urlScanResult = QGroupBox(self.page_urlScan)
         self.groupBox_urlScanResult.setObjectName(u"groupBox_urlScanResult")
         self.verticalLayout_23 = QVBoxLayout(self.groupBox_urlScanResult)
         self.verticalLayout_23.setObjectName(u"verticalLayout_23")
@@ -1241,10 +1290,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_23.addLayout(self.horizontalLayout_11)
 
 
-        self.verticalLayout_19.addWidget(self.groupBox_urlScanResult)
+        self.horizontalLayout_6.addWidget(self.groupBox_urlScanResult)
 
 
-        self.verticalLayout_18.addWidget(self.frame_3)
+        self.verticalLayout_16.addLayout(self.horizontalLayout_6)
 
         self.stackedWidget.addWidget(self.page_urlScan)
 
@@ -1382,6 +1431,10 @@ class Ui_MainWindow(object):
         self.groupBox_8.setTitle(QCoreApplication.translate("MainWindow", u"Top Threats", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"Most detected", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"Recently detected", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Filter By:", None))
+        self.op_TopThreatsfilterAll.setText(QCoreApplication.translate("MainWindow", u"All", None))
+        self.op_TopThreatsfilterFiles.setText(QCoreApplication.translate("MainWindow", u"Files", None))
+        self.op_TopThreatsfilterURLs.setText(QCoreApplication.translate("MainWindow", u"URLs", None))
         self.groupBox_5.setTitle(QCoreApplication.translate("MainWindow", u"Latest File Scan Results", None))
         self.groupBox_9.setTitle(QCoreApplication.translate("MainWindow", u"Latest URL Scan Results", None))
         self.groupBox_4.setTitle(QCoreApplication.translate("MainWindow", u"Scan files", None))
@@ -1390,7 +1443,8 @@ class Ui_MainWindow(object):
         self.btn_stopFileScan.setText(QCoreApplication.translate("MainWindow", u"Stop", None))
         self.groupBox_2.setTitle(QCoreApplication.translate("MainWindow", u"URL Scan", None))
         self.input_url.setPlaceholderText(QCoreApplication.translate("MainWindow", u"https://", None))
-        self.btn_UrlScan.setText(QCoreApplication.translate("MainWindow", u"Scan", None))
+        self.btn_urlScan.setText(QCoreApplication.translate("MainWindow", u"Scan", None))
+        self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"URL Details", None))
         self.groupBox_urlScanResult.setTitle(QCoreApplication.translate("MainWindow", u"Analysis Results", None))
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"Status:", None))
         self.label_urlScanStatus.setText("")

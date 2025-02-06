@@ -9,6 +9,9 @@ from core import DB
 from .base import Base
 
 class Home(Base):
+    filtered = Signal(str)
+    filterBy = 'all'
+
     def __init__(self, ui: Ui_MainWindow, signals=None, ctx=None, *args, **kwargs):
         self.ui = ui
         self.signals = signals
@@ -18,23 +21,37 @@ class Home(Base):
         super().__init__(*args, **kwargs)
 
     def uiDefinitions(self):
-        self.ui.tree_fileScanResults.setModel(self.fileScanResultModel)
-        self.ui.tree_fileScanResults.setColumnWidth(1, 150)
-        self.ui.tree_fileScanResults.doubleClicked.connect(self.fileScanResultsItemClick)
-        self.ui.tree_mostDetectedVirus.setModel(self.mostDetectedThreatModel)
-        self.ui.tree_mostDetectedVirus.setColumnWidth(0, 250)
+        self.ui.tbl_fileScanResults.setModel(self.fileScanResultModel)
+        self.ui.tbl_fileScanResults.setColumnWidth(1, 150)
+        self.ui.tbl_fileScanResults.doubleClicked.connect(self.fileScanResultsItemClick)
+        self.ui.tbl_mostDetectedVirus.setModel(self.mostDetectedThreatModel)
+        self.ui.tbl_mostDetectedVirus.setColumnWidth(0, 250)
 
     def connectSlotsAndSignals(self):
         self.signals['pageChanged'].connect(self.pageChanged)
+        self.filtered.connect(self.setFilter)
+        for (x, radioBtn) in [('all', self.ui.op_TopThreatsfilterAll),
+                              ('file', self.ui.op_TopThreatsfilterFiles),
+                              ('url', self.ui.op_TopThreatsfilterURLs)]:
+            def toggled(x):
+                def f(checked):
+                    if checked:
+                        self.filtered.emit(x)
+                return f
+            radioBtn.toggled.connect(toggled(x))
 
     def loadData(self):
         self.fileScanResultModel.loadData()
-        self.mostDetectedThreatModel.loadData()
+        self.mostDetectedThreatModel.loadData(self.filterBy)
         self.updateSummary()
 
     def pageChanged(self, idx):
         if idx == 0:
             self.loadData()
+
+    def setFilter(self, filterBy):
+        self.filterBy = filterBy
+        self.mostDetectedThreatModel.loadData(self.filterBy)
 
     def fileScanResultsItemClick(self, index: QModelIndex):
         row = index.row()

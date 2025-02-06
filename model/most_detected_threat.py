@@ -30,13 +30,14 @@ class MostDetectedThreatModel(QAbstractTableModel):
         col = index.column()
         return self.threats[row][['name', 'detected'][col]]
 
-    def loadData(self):
-        rows = self.db.fetchAll("""
-        SELECT v.name, COUNT(*) AS detected FROM virus v, analysis a
-        WHERE a.virus_id = v.id
-        GROUP BY v.id
-        ORDER BY detected DESC LIMIT 100
-        """)
+    def loadData(self, filterBy):
+        query = 'SELECT v.name, COUNT(*) AS detected FROM virus v, analysis a WHERE a.virus_id = v.id'
+        queryParams = []
+        if filterBy not in (None, 'all'):
+            queryParams.append(filterBy)
+            query += ' AND a.type = ?'
+        query += ' GROUP BY v.id ORDER BY detected DESC LIMIT 100'
+        rows = self.db.fetchAll(query, queryParams)
         self.beginResetModel()
         self.threats.clear()
         for row in rows:

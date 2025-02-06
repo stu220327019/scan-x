@@ -7,30 +7,33 @@ import time
 from qasync import asyncSlot
 import asyncio
 import json
-from ..ui.ui_main import Ui_MainWindow
+from pprint import pprint
+
+from view.ui.ui_main import Ui_MainWindow
+from .base import Base
 from core.config import VIRUS_TOTAL_API_KEY
 
 
 URL_PATTERN = r'((http|https)\:\/\/)?[a-zA-Z0-9\.\/\?\:@\-_=#]+\.([a-zA-Z]){2,6}([a-zA-Z0-9\.\&\/\?\:@\-_=#])*'
 
 
-class URLScan(QObject):
+class URLScan(Base):
     def __init__(self, ui: Ui_MainWindow, *args, **kwargs):
-        super().__init__()
         self.ui = ui
-        self.connect_slots_and_signals()
+        super().__init__(*args, **kwargs)
 
-    def connect_slots_and_signals(self):
+    def connectSlotsAndSignals(self):
         self.ui.input_url.textChanged.connect(self.validateURLInput)
-        self.ui.btn_UrlScan.clicked.connect(self.startURLScan)
+        self.ui.btn_urlScan.clicked.connect(self.startURLScan)
 
     def validateURLInput(self):
         txt = self.ui.input_url.text()
-        self.ui.btn_UrlScan.setEnabled(re.search(URL_PATTERN, txt) is not None)
+        self.ui.btn_urlScan.setEnabled(re.search(URL_PATTERN, txt) is not None)
 
     @asyncSlot()
     async def startURLScan(self):
-        self.ui.btn_UrlScan.setEnabled(False)
+        self.ui.btn_urlScan.setEnabled(False)
+        self.ui.input_url.setEnabled(False)
         self.ui.tbl_urlScanResult.clear()
         self.startTime = time.time()
         self.urlScanTask = URLScanTask(self.ui.input_url.text())
