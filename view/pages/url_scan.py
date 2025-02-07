@@ -12,7 +12,7 @@ import sqlite3
 from view.ui.ui_main import Ui_MainWindow
 from .base import Base
 from core.config import VIRUS_TOTAL_API_KEY
-from lib.entity import URL, URLScanResult, UrlHttpResponse, Analysis, Color
+from lib.entity import URL, UrlScanResult, UrlHttpResponse, Analysis, Color
 
 URL_PATTERN = r'((http|https)\:\/\/)?[a-zA-Z0-9\.\/\?\:@\-_=#]+\.([a-zA-Z]){2,6}([a-zA-Z0-9\.\&\/\?\:@\-_=#])*'
 
@@ -52,7 +52,7 @@ class URLScan(Base):
         self.ui.btn_urlScan.setText('Scan')
         self.ui.input_url.setEnabled(True)
 
-    def updateURLScanResult(self, scanResult: URLScanResult):
+    def updateURLScanResult(self, scanResult: UrlScanResult):
         item = QTreeWidgetItem(self.ui.tbl_urlDetails)
         item.setText(0, 'URL')
         item.setText(1, scanResult.url.url)
@@ -112,7 +112,7 @@ class URLScan(Base):
                               httpResponse.get('contentLength'),
                               httpResponse.get('contentSha256'),
                               httpResponse.get('title'),
-                              json.dumps(dict(httpResponse.get('headers'))),
+                              json.dumps(dict(httpResponse.get('headers'))) if httpResponse.get('headers') else None,
                               time.time()])
             cur = self.db.exec("""
             INSERT INTO url_scan_result (url_id, analysis_stats, analysis_results, clean, started_at, finished_at, created_at)
@@ -158,7 +158,7 @@ class URLScanTask(QObject):
         self.url = url
 
     def _createScanResult(self, analysis):
-        return URLScanResult({
+        return UrlScanResult({
             'url': URL({
                 'url': analysis.url,
                 'httpResponse': UrlHttpResponse({
@@ -173,7 +173,7 @@ class URLScanTask(QObject):
                 'stats': analysis.last_analysis_stats,
                 'results': analysis.last_analysis_results
             }),
-            'status': URLScanResult.STATUS_COMPLETED
+            'status': UrlScanResult.STATUS_COMPLETED
         })
 
     async def run(self):

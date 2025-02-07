@@ -11,6 +11,8 @@ class ScanResult(Map):
     STATUS_FAILED = 'Failed: {}'
     STATUS_CANCELED = 'Canceled'
     STATUS_CLEAN = 'Clean'
+    STATUS_SAFE = 'Safe'
+    STATUS_UNSAFE = 'Unsafe'
 
     analysis: Analysis
     clean: bool

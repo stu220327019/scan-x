@@ -1,7 +1,7 @@
 from PySide6.QtCore import QObject, QThread, Signal, Qt, QModelIndex
 from PySide6.QtWidgets import QFileDialog, QTreeWidgetItem
 
-from model import FileScanResultModel, MostDetectedThreatModel
+from model import FileScanResultModel, UrlScanResultModel, MostDetectedThreatModel
 from lib.entity import File
 from view.ui.ui_main import Ui_MainWindow
 from widgets import FileDetailsContainer
@@ -17,13 +17,16 @@ class Home(Base):
         self.signals = signals
         self.db: DB = ctx.get('db')
         self.fileScanResultModel = FileScanResultModel(self.db)
+        self.urlScanResultModel = UrlScanResultModel(self.db)
         self.mostDetectedThreatModel = MostDetectedThreatModel(self.db)
         super().__init__(*args, **kwargs)
 
     def uiDefinitions(self):
-        self.ui.tbl_fileScanResults.setModel(self.fileScanResultModel)
-        self.ui.tbl_fileScanResults.setColumnWidth(1, 150)
-        self.ui.tbl_fileScanResults.doubleClicked.connect(self.fileScanResultsItemClick)
+        self.ui.tbl_latestFileScanResults.setModel(self.fileScanResultModel)
+        self.ui.tbl_latestFileScanResults.setColumnWidth(1, 150)
+        self.ui.tbl_latestFileScanResults.doubleClicked.connect(self.fileScanResultsItemClick)
+        self.ui.tbl_latestUrlScanResults.setModel(self.urlScanResultModel)
+        self.ui.tbl_latestUrlScanResults.setColumnWidth(0, 200)
         self.ui.tbl_mostDetectedVirus.setModel(self.mostDetectedThreatModel)
         self.ui.tbl_mostDetectedVirus.setColumnWidth(0, 250)
 
@@ -42,6 +45,7 @@ class Home(Base):
 
     def loadData(self):
         self.fileScanResultModel.loadData()
+        self.urlScanResultModel.loadData()
         self.mostDetectedThreatModel.loadData(self.filterBy)
         self.updateSummary()
 
@@ -59,7 +63,9 @@ class Home(Base):
         self.signals['openRightBox'].emit(scanResult.file.filename, FileDetailsContainer, {'scanResult': scanResult})
 
     def updateSummary(self):
-        filesScaned = self.db.fetchOneCol('SELECT COUNT(id) FROM file_scan_result')
-        self.ui.label_filesScanned.setText(f'{filesScaned:,}')
+        filesScanned = self.db.fetchOneCol('SELECT COUNT(id) FROM file_scan_result')
+        self.ui.label_statsFilesScanned.setText(f'{filesScanned:,}')
+        urlsScanned = self.db.fetchOneCol('SELECT COUNT(id) FROM url_scan_result')
+        self.ui.label_statsUrlsScanned.setText(f'{urlsScanned:,}')
         threatsDetected = self.db.fetchOneCol('SELECT COUNT(virus_id) FROM analysis WHERE virus_id IS NOT NULL')
-        self.ui.label_threatsDetected.setText(f'{threatsDetected:,}')
+        self.ui.label_statsThreatsDetected.setText(f'{threatsDetected:,}')

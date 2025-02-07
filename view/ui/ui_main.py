@@ -963,33 +963,33 @@ class Ui_MainWindow(object):
 
         self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label)
 
-        self.label_filesScanned = QLabel(self.groupBox_7)
-        self.label_filesScanned.setObjectName(u"label_filesScanned")
-        self.label_filesScanned.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.label_statsFilesScanned = QLabel(self.groupBox_7)
+        self.label_statsFilesScanned.setObjectName(u"label_statsFilesScanned")
+        self.label_statsFilesScanned.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
 
-        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.label_filesScanned)
+        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.label_statsFilesScanned)
 
         self.label_4 = QLabel(self.groupBox_7)
         self.label_4.setObjectName(u"label_4")
 
         self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_4)
 
-        self.label_5 = QLabel(self.groupBox_7)
-        self.label_5.setObjectName(u"label_5")
-        self.label_5.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.label_statsUrlsScanned = QLabel(self.groupBox_7)
+        self.label_statsUrlsScanned.setObjectName(u"label_statsUrlsScanned")
+        self.label_statsUrlsScanned.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
 
-        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.label_5)
+        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.label_statsUrlsScanned)
 
         self.label_8 = QLabel(self.groupBox_7)
         self.label_8.setObjectName(u"label_8")
 
         self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_8)
 
-        self.label_threatsDetected = QLabel(self.groupBox_7)
-        self.label_threatsDetected.setObjectName(u"label_threatsDetected")
-        self.label_threatsDetected.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.label_statsThreatsDetected = QLabel(self.groupBox_7)
+        self.label_statsThreatsDetected.setObjectName(u"label_statsThreatsDetected")
+        self.label_statsThreatsDetected.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
 
-        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.label_threatsDetected)
+        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.label_statsThreatsDetected)
 
 
         self.verticalLayout_30.addLayout(self.formLayout)
@@ -1086,11 +1086,11 @@ class Ui_MainWindow(object):
         self.groupBox_5.setObjectName(u"groupBox_5")
         self.verticalLayout_29 = QVBoxLayout(self.groupBox_5)
         self.verticalLayout_29.setObjectName(u"verticalLayout_29")
-        self.tbl_fileScanResults = QTreeView(self.groupBox_5)
-        self.tbl_fileScanResults.setObjectName(u"tbl_fileScanResults")
-        self.tbl_fileScanResults.setAlternatingRowColors(True)
+        self.tbl_latestFileScanResults = QTreeView(self.groupBox_5)
+        self.tbl_latestFileScanResults.setObjectName(u"tbl_latestFileScanResults")
+        self.tbl_latestFileScanResults.setAlternatingRowColors(True)
 
-        self.verticalLayout_29.addWidget(self.tbl_fileScanResults)
+        self.verticalLayout_29.addWidget(self.tbl_latestFileScanResults)
 
 
         self.horizontalLayout_24.addWidget(self.groupBox_5)
@@ -1099,11 +1099,11 @@ class Ui_MainWindow(object):
         self.groupBox_9.setObjectName(u"groupBox_9")
         self.verticalLayout_31 = QVBoxLayout(self.groupBox_9)
         self.verticalLayout_31.setObjectName(u"verticalLayout_31")
-        self.tbl_latestURLScanResults = QTreeView(self.groupBox_9)
-        self.tbl_latestURLScanResults.setObjectName(u"tbl_latestURLScanResults")
-        self.tbl_latestURLScanResults.setAlternatingRowColors(True)
+        self.tbl_latestUrlScanResults = QTreeView(self.groupBox_9)
+        self.tbl_latestUrlScanResults.setObjectName(u"tbl_latestUrlScanResults")
+        self.tbl_latestUrlScanResults.setAlternatingRowColors(True)
 
-        self.verticalLayout_31.addWidget(self.tbl_latestURLScanResults)
+        self.verticalLayout_31.addWidget(self.tbl_latestUrlScanResults)
 
 
         self.horizontalLayout_24.addWidget(self.groupBox_9)
@@ -1428,11 +1428,11 @@ class Ui_MainWindow(object):
         self.groupBox_6.setTitle(QCoreApplication.translate("MainWindow", u"Analysis Stats", None))
         self.groupBox_7.setTitle(QCoreApplication.translate("MainWindow", u"Summary", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"Files scanned:", None))
-        self.label_filesScanned.setText(QCoreApplication.translate("MainWindow", u"999", None))
+        self.label_statsFilesScanned.setText(QCoreApplication.translate("MainWindow", u"999", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"URLs scanned:", None))
-        self.label_5.setText(QCoreApplication.translate("MainWindow", u"999", None))
+        self.label_statsUrlsScanned.setText(QCoreApplication.translate("MainWindow", u"999", None))
         self.label_8.setText(QCoreApplication.translate("MainWindow", u"Threats detected:", None))
-        self.label_threatsDetected.setText(QCoreApplication.translate("MainWindow", u"999,999", None))
+        self.label_statsThreatsDetected.setText(QCoreApplication.translate("MainWindow", u"999,999", None))
         self.groupBox_8.setTitle(QCoreApplication.translate("MainWindow", u"Top Threats", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"Most detected", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"Recently detected", None))

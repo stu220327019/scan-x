@@ -32,7 +32,8 @@ class MostDetectedThreatModel(QAbstractTableModel):
 
     def loadData(self, filterBy):
         query = 'SELECT v.name, COUNT(*) AS detected FROM virus v, analysis a WHERE a.virus_id = v.id'
-        queryParams = []
+        query += " AND a.category NOT IN (?, ?)"
+        queryParams = ['harmless', 'undetected']
         if filterBy not in (None, 'all'):
             queryParams.append(filterBy)
             query += ' AND a.type = ?'

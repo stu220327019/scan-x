@@ -1761,7 +1761,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                  </widget>
                                 </item>
                                 <item row="0" column="1">
-                                 <widget class="QLabel" name="label_filesScanned">
+                                 <widget class="QLabel" name="label_statsFilesScanned">
                                   <property name="text">
                                    <string>999</string>
                                   </property>
@@ -1778,7 +1778,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                  </widget>
                                 </item>
                                 <item row="1" column="1">
-                                 <widget class="QLabel" name="label_5">
+                                 <widget class="QLabel" name="label_statsUrlsScanned">
                                   <property name="text">
                                    <string>999</string>
                                   </property>
@@ -1795,7 +1795,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                  </widget>
                                 </item>
                                 <item row="2" column="1">
-                                 <widget class="QLabel" name="label_threatsDetected">
+                                 <widget class="QLabel" name="label_statsThreatsDetected">
                                   <property name="text">
                                    <string>999,999</string>
                                   </property>
@@ -1939,7 +1939,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                             </property>
                             <layout class="QVBoxLayout" name="verticalLayout_29">
                              <item>
-                              <widget class="QTreeView" name="tbl_fileScanResults">
+                              <widget class="QTreeView" name="tbl_latestFileScanResults">
                                <property name="alternatingRowColors">
                                 <bool>true</bool>
                                </property>
@@ -1955,7 +1955,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                             </property>
                             <layout class="QVBoxLayout" name="verticalLayout_31">
                              <item>
-                              <widget class="QTreeView" name="tbl_latestURLScanResults">
+                              <widget class="QTreeView" name="tbl_latestUrlScanResults">
                                <property name="alternatingRowColors">
                                 <bool>true</bool>
                                </property>
