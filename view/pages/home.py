@@ -1,6 +1,7 @@
-from PySide6.QtCore import QObject, QThread, Signal, Qt, QModelIndex
+from PySide6.QtCore import QObject, QThread, Signal, Qt, QModelIndex, QUrl
 from PySide6.QtWidgets import QFileDialog, QTreeWidgetItem, QMenu
 from PySide6.QtGui import QAction, QClipboard, QDesktopServices
+import hashlib
 
 from model import FileScanResultModel, UrlScanResultModel, MostDetectedThreatModel
 from lib.entity import File
@@ -26,6 +27,8 @@ class Home(Base):
         self.ui.tbl_latestFileScanResults.setModel(self.fileScanResultModel)
         self.ui.tbl_latestFileScanResults.setColumnWidth(1, 150)
         self.ui.tbl_latestFileScanResults.doubleClicked.connect(self.fileScanResultsItemClick)
+        self.ui.tbl_latestFileScanResults.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.ui.tbl_latestFileScanResults.customContextMenuRequested.connect(self.fileScanResultsContextMenu)
         self.ui.tbl_latestUrlScanResults.setModel(self.urlScanResultModel)
         self.ui.tbl_latestUrlScanResults.setColumnWidth(0, 200)
         self.ui.tbl_latestUrlScanResults.doubleClicked.connect(self.urlScanResultsItemClick)
@@ -71,10 +74,37 @@ class Home(Base):
         scanResult = self.urlScanResultModel.results[row]
         self.signals['openRightBox'].emit('URL Scan Result', UrlScanResultContainer, {'scanResult': scanResult})
 
+    def fileScanResultsContextMenu(self, position):
+        menu = QMenu(self.ui.tbl_latestFileScanResults)
+        for (label, trigger) in [("Open with default program", self.openFile),
+                                 ("View in directory", self.openFileDir),
+                                 ("View in VirusTotal", self.viewFileVirusTotal)]:
+            menu.addAction(label).triggered.connect(trigger)
+        menu.exec(self.ui.tbl_latestFileScanResults.mapToGlobal(position))
+
+    def openFile(self, position):
+        index = self.ui.tbl_latestFileScanResults.currentIndex()
+        row = index.row()
+        filepath = self.fileScanResultModel.results[row].file.filepath
+        QDesktopServices.openUrl(QUrl.fromUserInput(filepath))
+
+    def openFileDir(self, position):
+        index = self.ui.tbl_latestFileScanResults.currentIndex()
+        row = index.row()
+        path = self.fileScanResultModel.results[row].file.path
+        QDesktopServices.openUrl(QUrl.fromUserInput(path))
+
+    def viewFileVirusTotal(self, position):
+        index = self.ui.tbl_latestFileScanResults.currentIndex()
+        row = index.row()
+        sha256 = self.fileScanResultModel.results[row].file.sha256
+        QDesktopServices.openUrl(f'https://www.virustotal.com/gui/file/{sha256}')
+
     def urlScanResultsContextMenu(self, position):
-        actions = [("Copy URL", self.copyURL), ("Open in Browser", self.openURL)]
         menu = QMenu(self.ui.tbl_latestUrlScanResults)
-        for (label, trigger) in actions:
+        for (label, trigger) in [("Copy URL", self.copyURL),
+                                 ("Open in Browser", self.openURL),
+                                 ("View in VirusTotal", self.viewURLVirusTotal)]:
             menu.addAction(label).triggered.connect(trigger)
         menu.exec(self.ui.tbl_latestUrlScanResults.mapToGlobal(position))
 
@@ -91,6 +121,13 @@ class Home(Base):
         row = index.row()
         url = self.urlScanResultModel.results[row].url.url
         QDesktopServices.openUrl(url)
+
+    def viewURLVirusTotal(self, position):
+        index = self.ui.tbl_latestUrlScanResults.currentIndex()
+        row = index.row()
+        url = self.urlScanResultModel.results[row].url.url
+        sha256 = hashlib.sha256(url.encode('utf-8')).hexdigest()
+        QDesktopServices.openUrl(f'https://www.virustotal.com/gui/url/{sha256}')
 
     def updateSummary(self):
         filesScanned = self.db.fetchOneCol('SELECT COUNT(id) FROM file_scan_result')
