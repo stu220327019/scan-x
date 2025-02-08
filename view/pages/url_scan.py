@@ -12,6 +12,7 @@ import sqlite3
 from view.ui.ui_main import Ui_MainWindow
 from .base import Base
 from core.config import VIRUS_TOTAL_API_KEY
+from core import DB
 from lib.entity import URL, UrlScanResult, UrlHttpResponse, Analysis, Color
 
 URL_PATTERN = r'((http|https)\:\/\/)?[a-zA-Z0-9\.\/\?\:@\-_=#]+\.([a-zA-Z]){2,6}([a-zA-Z0-9\.\&\/\?\:@\-_=#])*'
@@ -101,9 +102,10 @@ class URLScan(Base):
                 cur = self.db.exec('INSERT INTO url (url, created_at) VALUES (?, ?)', [url.url, time.time()])
                 urlId = cur.lastrowid
             httpResponse = url.httpResponse
-            if not self.db.fetchOneCol('SELECT id FROM url_http_response WHERE url_id = ? AND content_sha256 = ?',
-                                       [urlId, httpResponse.get('contentSha256')]):
-                self.db.exec("""
+            urlHttpResponseId = self.db.fetchOneCol('SELECT id FROM url_http_response WHERE url_id = ? AND content_sha256 = ?',
+                                                    [urlId, httpResponse.get('contentSha256')])
+            if not urlHttpResponseId:
+                cur = self.db.exec("""
                 INSERT INTO url_http_response (url_id, status_code, content_length, content_sha256, title, headers, created_at)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
                 """,
@@ -114,11 +116,13 @@ class URLScan(Base):
                               httpResponse.get('title'),
                               json.dumps(dict(httpResponse.get('headers'))) if httpResponse.get('headers') else None,
                               time.time()])
+                urlHttpResponseId = cur.lastrowid
             cur = self.db.exec("""
-            INSERT INTO url_scan_result (url_id, analysis_stats, analysis_results, clean, started_at, finished_at, created_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO url_scan_result (url_id, url_http_response_id, analysis_stats, analysis_results, clean, started_at, finished_at, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """,
                          [urlId,
+                          urlHttpResponseId,
                           json.dumps(dict(scanResult.analysis.stats)),
                           json.dumps([dict(res) for res in analysisResults]),
                           len(detection) == 0, self.startedTime, finishedTime, time.time()])

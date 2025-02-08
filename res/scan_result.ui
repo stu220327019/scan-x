@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>FileDetails</class>
- <widget class="QWidget" name="FileDetails">
+ <class>ScanResult</class>
+ <widget class="QWidget" name="ScanResult">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -56,13 +56,13 @@
       <number>10</number>
      </property>
      <item>
-      <widget class="QGroupBox" name="groupBox_fileInfo">
+      <widget class="QGroupBox" name="groupBox_details">
        <property name="title">
-        <string>File Details</string>
+        <string>Details</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_21">
         <item>
-         <widget class="QTreeWidget" name="tbl_fileInfo">
+         <widget class="QTreeWidget" name="tbl_details">
           <property name="maximumSize">
            <size>
             <width>16777215</width>
@@ -88,7 +88,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="groupBox_fileScanResult">
+      <widget class="QGroupBox" name="groupBox_scanResult">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -109,7 +109,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_fileScanStatus">
+           <widget class="QLabel" name="label_status">
             <property name="text">
              <string/>
             </property>
@@ -144,7 +144,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_fileScanDetection">
+           <widget class="QLabel" name="label_detection">
             <property name="text">
              <string/>
             </property>
@@ -166,7 +166,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QTreeWidget" name="tbl_fileScanResult">
+         <widget class="QTreeWidget" name="tbl_analysisResults">
           <property name="alternatingRowColors">
            <bool>true</bool>
           </property>
@@ -205,7 +205,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_fileScanElapsedTime">
+           <widget class="QLabel" name="label_elapsedTime">
             <property name="text">
              <string/>
             </property>

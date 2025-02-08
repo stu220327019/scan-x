@@ -1,10 +1,11 @@
 from PySide6.QtCore import QObject, QThread, Signal, Qt, QModelIndex
-from PySide6.QtWidgets import QFileDialog, QTreeWidgetItem
+from PySide6.QtWidgets import QFileDialog, QTreeWidgetItem, QMenu
+from PySide6.QtGui import QAction, QClipboard
 
 from model import FileScanResultModel, UrlScanResultModel, MostDetectedThreatModel
 from lib.entity import File
 from view.ui.ui_main import Ui_MainWindow
-from widgets import FileDetailsContainer
+from widgets import FileScanResultContainer, UrlScanResultContainer
 from core import DB
 from .base import Base
 
@@ -27,6 +28,9 @@ class Home(Base):
         self.ui.tbl_latestFileScanResults.doubleClicked.connect(self.fileScanResultsItemClick)
         self.ui.tbl_latestUrlScanResults.setModel(self.urlScanResultModel)
         self.ui.tbl_latestUrlScanResults.setColumnWidth(0, 200)
+        self.ui.tbl_latestUrlScanResults.doubleClicked.connect(self.urlScanResultsItemClick)
+        self.ui.tbl_latestUrlScanResults.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.ui.tbl_latestUrlScanResults.customContextMenuRequested.connect(self.urlScanResultsContextMenu)
         self.ui.tbl_mostDetectedVirus.setModel(self.mostDetectedThreatModel)
         self.ui.tbl_mostDetectedVirus.setColumnWidth(0, 250)
 
@@ -60,7 +64,29 @@ class Home(Base):
     def fileScanResultsItemClick(self, index: QModelIndex):
         row = index.row()
         scanResult = self.fileScanResultModel.results[row]
-        self.signals['openRightBox'].emit(scanResult.file.filename, FileDetailsContainer, {'scanResult': scanResult})
+        self.signals['openRightBox'].emit(scanResult.file.filename, FileScanResultContainer, {'scanResult': scanResult})
+
+    def urlScanResultsItemClick(self, index: QModelIndex):
+        row = index.row()
+        scanResult = self.urlScanResultModel.results[row]
+        self.signals['openRightBox'].emit('URL Scan Result', UrlScanResultContainer, {'scanResult': scanResult})
+
+    def urlScanResultsContextMenu(self, position):
+        actions = [("Copy URL", self.copyURL)]
+        menu = QMenu(self.ui.tbl_latestUrlScanResults)
+        for (label, triggerAction) in actions:
+            action = QAction(label)
+            action.triggered.connect(triggerAction)
+            menu.addAction(action)
+        menu.exec(self.ui.tbl_latestUrlScanResults.mapToGlobal(position))
+
+    def copyURL(self, position):
+        index = self.ui.tbl_latestUrlScanResults.currentIndex()
+        row = index.row()
+        url = self.urlScanResultModel.results[row].url.url
+        clipboard = QClipboard()
+        clipboard.clear()
+        clipboard.setText(url)
 
     def updateSummary(self):
         filesScanned = self.db.fetchOneCol('SELECT COUNT(id) FROM file_scan_result')

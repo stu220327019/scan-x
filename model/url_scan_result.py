@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 
 from core import DB
-from lib.entity import UrlScanResult, URL, Analysis, Color
+from lib.entity import UrlScanResult, URL, UrlHttpResponse, Analysis, Color
 
 class UrlScanResultModel(QAbstractTableModel):
     results: list[UrlScanResult] = []
@@ -60,7 +60,9 @@ class UrlScanResultModel(QAbstractTableModel):
 
     def loadData(self):
         rows = self.db.fetchAll("""
-        SELECT u.url, r.clean, r.analysis_stats, r.analysis_results, r.started_at, r.finished_at, r.created_at FROM url_scan_result r, url u
+        SELECT u.url, resp.*, r.clean, r.analysis_stats, r.analysis_results, r.started_at, r.finished_at, r.created_at
+        FROM url_scan_result r, url u
+        LEFT JOIN url_http_response resp ON resp.id = r.url_http_response_id
         WHERE u.id = r.url_id
         ORDER BY r.created_at DESC LIMIT 100
         """)
@@ -69,7 +71,14 @@ class UrlScanResultModel(QAbstractTableModel):
         for row in rows:
             result = UrlScanResult({
                 'url': URL({
-                    'url': row['url']
+                    'url': row['url'],
+                    'httpResponse': UrlHttpResponse({
+                        'statusCode': row.get('status_code'),
+                        'contentLength': row.get('content_length'),
+                        'contentSha256': row.get('content_sha256'),
+                        'headers': json.loads(row.get('headers')) if row.get('headers') else None,
+                        'title': row.get('title')
+                    })
                 }),
                 'analysis': Analysis({
                     'stats': json.loads(row['analysis_stats']),

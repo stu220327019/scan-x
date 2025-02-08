@@ -17,4 +17,5 @@
 from . custom_grips import CustomGrip
 from . file_drop import FileDropWidget
 from . custom_tree_view import CustomTreeView
-from . file_details_container import FileDetailsContainer
+from . file_scan_result_container import FileScanResultContainer
+from . url_scan_result_container import UrlScanResultContainer

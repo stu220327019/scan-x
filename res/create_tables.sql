@@ -49,13 +49,15 @@ CREATE UNIQUE INDEX IF NOT EXISTS ux_url_http_response_url_sha256 ON url_http_re
 CREATE TABLE IF NOT EXISTS url_scan_result (
   id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   url_id INTEGER NOT NULL,
+  url_http_response_id INTEGER NOT NULL,
   analysis_stats TEXT NOT NULL,
   analysis_results TEXT NOT NULL,
   clean BOOLEAN NOT NULL,
   started_at DATETIME NOT NULL,
   finished_at DATETIME NOT NULL,
   created_at DATETIME NOT NULL,
-  FOREIGN KEY (url_id) REFERENCES url(id) ON UPDATE CASCADE ON DELETE CASCADE
+  FOREIGN KEY (url_id) REFERENCES url(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (url_http_response_id) REFERENCES url_http_response(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS engine (

@@ -12,7 +12,7 @@ import sqlite3
 from model import FileScanModel
 from lib.entity import FileScanResult, Analysis
 from view.ui.ui_main import Ui_MainWindow
-from widgets import FileDetailsContainer
+from widgets import FileScanResultContainer
 from core.config import VIRUS_TOTAL_API_KEY, NUM_SCAN_WORKERS
 from core import DB
 from .base import Base
@@ -63,7 +63,7 @@ class FileScan(Base):
 
     def filelistItemClick(self, index: QModelIndex):
         result = self.model.results[index.row()]
-        self.signals['openRightBox'].emit(result.file.filename, FileDetailsContainer, {'scanResult': result})
+        self.signals['openRightBox'].emit(result.file.filename, FileScanResultContainer, {'scanResult': result})
 
     # @asyncSlot()
     def startFileScan(self):
