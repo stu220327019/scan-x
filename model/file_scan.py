@@ -119,8 +119,8 @@ class FileScanModel(QAbstractTableModel):
     def getResultRow(self, id):
         return next(iter([i for i, j in enumerate(self.results) if j['id'] == id]), None)
 
-    def getResult(self, filepath):
-        row = self.getResultRow()
+    def getResult(self, id) -> FileScanResult:
+        row = self.getResultRow(id)
         if row is not None:
             return self.results[row]
 

@@ -991,6 +991,17 @@ class Ui_MainWindow(object):
 
         self.formLayout.setWidget(2, QFormLayout.FieldRole, self.label_statsThreatsDetected)
 
+        self.label_5 = QLabel(self.groupBox_7)
+        self.label_5.setObjectName(u"label_5")
+
+        self.formLayout.setWidget(3, QFormLayout.LabelRole, self.label_5)
+
+        self.label_statsAnalysisDetections = QLabel(self.groupBox_7)
+        self.label_statsAnalysisDetections.setObjectName(u"label_statsAnalysisDetections")
+        self.label_statsAnalysisDetections.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+
+        self.formLayout.setWidget(3, QFormLayout.FieldRole, self.label_statsAnalysisDetections)
+
 
         self.verticalLayout_30.addLayout(self.formLayout)
 
@@ -1007,24 +1018,34 @@ class Ui_MainWindow(object):
         self.tab.setObjectName(u"tab")
         self.horizontalLayout_14 = QHBoxLayout(self.tab)
         self.horizontalLayout_14.setObjectName(u"horizontalLayout_14")
-        self.tbl_mostDetectedVirus = QTreeView(self.tab)
-        self.tbl_mostDetectedVirus.setObjectName(u"tbl_mostDetectedVirus")
-        self.tbl_mostDetectedVirus.setAlternatingRowColors(True)
+        self.tbl_topThreatsDetections = QTreeView(self.tab)
+        self.tbl_topThreatsDetections.setObjectName(u"tbl_topThreatsDetections")
+        self.tbl_topThreatsDetections.setAlternatingRowColors(True)
 
-        self.horizontalLayout_14.addWidget(self.tbl_mostDetectedVirus)
+        self.horizontalLayout_14.addWidget(self.tbl_topThreatsDetections)
 
         self.tabWidget.addTab(self.tab, "")
         self.tab_2 = QWidget()
         self.tab_2.setObjectName(u"tab_2")
         self.verticalLayout_14 = QVBoxLayout(self.tab_2)
         self.verticalLayout_14.setObjectName(u"verticalLayout_14")
-        self.tbl_recentlyDetectedVirus = QTreeView(self.tab_2)
-        self.tbl_recentlyDetectedVirus.setObjectName(u"tbl_recentlyDetectedVirus")
-        self.tbl_recentlyDetectedVirus.setAlternatingRowColors(True)
+        self.tbl_topThreats = QTreeView(self.tab_2)
+        self.tbl_topThreats.setObjectName(u"tbl_topThreats")
+        self.tbl_topThreats.setAlternatingRowColors(True)
 
-        self.verticalLayout_14.addWidget(self.tbl_recentlyDetectedVirus)
+        self.verticalLayout_14.addWidget(self.tbl_topThreats)
 
         self.tabWidget.addTab(self.tab_2, "")
+        self.tab_3 = QWidget()
+        self.tab_3.setObjectName(u"tab_3")
+        self.verticalLayout = QVBoxLayout(self.tab_3)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.tbl_topThreatsCategories = QTreeView(self.tab_3)
+        self.tbl_topThreatsCategories.setObjectName(u"tbl_topThreatsCategories")
+
+        self.verticalLayout.addWidget(self.tbl_topThreatsCategories)
+
+        self.tabWidget.addTab(self.tab_3, "")
 
         self.horizontalLayout_7.addWidget(self.tabWidget)
 
@@ -1428,14 +1449,17 @@ class Ui_MainWindow(object):
         self.groupBox_6.setTitle(QCoreApplication.translate("MainWindow", u"Analysis Stats", None))
         self.groupBox_7.setTitle(QCoreApplication.translate("MainWindow", u"Summary", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"Files scanned:", None))
-        self.label_statsFilesScanned.setText(QCoreApplication.translate("MainWindow", u"999", None))
+        self.label_statsFilesScanned.setText(QCoreApplication.translate("MainWindow", u"0", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"URLs scanned:", None))
-        self.label_statsUrlsScanned.setText(QCoreApplication.translate("MainWindow", u"999", None))
+        self.label_statsUrlsScanned.setText(QCoreApplication.translate("MainWindow", u"0", None))
         self.label_8.setText(QCoreApplication.translate("MainWindow", u"Threats detected:", None))
-        self.label_statsThreatsDetected.setText(QCoreApplication.translate("MainWindow", u"999,999", None))
+        self.label_statsThreatsDetected.setText(QCoreApplication.translate("MainWindow", u"0", None))
+        self.label_5.setText(QCoreApplication.translate("MainWindow", u"Analysis detections:", None))
+        self.label_statsAnalysisDetections.setText(QCoreApplication.translate("MainWindow", u"0", None))
         self.groupBox_8.setTitle(QCoreApplication.translate("MainWindow", u"Top Threats", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"Most detected", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"Recently detected", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"Vendors' detections", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"Threats", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), QCoreApplication.translate("MainWindow", u"Categories", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"Filter By:", None))
         self.op_TopThreatsfilterAll.setText(QCoreApplication.translate("MainWindow", u"All", None))
         self.op_TopThreatsfilterFiles.setText(QCoreApplication.translate("MainWindow", u"Files", None))

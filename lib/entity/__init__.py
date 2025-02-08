@@ -5,3 +5,8 @@ from .analysis import Analysis
 from .url import URL
 from .url_http_response import UrlHttpResponse
 from .url_scan_result import UrlScanResult
+from .threat import Threat
+from .threat_category import ThreatCategory
+from .threat_tag import ThreatTag
+from .file_type import FileType
+from .file_type_tag import FileTypeTag

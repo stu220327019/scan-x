@@ -1,4 +1,6 @@
 from lib import Map
+from .threat import Threat
+from .file_type import FileType
 
 class File(Map):
     filename: str
@@ -9,3 +11,5 @@ class File(Map):
     md5: str
     size: int
     type: str
+    threat: Threat|None
+    fileType: FileType|None

@@ -34,8 +34,8 @@ class Home(Base):
         self.ui.tbl_latestUrlScanResults.doubleClicked.connect(self.urlScanResultsItemClick)
         self.ui.tbl_latestUrlScanResults.setContextMenuPolicy(Qt.CustomContextMenu)
         self.ui.tbl_latestUrlScanResults.customContextMenuRequested.connect(self.urlScanResultsContextMenu)
-        self.ui.tbl_mostDetectedVirus.setModel(self.mostDetectedThreatModel)
-        self.ui.tbl_mostDetectedVirus.setColumnWidth(0, 250)
+        self.ui.tbl_topThreatsDetections.setModel(self.mostDetectedThreatModel)
+        self.ui.tbl_topThreatsDetections.setColumnWidth(0, 250)
 
     def connectSlotsAndSignals(self):
         self.signals['pageChanged'].connect(self.pageChanged)
@@ -76,23 +76,18 @@ class Home(Base):
 
     def fileScanResultsContextMenu(self, position):
         menu = QMenu(self.ui.tbl_latestFileScanResults)
-        for (label, trigger) in [("Open with default program", self.openFile),
-                                 ("View in directory", self.openFileDir),
+        def openFileOrDir(field):
+            def _openFileOrDir():
+                index = self.ui.tbl_latestFileScanResults.currentIndex()
+                row = index.row()
+                path = self.fileScanResultModel.results[row].file.get(field)
+                QDesktopServices.openUrl(QUrl.fromUserInput(path))
+            return _openFileOrDir
+        for (label, trigger) in [("Open with default program", openFileOrDir('filepath')),
+                                 ("View in directory", openFileOrDir('path')),
                                  ("View in VirusTotal", self.viewFileVirusTotal)]:
             menu.addAction(label).triggered.connect(trigger)
         menu.exec(self.ui.tbl_latestFileScanResults.mapToGlobal(position))
-
-    def openFile(self, position):
-        index = self.ui.tbl_latestFileScanResults.currentIndex()
-        row = index.row()
-        filepath = self.fileScanResultModel.results[row].file.filepath
-        QDesktopServices.openUrl(QUrl.fromUserInput(filepath))
-
-    def openFileDir(self, position):
-        index = self.ui.tbl_latestFileScanResults.currentIndex()
-        row = index.row()
-        path = self.fileScanResultModel.results[row].file.path
-        QDesktopServices.openUrl(QUrl.fromUserInput(path))
 
     def viewFileVirusTotal(self, position):
         index = self.ui.tbl_latestFileScanResults.currentIndex()
@@ -135,4 +130,4 @@ class Home(Base):
         urlsScanned = self.db.fetchOneCol('SELECT COUNT(id) FROM url_scan_result')
         self.ui.label_statsUrlsScanned.setText(f'{urlsScanned:,}')
         threatsDetected = self.db.fetchOneCol('SELECT COUNT(virus_id) FROM analysis WHERE virus_id IS NOT NULL')
-        self.ui.label_statsThreatsDetected.setText(f'{threatsDetected:,}')
+        self.ui.label_statsAnalysisDetections.setText(f'{threatsDetected:,}')

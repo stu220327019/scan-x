@@ -8,9 +8,11 @@ import vt
 import os
 import json
 import sqlite3
+from pprint import pprint
 
 from model import FileScanModel
-from lib.entity import FileScanResult, Analysis
+from lib.entity import (FileScanResult, Analysis, Threat,ThreatCategory,
+                        ThreatTag, FileType, FileTypeTag)
 from view.ui.ui_main import Ui_MainWindow
 from widgets import FileScanResultContainer
 from core.config import VIRUS_TOTAL_API_KEY, NUM_SCAN_WORKERS
@@ -91,13 +93,19 @@ class FileScan(Base):
     def workerStarted(self, filepath):
         self.model.updateResult(filepath, status=FileScanResult.STATUS_SCANNING, startedTime=time.time())
 
-    def workerFinished(self, filepath, analysis: Analysis):
+    def workerFinished(self, filepath, scanResult: dict):
+        analysis, threat, fileType = scanResult.get('analysis'), scanResult.get('threat'), scanResult.get('fileType')
         analysisStats = analysis.stats
         analysisResults = analysis.results.values()
         detection = [x for x in analysisResults if x['result'] is not None]
         status = FileScanResult.STATUS_COMPLETED if len(detection) == 0 else FileScanResult.STATUS_INFECTED
-        result = self.model.updateResult(filepath, status=status, analysis=analysis, finishedTime=time.time())
+        result = self.model.getResult(filepath)
         file = result.file
+        if threat:
+            file.threat = threat
+        if fileType:
+            file.fileType = fileType
+        result = self.model.updateResult(filepath, file=file, status=status, analysis=analysis, finishedTime=time.time())
         try:
             self.db.beginTransaction()
             fileId = self.db.fetchOneCol(
@@ -105,11 +113,42 @@ class FileScan(Base):
                 [file.filepath, file.sha1]
             )
             if not fileId:
+                fileTypeId = None
+                if file.fileType:
+                    fileTypeId = self.db.fetchOneCol('SELECT id FROM file_type WHERE description = ?', [file.fileType.description])
+                    if not fileTypeId:
+                        cur = self.db.exec('INSERT INTO file_type (description, extension) VALUES (?, ?)',
+                                           [file.fileType.description, file.fileType.extension])
+                        fileTypeId = cur.lastrowid
+                    for tag in file.fileType.tags:
+                        tagId = self.db.fetchOneCol('SELECT id FROM file_type_tag WHERE name = ?', [tag.name])
+                        if not tagId:
+                            cur = self.db.exec('INSERT INTO file_type_tag (name) VALUES (?)', [tag.name])
+                            tagId = cur.lastrowid
+                        self.db.exec('INSERT INTO file_types_tags (file_type_id, file_type_tag_id) VALUES (?, ?)', [fileTypeId, tagId])
+                threatId = None
+                if file.threat:
+                    threatId = self.db.fetchOneCol('SELECT id FROM threat WHERE name = ?', [file.threat.name])
+                    if not threatId:
+                        cur = self.db.exec('INSERT INTO threat (name) VALUES (?)', [file.threat.name])
+                        threatId = cur.lastrowid
+                    for cat in file.threat.categories:
+                        catId = self.db.fetchOneCol('SELECT id FROM threat_category WHERE name = ?', [cat.name])
+                        if not catId:
+                            cur = self.db.exec('INSERT INTO threat_category (name) VALUES (?)', [cat.name])
+                            catId = cur.lastrowid
+                        self.db.exec('INSERT INTO threats_categories (threat_id, threat_category_id) VALUES (?, ?)', [threatId, catId])
+                    for tag in file.threat.tags:
+                        tagId = self.db.fetchOneCol('SELECT id FROM threat_tag WHERE name = ?', [tag.name])
+                        if not tagId:
+                            cur = self.db.exec('INSERT INTO threat_tag (name) VALUES (?)', [tag.name])
+                            tagId = cur.lastrowid
+                        self.db.exec('INSERT INTO threats_tags (threat_id, threat_tag_id) VALUES (?, ?)', [threatId, tagId])
                 cur = self.db.exec("""
-                INSERT INTO file (filename, filepath, path, sha1, sha256, md5, size, type, created_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO file (file_type_id, threat_id, filename, filepath, path, sha1, sha256, md5, size, type, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
-                                   [file.filename, file.filepath, file.path,
+                                   [fileTypeId, threatId, file.filename, file.filepath, file.path,
                                     file.sha1, file.sha256, file.md5,
                                     file.size, file.type, time.time()])
                 fileId = cur.lastrowid
@@ -165,19 +204,42 @@ class FileScanWorker(QObject):
                     self.started.emit(filepath)
                     with open(filepath, 'rb') as f:
                         sha1 = hashlib.sha1(f.read()).hexdigest()
+                        analysis = None
+                        scanResult = None
                         async with vt.Client(self.virustotalApiKey) as client:
                             try:
                                 analysis = await client.get_object_async('/files/{}', sha1)
-                                self.finished.emit(filepath, Analysis({
-                                    'stats': analysis.last_analysis_stats,
-                                    'results': analysis.last_analysis_results
-                                }))
+                                scanResult = {
+                                    'analysis': Analysis({
+                                        'stats': analysis.last_analysis_stats,
+                                        'results': analysis.last_analysis_results
+                                    })
+                                }
                             except vt.APIError as e:
                                 if e.code == 'NotFoundError':
                                     analysis = await client.scan_file_async(f, wait_for_completion=True)
-                                    self.finished.emit(filepath, Analysis(analysis))
+                                    scanResult = {
+                                        'analysis': Analysis({
+                                            'stats': analysis.stats,
+                                            'results': analysis.results
+                                        })
+                                    }
                                 else:
                                     raise e
+                            threat = analysis.get('popular_threat_classification')
+                            if threat:
+                                scanResult['threat'] = Threat({
+                                    'name': threat.get('suggested_threat_label'),
+                                    'categories': [ThreatCategory({'name': cat['value']}) for cat in threat.get('popular_threat_category', [])],
+                                    'tags': [ThreatTag({'name': tag['value']}) for tag in threat.get('popular_threat_name', [])]
+                                })
+                            if analysis.get('type_description'):
+                                scanResult['fileType'] = FileType({
+                                    'description': analysis.get('type_description'),
+                                    'extension': analysis.get('type_extension'),
+                                    'tags': [FileTypeTag({'name': tag}) for tag in analysis.get('type_tags', [])]
+                                })
+                            self.finished.emit(filepath, scanResult)
                             self.queue.task_done()
                 else:
                     self.queue.task_done()
