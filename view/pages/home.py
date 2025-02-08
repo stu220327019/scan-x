@@ -1,6 +1,6 @@
 from PySide6.QtCore import QObject, QThread, Signal, Qt, QModelIndex
 from PySide6.QtWidgets import QFileDialog, QTreeWidgetItem, QMenu
-from PySide6.QtGui import QAction, QClipboard
+from PySide6.QtGui import QAction, QClipboard, QDesktopServices
 
 from model import FileScanResultModel, UrlScanResultModel, MostDetectedThreatModel
 from lib.entity import File
@@ -72,12 +72,10 @@ class Home(Base):
         self.signals['openRightBox'].emit('URL Scan Result', UrlScanResultContainer, {'scanResult': scanResult})
 
     def urlScanResultsContextMenu(self, position):
-        actions = [("Copy URL", self.copyURL)]
+        actions = [("Copy URL", self.copyURL), ("Open in Browser", self.openURL)]
         menu = QMenu(self.ui.tbl_latestUrlScanResults)
-        for (label, triggerAction) in actions:
-            action = QAction(label)
-            action.triggered.connect(triggerAction)
-            menu.addAction(action)
+        for (label, trigger) in actions:
+            menu.addAction(label).triggered.connect(trigger)
         menu.exec(self.ui.tbl_latestUrlScanResults.mapToGlobal(position))
 
     def copyURL(self, position):
@@ -87,6 +85,12 @@ class Home(Base):
         clipboard = QClipboard()
         clipboard.clear()
         clipboard.setText(url)
+
+    def openURL(self, position):
+        index = self.ui.tbl_latestUrlScanResults.currentIndex()
+        row = index.row()
+        url = self.urlScanResultModel.results[row].url.url
+        QDesktopServices.openUrl(url)
 
     def updateSummary(self):
         filesScanned = self.db.fetchOneCol('SELECT COUNT(id) FROM file_scan_result')
