@@ -58,9 +58,20 @@ class UrlScanResultModel(QAbstractTableModel):
             else:
                 return None
 
+    def getRow(self, id):
+        return next(iter([i for i, j in enumerate(self.results) if j['id'] == id]), None)
+
+    def delScanResult(self, id):
+        row = self.getRow(id)
+        if row:
+            self.beginRemoveRows(QModelIndex(), row, row)
+            del self.results[row]
+            self.endRemoveRows()
+        self.db.exec('DELETE FROM url_scan_result WHERE id = ?', [id], True)
+
     def loadData(self):
         rows = self.db.fetchAll("""
-        SELECT u.url, resp.*, r.clean, r.analysis_stats, r.analysis_results, r.started_at, r.finished_at, r.created_at
+        SELECT u.url, resp.*, r.id, r.clean, r.analysis_stats, r.analysis_results, r.started_at, r.finished_at, r.created_at
         FROM url_scan_result r, url u
         LEFT JOIN url_http_response resp ON resp.id = r.url_http_response_id
         WHERE u.id = r.url_id
@@ -87,7 +98,8 @@ class UrlScanResultModel(QAbstractTableModel):
                 'clean':row['clean'],
                 'startedTime': row['started_at'],
                 'finishedTime': row['finished_at'],
-                'scannedAt': row['created_at']
+                'scannedAt': row['created_at'],
+                'id': row['id']
             })
             self.results.append(result)
         self.endResetModel()

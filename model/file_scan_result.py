@@ -76,9 +76,21 @@ class FileScanResultModel(QAbstractTableModel):
                 })
             }
 
+    def getRow(self, id):
+        return next(iter([i for i, j in enumerate(self.results) if j['id'] == id]), None)
+
+    def delScanResult(self, id):
+        row = self.getRow(id)
+        if row:
+            self.beginRemoveRows(QModelIndex(), row, row)
+            del self.results[row]
+            self.endRemoveRows()
+        self.db.exec('DELETE FROM file_scan_result WHERE id = ?', [id], True)
+
+
     def loadData(self):
         rows = self.db.fetchAll("""
-        SELECT f.*, r.clean, r.analysis_stats, r.analysis_results, r.started_at, r.finished_at, r.created_at FROM file_scan_result r, file f
+        SELECT f.*, f.id AS file_id, r.id, r.clean, r.analysis_stats, r.analysis_results, r.started_at, r.finished_at, r.created_at FROM file_scan_result r, file f
         WHERE f.id = r.file_id
         ORDER BY r.created_at DESC LIMIT 100
         """)
@@ -95,7 +107,7 @@ class FileScanResultModel(QAbstractTableModel):
                     'md5': row['md5'],
                     'size': row['size'],
                     'type': row['type'],
-                    'id': row['id']
+                    'id': row['file_id']
                 }),
                 'analysis': Analysis({
                     'stats': json.loads(row['analysis_stats']),
@@ -104,7 +116,8 @@ class FileScanResultModel(QAbstractTableModel):
                 'clean':row['clean'],
                 'startedTime': row['started_at'],
                 'finishedTime': row['finished_at'],
-                'scannedAt': row['created_at']
+                'scannedAt': row['created_at'],
+                'id': row['id']
             })
             self.results.append(result)
         self.endResetModel()
