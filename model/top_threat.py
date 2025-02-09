@@ -1,11 +1,10 @@
 from PySide6.QtCore import Qt, QAbstractTableModel, QModelIndex
 from PySide6.QtGui import QColor, QIcon
 import json
-from datetime import datetime
 
 from core import DB
 
-class MostDetectedThreatModel(QAbstractTableModel):
+class TopThreatModel(QAbstractTableModel):
     threats = []
 
     def __init__(self, db: DB, parent=None):
@@ -16,11 +15,11 @@ class MostDetectedThreatModel(QAbstractTableModel):
         return len(self.threats) if not parent.isValid() else 0
 
     def columnCount(self, parent=QModelIndex()):
-        return 2
+        return 3
 
     def headerData(self, section, orientation, role=Qt.DisplayRole):
         if role == Qt.DisplayRole and orientation == Qt.Horizontal:
-            return ['Threat / Virus', 'Detected', 'Detected (Unique)'][section]
+            return ['Threat', 'Detected', 'Categories', 'Detected (Unique)'][section]
         return None
 
     def data(self, index, role=Qt.DisplayRole):
@@ -28,19 +27,28 @@ class MostDetectedThreatModel(QAbstractTableModel):
             return None
         row = index.row()
         col = index.column()
-        return self.threats[row][['name', 'detected'][col]]
+        val = self.threats[row][['name', 'detected', 'categories'][col]]
+        return str.join(', ', val) if type(val) == list else val
 
-    def loadData(self, filterBy):
-        query = 'SELECT v.name, COUNT(*) AS detected FROM virus v, analysis a WHERE a.virus_id = v.id'
-        query += " AND a.category NOT IN (?, ?)"
-        queryParams = ['harmless', 'undetected']
-        if filterBy not in (None, 'all'):
-            queryParams.append(filterBy)
-            query += ' AND a.type = ?'
-        query += ' GROUP BY v.id ORDER BY detected DESC LIMIT 100'
-        rows = self.db.fetchAll(query, queryParams)
+    def loadData(self, viewBy=None):
+        query = """
+        SELECT t.*, JSON_GROUP_ARRAY(c.name) AS categories
+        FROM (
+            SELECT t.id, t.name, COUNT(*) AS detected
+            FROM threat t, file f
+            WHERE f.threat_id = t.id
+            GROUP BY t.id
+            ORDER BY detected DESC
+            LIMIT 100
+        ) t, threat_category c, threats_categories tc
+        WHERE tc.threat_id = t.id AND tc.threat_category_id = c.id
+        GROUP BY t.id
+        ORDER BY detected DESC
+        """
+        rows = self.db.fetchAll(query)
         self.beginResetModel()
         self.threats.clear()
         for row in rows:
+            row['categories'] = json.loads(row['categories'])
             self.threats.append(row)
         self.endResetModel()

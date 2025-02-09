@@ -1014,6 +1014,73 @@ class Ui_MainWindow(object):
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
         self.tabWidget = QTabWidget(self.groupBox_8)
         self.tabWidget.setObjectName(u"tabWidget")
+        self.tab_2 = QWidget()
+        self.tab_2.setObjectName(u"tab_2")
+        self.verticalLayout = QVBoxLayout(self.tab_2)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.horizontalLayout_8 = QHBoxLayout()
+        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
+        self.label_9 = QLabel(self.tab_2)
+        self.label_9.setObjectName(u"label_9")
+
+        self.horizontalLayout_8.addWidget(self.label_9)
+
+        self.horizontalLayout_13 = QHBoxLayout()
+        self.horizontalLayout_13.setObjectName(u"horizontalLayout_13")
+        self.radioButton_viewByThreats = QRadioButton(self.tab_2)
+        self.buttonGroup_homeViewBy = QButtonGroup(MainWindow)
+        self.buttonGroup_homeViewBy.setObjectName(u"buttonGroup_homeViewBy")
+        self.buttonGroup_homeViewBy.addButton(self.radioButton_viewByThreats)
+        self.radioButton_viewByThreats.setObjectName(u"radioButton_viewByThreats")
+        self.radioButton_viewByThreats.setChecked(True)
+
+        self.horizontalLayout_13.addWidget(self.radioButton_viewByThreats)
+
+        self.radioButton_viewByCategories = QRadioButton(self.tab_2)
+        self.buttonGroup_homeViewBy.addButton(self.radioButton_viewByCategories)
+        self.radioButton_viewByCategories.setObjectName(u"radioButton_viewByCategories")
+
+        self.horizontalLayout_13.addWidget(self.radioButton_viewByCategories)
+
+
+        self.horizontalLayout_8.addLayout(self.horizontalLayout_13)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_8.addItem(self.horizontalSpacer)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout_8)
+
+        self.stackedWidget_topThreats = QStackedWidget(self.tab_2)
+        self.stackedWidget_topThreats.setObjectName(u"stackedWidget_topThreats")
+        self.page = QWidget()
+        self.page.setObjectName(u"page")
+        self.verticalLayout_14 = QVBoxLayout(self.page)
+        self.verticalLayout_14.setObjectName(u"verticalLayout_14")
+        self.verticalLayout_14.setContentsMargins(0, 0, 0, 0)
+        self.tbl_topThreats = QTreeView(self.page)
+        self.tbl_topThreats.setObjectName(u"tbl_topThreats")
+        self.tbl_topThreats.setAlternatingRowColors(True)
+
+        self.verticalLayout_14.addWidget(self.tbl_topThreats)
+
+        self.stackedWidget_topThreats.addWidget(self.page)
+        self.page_2 = QWidget()
+        self.page_2.setObjectName(u"page_2")
+        self.verticalLayout_19 = QVBoxLayout(self.page_2)
+        self.verticalLayout_19.setObjectName(u"verticalLayout_19")
+        self.verticalLayout_19.setContentsMargins(0, 0, 0, 0)
+        self.tbl_topThreatsCategories = QTreeView(self.page_2)
+        self.tbl_topThreatsCategories.setObjectName(u"tbl_topThreatsCategories")
+
+        self.verticalLayout_19.addWidget(self.tbl_topThreatsCategories)
+
+        self.stackedWidget_topThreats.addWidget(self.page_2)
+
+        self.verticalLayout.addWidget(self.stackedWidget_topThreats)
+
+        self.tabWidget.addTab(self.tab_2, "")
         self.tab = QWidget()
         self.tab.setObjectName(u"tab")
         self.horizontalLayout_14 = QHBoxLayout(self.tab)
@@ -1024,64 +1091,39 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_14.addWidget(self.tbl_topThreatsDetections)
 
-        self.tabWidget.addTab(self.tab, "")
-        self.tab_2 = QWidget()
-        self.tab_2.setObjectName(u"tab_2")
-        self.verticalLayout_14 = QVBoxLayout(self.tab_2)
-        self.verticalLayout_14.setObjectName(u"verticalLayout_14")
-        self.tbl_topThreats = QTreeView(self.tab_2)
-        self.tbl_topThreats.setObjectName(u"tbl_topThreats")
-        self.tbl_topThreats.setAlternatingRowColors(True)
-
-        self.verticalLayout_14.addWidget(self.tbl_topThreats)
-
-        self.tabWidget.addTab(self.tab_2, "")
-        self.tab_3 = QWidget()
-        self.tab_3.setObjectName(u"tab_3")
-        self.verticalLayout = QVBoxLayout(self.tab_3)
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.tbl_topThreatsCategories = QTreeView(self.tab_3)
-        self.tbl_topThreatsCategories.setObjectName(u"tbl_topThreatsCategories")
-
-        self.verticalLayout.addWidget(self.tbl_topThreatsCategories)
-
-        self.tabWidget.addTab(self.tab_3, "")
-
-        self.horizontalLayout_7.addWidget(self.tabWidget)
-
         self.verticalLayout_13 = QVBoxLayout()
         self.verticalLayout_13.setObjectName(u"verticalLayout_13")
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_13.addItem(self.verticalSpacer)
 
-        self.label_2 = QLabel(self.groupBox_8)
+        self.label_2 = QLabel(self.tab)
         self.label_2.setObjectName(u"label_2")
 
         self.verticalLayout_13.addWidget(self.label_2)
 
         self.verticalLayout_18 = QVBoxLayout()
         self.verticalLayout_18.setObjectName(u"verticalLayout_18")
-        self.op_TopThreatsfilterAll = QRadioButton(self.groupBox_8)
-        self.buttonGroup = QButtonGroup(MainWindow)
-        self.buttonGroup.setObjectName(u"buttonGroup")
-        self.buttonGroup.addButton(self.op_TopThreatsfilterAll)
-        self.op_TopThreatsfilterAll.setObjectName(u"op_TopThreatsfilterAll")
-        self.op_TopThreatsfilterAll.setChecked(True)
+        self.radioButton_filterByAll = QRadioButton(self.tab)
+        self.buttonGroup_homeFilterBy = QButtonGroup(MainWindow)
+        self.buttonGroup_homeFilterBy.setObjectName(u"buttonGroup_homeFilterBy")
+        self.buttonGroup_homeFilterBy.addButton(self.radioButton_filterByAll)
+        self.radioButton_filterByAll.setObjectName(u"radioButton_filterByAll")
+        self.radioButton_filterByAll.setChecked(True)
 
-        self.verticalLayout_18.addWidget(self.op_TopThreatsfilterAll)
+        self.verticalLayout_18.addWidget(self.radioButton_filterByAll)
 
-        self.op_TopThreatsfilterFiles = QRadioButton(self.groupBox_8)
-        self.buttonGroup.addButton(self.op_TopThreatsfilterFiles)
-        self.op_TopThreatsfilterFiles.setObjectName(u"op_TopThreatsfilterFiles")
+        self.radioButton_filterByFile = QRadioButton(self.tab)
+        self.buttonGroup_homeFilterBy.addButton(self.radioButton_filterByFile)
+        self.radioButton_filterByFile.setObjectName(u"radioButton_filterByFile")
 
-        self.verticalLayout_18.addWidget(self.op_TopThreatsfilterFiles)
+        self.verticalLayout_18.addWidget(self.radioButton_filterByFile)
 
-        self.op_TopThreatsfilterURLs = QRadioButton(self.groupBox_8)
-        self.buttonGroup.addButton(self.op_TopThreatsfilterURLs)
-        self.op_TopThreatsfilterURLs.setObjectName(u"op_TopThreatsfilterURLs")
+        self.radioButton_filterByURL = QRadioButton(self.tab)
+        self.buttonGroup_homeFilterBy.addButton(self.radioButton_filterByURL)
+        self.radioButton_filterByURL.setObjectName(u"radioButton_filterByURL")
 
-        self.verticalLayout_18.addWidget(self.op_TopThreatsfilterURLs)
+        self.verticalLayout_18.addWidget(self.radioButton_filterByURL)
 
 
         self.verticalLayout_13.addLayout(self.verticalLayout_18)
@@ -1091,7 +1133,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_13.addItem(self.verticalSpacer_2)
 
 
-        self.horizontalLayout_7.addLayout(self.verticalLayout_13)
+        self.horizontalLayout_14.addLayout(self.verticalLayout_13)
+
+        self.tabWidget.addTab(self.tab, "")
+
+        self.horizontalLayout_7.addWidget(self.tabWidget)
 
 
         self.horizontalLayout_23.addWidget(self.groupBox_8)
@@ -1388,6 +1434,7 @@ class Ui_MainWindow(object):
         self.content.setCurrentIndex(1)
         self.stackedWidget.setCurrentIndex(0)
         self.tabWidget.setCurrentIndex(0)
+        self.stackedWidget_topThreats.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -1457,13 +1504,15 @@ class Ui_MainWindow(object):
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"Analysis detections:", None))
         self.label_statsAnalysisDetections.setText(QCoreApplication.translate("MainWindow", u"0", None))
         self.groupBox_8.setTitle(QCoreApplication.translate("MainWindow", u"Top Threats", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"Vendors' detections", None))
+        self.label_9.setText(QCoreApplication.translate("MainWindow", u"View by:", None))
+        self.radioButton_viewByThreats.setText(QCoreApplication.translate("MainWindow", u"Threats", None))
+        self.radioButton_viewByCategories.setText(QCoreApplication.translate("MainWindow", u"Categories", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"Threats", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), QCoreApplication.translate("MainWindow", u"Categories", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"Filter By:", None))
-        self.op_TopThreatsfilterAll.setText(QCoreApplication.translate("MainWindow", u"All", None))
-        self.op_TopThreatsfilterFiles.setText(QCoreApplication.translate("MainWindow", u"Files", None))
-        self.op_TopThreatsfilterURLs.setText(QCoreApplication.translate("MainWindow", u"URLs", None))
+        self.radioButton_filterByAll.setText(QCoreApplication.translate("MainWindow", u"All", None))
+        self.radioButton_filterByFile.setText(QCoreApplication.translate("MainWindow", u"Files", None))
+        self.radioButton_filterByURL.setText(QCoreApplication.translate("MainWindow", u"URLs", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"Vendors' detections", None))
         self.groupBox_5.setTitle(QCoreApplication.translate("MainWindow", u"Latest File Scan Results", None))
         self.groupBox_9.setTitle(QCoreApplication.translate("MainWindow", u"Latest URL Scan Results", None))
         self.groupBox_4.setTitle(QCoreApplication.translate("MainWindow", u"Scan files", None))
