@@ -378,6 +378,28 @@ Button */
 	border: 2px solid #2f93e1;
 }
 
+/* /////////////////////////////////////////////////////////////////////////////////////////////////
+QSplitter */
+
+/* QSplitter::handle:hover */
+/* { */
+/* 	background-color: rgb(166, 179, 155); */
+/* } */
+
+/* QSplitter::handle:horizontal { */
+/*     width: 5px; */
+/* 	image: url(:/resources/images/icons/v.png); */
+/* } */
+
+/* QSplitter::handle:vertical { */
+/*     height: 2px; */
+/* 	image: url(:/resources/images/icons/h.png); */
+/* } */
+
+/* QSplitter::handle:pressed */
+/* { */
+/* 	background-color: rgb(166, 179, 155); */
+/* } */
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
 Custome */

@@ -413,6 +413,28 @@ Button */
 	border: 2px solid #2f93e1;
 }
 
+/* /////////////////////////////////////////////////////////////////////////////////////////////////
+QSplitter */
+
+/* QSplitter::handle:hover */
+/* { */
+/* 	background-color: rgb(166, 179, 155); */
+/* } */
+
+/* QSplitter::handle:horizontal { */
+/*     width: 5px; */
+/* 	image: url(:/resources/images/icons/v.png); */
+/* } */
+
+/* QSplitter::handle:vertical { */
+/*     height: 2px; */
+/* 	image: url(:/resources/images/icons/h.png); */
+/* } */
+
+/* QSplitter::handle:pressed */
+/* { */
+/* 	background-color: rgb(166, 179, 155); */
+/* } */
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
 Custome */
@@ -1936,7 +1958,11 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                        <number>0</number>
                                       </property>
                                       <item>
-                                       <widget class="QTreeView" name="tbl_topThreatsCategories"/>
+                                       <widget class="QTreeView" name="tbl_topThreatsCategories">
+                                        <property name="alternatingRowColors">
+                                         <bool>true</bool>
+                                        </property>
+                                       </widget>
                                       </item>
                                      </layout>
                                     </widget>

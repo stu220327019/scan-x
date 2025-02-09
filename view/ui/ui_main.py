@@ -431,6 +431,29 @@ class Ui_MainWindow(object):
 "	border: 2px solid #2f93e1;\n"
 "}\n"
 "\n"
+"/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
+"QSplitter */\n"
+"\n"
+"/* QSplitter::handle:hover */\n"
+"/* { */\n"
+"/* 	background-color: rgb(166, 179, 155); */\n"
+"/* } */\n"
+"\n"
+"/* QSplitter::handle:horizontal { */\n"
+"/*     width: 5px; */\n"
+"/* 	image: url(:/resources/images/icons/v.png); */\n"
+"/* } */\n"
+"\n"
+"/* QSplitter::handle:vertical { */\n"
+"/*     height: 2px; */\n"
+"/* 	image: url(:/resources/images/icons/h.png); */\n"
+"/* } */\n"
+"\n"
+"/* QSplitter::handle:p"
+                        "ressed */\n"
+"/* { */\n"
+"/* 	background-color: rgb(166, 179, 155); */\n"
+"/* } */\n"
 "\n"
 "/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
 "Custome */\n"
@@ -1073,6 +1096,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_19.setContentsMargins(0, 0, 0, 0)
         self.tbl_topThreatsCategories = QTreeView(self.page_2)
         self.tbl_topThreatsCategories.setObjectName(u"tbl_topThreatsCategories")
+        self.tbl_topThreatsCategories.setAlternatingRowColors(True)
 
         self.verticalLayout_19.addWidget(self.tbl_topThreatsCategories)
 

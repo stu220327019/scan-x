@@ -16,8 +16,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QGroupBox, QHBoxLayout, QHeaderView,
-    QLabel, QSizePolicy, QSpacerItem, QTreeWidget,
-    QTreeWidgetItem, QVBoxLayout, QWidget)
+    QLabel, QSizePolicy, QSpacerItem, QSplitter,
+    QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget)
 import resources_rc
 
 class Ui_ScanResult(object):
@@ -31,28 +31,23 @@ class Ui_ScanResult(object):
         sizePolicy.setHeightForWidth(ScanResult.sizePolicy().hasHeightForWidth())
         ScanResult.setSizePolicy(sizePolicy)
         ScanResult.setMaximumSize(QSize(400, 16777215))
-        self.verticalLayout_2 = QVBoxLayout(ScanResult)
-        self.verticalLayout_2.setSpacing(0)
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout = QVBoxLayout()
+        self.verticalLayout = QVBoxLayout(ScanResult)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(10, 0, 10, 10)
-        self.groupBox_details = QGroupBox(ScanResult)
+        self.splitter = QSplitter(ScanResult)
+        self.splitter.setObjectName(u"splitter")
+        self.splitter.setOrientation(Qt.Orientation.Vertical)
+        self.groupBox_details = QGroupBox(self.splitter)
         self.groupBox_details.setObjectName(u"groupBox_details")
         self.verticalLayout_21 = QVBoxLayout(self.groupBox_details)
         self.verticalLayout_21.setObjectName(u"verticalLayout_21")
         self.tbl_details = QTreeWidget(self.groupBox_details)
         self.tbl_details.setObjectName(u"tbl_details")
-        self.tbl_details.setMaximumSize(QSize(16777215, 150))
         self.tbl_details.setAlternatingRowColors(True)
 
         self.verticalLayout_21.addWidget(self.tbl_details)
 
-
-        self.verticalLayout.addWidget(self.groupBox_details)
-
-        self.groupBox_scanResult = QGroupBox(ScanResult)
+        self.splitter.addWidget(self.groupBox_details)
+        self.groupBox_scanResult = QGroupBox(self.splitter)
         self.groupBox_scanResult.setObjectName(u"groupBox_scanResult")
         sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy1.setHorizontalStretch(0)
@@ -125,14 +120,10 @@ class Ui_ScanResult(object):
 
         self.verticalLayout_22.addLayout(self.horizontalLayout_8)
 
+        self.splitter.addWidget(self.groupBox_scanResult)
 
-        self.verticalLayout.addWidget(self.groupBox_scanResult)
+        self.verticalLayout.addWidget(self.splitter)
 
-        self.verticalLayout.setStretch(1, 1)
-
-        self.verticalLayout_2.addLayout(self.verticalLayout)
-
-        self.verticalLayout_2.setStretch(0, 1)
 
         self.retranslateUi(ScanResult)
 
