@@ -13,3 +13,4 @@ class File(Map):
     type: str
     threat: Threat|None
     fileType: FileType|None
+    id: int

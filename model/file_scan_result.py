@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 
 from core import DB
-from lib.entity import FileScanResult, File, Analysis, Color
+from lib.entity import FileScanResult, File, Analysis, Color, Threat, FileType
 
 class FileScanResultModel(QAbstractTableModel):
     results: list[FileScanResult] = []
@@ -58,6 +58,24 @@ class FileScanResultModel(QAbstractTableModel):
             else:
                 return None
 
+    def fetchFileInfo(self, fileId):
+        row = self.db.fetchOne("""
+        SELECT t.name AS threat, ft.description AS file_type
+        FROM file f
+        LEFT JOIN threat t ON t.id = f.threat_id
+        LEFT JOIN file_type ft on ft.id = f.file_type_id
+        WHERE f.id = ?
+        """, [fileId])
+        if row:
+            return {
+                'threat': Threat({
+                    'name': row['threat']
+                }),
+                'fileType': FileType({
+                    'description': row['file_type']
+                })
+            }
+
     def loadData(self):
         rows = self.db.fetchAll("""
         SELECT f.*, r.clean, r.analysis_stats, r.analysis_results, r.started_at, r.finished_at, r.created_at FROM file_scan_result r, file f
@@ -76,7 +94,8 @@ class FileScanResultModel(QAbstractTableModel):
                     'sha256': row['sha256'],
                     'md5': row['md5'],
                     'size': row['size'],
-                    'type': row['type']
+                    'type': row['type'],
+                    'id': row['id']
                 }),
                 'analysis': Analysis({
                     'stats': json.loads(row['analysis_stats']),

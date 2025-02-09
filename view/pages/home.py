@@ -87,6 +87,7 @@ class Home(Base):
     def fileScanResultsItemClick(self, index: QModelIndex):
         row = index.row()
         scanResult = self.fileScanResultModel.results[row]
+        scanResult.file = File(scanResult.file | self.fileScanResultModel.fetchFileInfo(scanResult.file.id))
         self.signals['openRightBox'].emit(scanResult.file.filename, FileScanResultContainer, {'scanResult': scanResult})
 
     def urlScanResultsItemClick(self, index: QModelIndex):

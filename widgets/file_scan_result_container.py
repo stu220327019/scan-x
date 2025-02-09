@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QWidget, QTreeWidgetItem
-from PySide6.QtGui import QIcon
+from PySide6.QtGui import QIcon, QColor
 from view.ui.ui_scan_result import Ui_ScanResult
 
 from lib.entity import File, Color, FileScanResult
@@ -16,12 +16,17 @@ class FileScanResultContainer(QWidget):
     def updateFileDetails(self, fileInfo: File):
         self.ui.groupBox_details.setTitle('File Details')
         for label, key in [['Filename', 'filename'], ['Path', 'path'], ['MD5', 'md5'], ['SHA1', 'sha1'],
-                           ['SHA256', 'sha256'], ['Size', 'size'], ['Type', 'type']]:
-            item = QTreeWidgetItem(self.ui.tbl_details)
-            item.setText(0, label)
-            value = '{} ({} Bytes)'.format(utils.sizeof_fmt(fileInfo.get(key)), fileInfo.get(key)) \
-                if key == 'size' else fileInfo.get(key)
-            item.setText(1, value)
+                           ['SHA256', 'sha256'], ['Size', 'size'], ['Type', 'type'], ['Threat', 'threat']]:
+            if fileInfo.get(key):
+                item = QTreeWidgetItem(self.ui.tbl_details)
+                item.setText(0, label)
+                val = fileInfo.get(key)
+                if key == 'size':
+                    val = '{} ({} Bytes)'.format(utils.sizeof_fmt(fileInfo.get(key)), fileInfo.get(key))
+                elif key == 'threat':
+                    val = val.name
+                    item.setForeground(1, QColor(Color.DANGER))
+                item.setText(1, val)
 
     def updateAnalysisResults(self, scanResult: FileScanResult):
         status = scanResult.status
