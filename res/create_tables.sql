@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS file_type (
   id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   description TEXT NOT NULL UNIQUE,
-  extension TEXT NOT NULL
+  extension TEXT
 );
 
 CREATE TABLE IF NOT EXISTS file_type_tag (

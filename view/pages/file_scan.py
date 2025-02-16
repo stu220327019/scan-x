@@ -58,7 +58,7 @@ class FileScan(Base):
 
     def filelistkeyPressed(self, event):
         if event.key() == Qt.Key_Delete:
-            selectedIndexes = self.ui.tree_filelist.selectedIndexes()
+            selectedIndexes = self.ui.tbl_fileScanList.selectedIndexes()
             rows = sorted(list(set([index.row() for index in selectedIndexes if index.isValid()])), reverse=True)
             for row in rows:
                 self.model.removeResult(row)
@@ -132,18 +132,18 @@ class FileScan(Base):
                     if not threatId:
                         cur = self.db.exec('INSERT INTO threat (name) VALUES (?)', [file.threat.name])
                         threatId = cur.lastrowid
-                    for cat in file.threat.categories:
-                        catId = self.db.fetchOneCol('SELECT id FROM threat_category WHERE name = ?', [cat.name])
-                        if not catId:
-                            cur = self.db.exec('INSERT INTO threat_category (name) VALUES (?)', [cat.name])
-                            catId = cur.lastrowid
-                        self.db.exec('INSERT INTO threats_categories (threat_id, threat_category_id) VALUES (?, ?)', [threatId, catId])
-                    for tag in file.threat.tags:
-                        tagId = self.db.fetchOneCol('SELECT id FROM threat_tag WHERE name = ?', [tag.name])
-                        if not tagId:
-                            cur = self.db.exec('INSERT INTO threat_tag (name) VALUES (?)', [tag.name])
-                            tagId = cur.lastrowid
-                        self.db.exec('INSERT INTO threats_tags (threat_id, threat_tag_id) VALUES (?, ?)', [threatId, tagId])
+                        for cat in file.threat.categories:
+                            catId = self.db.fetchOneCol('SELECT id FROM threat_category WHERE name = ?', [cat.name])
+                            if not catId:
+                                cur = self.db.exec('INSERT INTO threat_category (name) VALUES (?)', [cat.name])
+                                catId = cur.lastrowid
+                            self.db.exec('INSERT INTO threats_categories (threat_id, threat_category_id) VALUES (?, ?)', [threatId, catId])
+                        for tag in file.threat.tags:
+                            tagId = self.db.fetchOneCol('SELECT id FROM threat_tag WHERE name = ?', [tag.name])
+                            if not tagId:
+                                cur = self.db.exec('INSERT INTO threat_tag (name) VALUES (?)', [tag.name])
+                                tagId = cur.lastrowid
+                            self.db.exec('INSERT INTO threats_tags (threat_id, threat_tag_id) VALUES (?, ?)', [threatId, tagId])
                 cur = self.db.exec("""
                 INSERT INTO file (file_type_id, threat_id, filename, filepath, path, sha1, sha256, md5, size, type, created_at)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
