@@ -1,6 +1,4 @@
-from controller import *
-from model import *
-from view import *
+from view import View
 from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtGui import QFontDatabase,QIcon
 import sys
@@ -28,10 +26,7 @@ def main():
         'db': db
     }
 
-    model = Model()
-    view = View(model, ctx)
-    controller = Controller(view, model)
-
+    view = View(ctx)
     view.show()
 
     # sys.exit(app.exec())

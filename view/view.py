@@ -28,12 +28,10 @@ class View(QMainWindow):
     closeRightBoxSignal = Signal()
     pageChangedSignal = Signal(int)
 
-    def __init__(self, model, ctx):
+    def __init__(self, ctx):
         super(View, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-
-        self.model = model
 
         self.setWindowTitle("Scan-X GUI Application")
         self.setWindowFlags(Qt.FramelessWindowHint)
@@ -52,6 +50,29 @@ class View(QMainWindow):
                                       ('pageScan', FileScan),
                                       ('urlScan', URLScan)]:
             setattr(self, pageName, pageClass(self.ui, signals=signals, ctx=ctx))
+
+        self.connectSlotsAndSignals()
+
+    def connectSlotsAndSignals(self):
+        self.ui.toggleButton.clicked.connect(self.toggleMenu)
+        self.ui.toggleLeftBox.clicked.connect(self.toggleLeftBox)
+        self.ui.extraCloseColumnBtn.clicked.connect(self.toggleLeftBox)
+        # self.ui.settingsTopBtn.clicked.connect(self.toggleRightBox)
+        self.ui.settingsTopBtn.clicked.connect(lambda: self.toggleRightBoxSignal.emit())
+        self.ui.btn_extraRightBoxClose.clicked.connect(lambda: self.closeRightBoxSignal.emit())
+        self.ui.extraRightBoxBackdrop.mousePressEvent = lambda x: self.closeRightBoxSignal.emit()
+
+        self.toggleRightBoxSignal.connect(self.toggleRightBox)
+        self.openRightBoxSignal.connect(self.openRightBox)
+        self.closeRightBoxSignal.connect(self.closeRightBox)
+        self.pageChangedSignal.connect(self.pageChanged)
+
+        self._connectNavLinks()
+
+    def _connectNavLinks(self):
+        for idx, button in enumerate(self.ui.topMenu.findChildren(QPushButton)):
+            button.clicked.connect(lambda _, idx=idx: self.pageChangedSignal.emit(idx))
+        self.pageChangedSignal.emit(0)
 
     # TOGGLE MENU
     # ///////////////////////////////////////////////////////////////
@@ -279,16 +300,11 @@ class View(QMainWindow):
     def resizeEvent(self, event):
         self.resize_grips()
 
-    def select_topMenu_clicked_style(self, button):
-        button.setStyleSheet(button.styleSheet() + self.MENU_SELECTED_STYLESHEET)
-
-    def reset_topMenu_clicked_style(self):
-        for button in self.ui.topMenu.findChildren(QPushButton):
-            button.setStyleSheet(button.styleSheet().replace(self.MENU_SELECTED_STYLESHEET, ""))
-    
-    def changePage(self, button):
-        idx = self.model.topMenuPageIdx(button)
-        self.pageChangedSignal.emit(idx)
-        self.reset_topMenu_clicked_style()
-        self.select_topMenu_clicked_style(button)
+    def pageChanged(self, idx):
+        for _idx, button in enumerate(self.ui.topMenu.findChildren(QPushButton)):
+            if _idx == idx:
+                styleSheet = button.styleSheet() + self.MENU_SELECTED_STYLESHEET
+            else:
+                styleSheet = button.styleSheet().replace(self.MENU_SELECTED_STYLESHEET, "")
+            button.setStyleSheet(styleSheet)
         self.ui.stackedWidget.setCurrentIndex(idx)
