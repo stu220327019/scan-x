@@ -474,6 +474,15 @@ class Ui_MainWindow(object):
 "QLabel[class~=\"link\"]:hover {\n"
 "  color:rgb(53, 132, 228);\n"
 "}\n"
+"\n"
+"QLabel[class~=\"page-header\"] {\n"
+"  font-weight: bold;\n"
+"  font-size: 24px;\n"
+"}\n"
+"\n"
+"#pagesContainer QPushButton[class~=\"nav-btn\"] { background-color: rgba(255, 255, 255, 0); border: none;  border-radius: 5px; padding: 5px; }\n"
+"#pagesContainer QPushButton[class~=\"nav-btn\"]:hover { background-color: #f2f6ff; border-style: solid; border-radius: 4px; }\n"
+"#pagesContainer QPushButton[class~=\"nav-btn\"]:pressed { background-color: #2f93e1; border-style: solid; border-radius: 4px; }\n"
 "")
         self.verticalLayout_21 = QVBoxLayout(self.styleSheet)
         self.verticalLayout_21.setObjectName(u"verticalLayout_21")
@@ -1425,6 +1434,33 @@ class Ui_MainWindow(object):
         self.page_threats.setObjectName(u"page_threats")
         self.verticalLayout_22 = QVBoxLayout(self.page_threats)
         self.verticalLayout_22.setObjectName(u"verticalLayout_22")
+        self.horizontalWidget_2 = QWidget(self.page_threats)
+        self.horizontalWidget_2.setObjectName(u"horizontalWidget_2")
+        self.horizontalWidget_2.setProperty(u"class", u"page-header-container")
+        self.horizontalLayout_19 = QHBoxLayout(self.horizontalWidget_2)
+        self.horizontalLayout_19.setObjectName(u"horizontalLayout_19")
+        self.horizontalLayout_19.setContentsMargins(0, 0, 0, 9)
+        self.btn_back = QPushButton(self.horizontalWidget_2)
+        self.btn_back.setObjectName(u"btn_back")
+        self.btn_back.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        icon8 = QIcon()
+        icon8.addFile(u":/resources/images/icons/arrow-left.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_back.setIcon(icon8)
+        self.btn_back.setIconSize(QSize(20, 20))
+        self.btn_back.setProperty(u"class", u"nav-btn")
+
+        self.horizontalLayout_19.addWidget(self.btn_back)
+
+        self.label_11 = QLabel(self.horizontalWidget_2)
+        self.label_11.setObjectName(u"label_11")
+        self.label_11.setProperty(u"class", u"page-header")
+
+        self.horizontalLayout_19.addWidget(self.label_11)
+
+        self.horizontalLayout_19.setStretch(1, 1)
+
+        self.verticalLayout_22.addWidget(self.horizontalWidget_2)
+
         self.horizontalLayout_17 = QHBoxLayout()
         self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
         self.label_10 = QLabel(self.page_threats)
@@ -1624,6 +1660,11 @@ class Ui_MainWindow(object):
         ___qtreewidgetitem1.setText(0, QCoreApplication.translate("MainWindow", u"Vendor", None));
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"Elapsed time:", None))
         self.label_urlScanElapsedTime.setText("")
+#if QT_CONFIG(tooltip)
+        self.btn_back.setToolTip(QCoreApplication.translate("MainWindow", u"Return", None))
+#endif // QT_CONFIG(tooltip)
+        self.btn_back.setText("")
+        self.label_11.setText(QCoreApplication.translate("MainWindow", u"Detected Threats", None))
         self.label_10.setText(QCoreApplication.translate("MainWindow", u"Filter:", None))
         self.comboBox_threatCategoryFilter.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Category", None))
         self.creditsLabel.setText(QCoreApplication.translate("MainWindow", u"Developed by Pang Hoi Him (220327019)", None))

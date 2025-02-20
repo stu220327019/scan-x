@@ -33,6 +33,7 @@ class Threats(Base):
         self.ui.comboBox_threatCategoryFilter.currentIndexChanged.connect(
             lambda idx: self.setFilter(category=self.threatCategoryModel.threatCategories[idx-1]).loadData(loadCategories=False) if idx > 0 else None
         )
+        self.ui.btn_back.clicked.connect(lambda: self.router.routeTo(Route.ROUTE_HOME))
 
     def routeUpdated(self, route: Route):
         if route.route == Route.ROUTE_THREATS:

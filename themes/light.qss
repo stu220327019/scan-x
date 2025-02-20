@@ -419,3 +419,12 @@ QLabel[class~="link"] {
 QLabel[class~="link"]:hover {
   color:rgb(53, 132, 228);
 }
+
+QLabel[class~="page-header"] {
+  font-weight: bold;
+  font-size: 24px;
+}
+
+#pagesContainer QPushButton[class~="nav-btn"] { background-color: rgba(255, 255, 255, 0); border: none;  border-radius: 5px; padding: 5px; }
+#pagesContainer QPushButton[class~="nav-btn"]:hover { background-color: #f2f6ff; border-style: solid; border-radius: 4px; }
+#pagesContainer QPushButton[class~="nav-btn"]:pressed { background-color: #2f93e1; border-style: solid; border-radius: 4px; }

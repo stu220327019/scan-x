@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="resources">
+    <file>images/icons/arrow-left.svg</file>
     <file>images/icons/alert-triangle.svg</file>
     <file>images/icons/magnifying-glass.svg</file>
     <file>images/icons/info-circle.svg</file>
