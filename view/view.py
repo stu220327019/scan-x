@@ -265,13 +265,14 @@ class View(QMainWindow):
         self.top_grip = CustomGrip(self, Qt.TopEdge, True)
         self.bottom_grip = CustomGrip(self, Qt.BottomEdge, True)
 
-        # DROP SHADOW
-        self.shadow = QGraphicsDropShadowEffect(self)
-        self.shadow.setBlurRadius(17)
-        self.shadow.setXOffset(0)
-        self.shadow.setYOffset(0)
-        self.shadow.setColor(QColor(0, 0, 0, 150))
-        self.ui.bgApp.setGraphicsEffect(self.shadow)
+        # DROP SHADOW DISABLED - result in HTML render error
+        # # DROP SHADOW
+        # self.shadow = QGraphicsDropShadowEffect(self)
+        # self.shadow.setBlurRadius(17)
+        # self.shadow.setXOffset(0)
+        # self.shadow.setYOffset(0)
+        # self.shadow.setColor(QColor(0, 0, 0, 150))
+        # self.ui.bgApp.setGraphicsEffect(self.shadow)
 
         # RESIZE WINDOW
         self.sizegrip = QSizeGrip(self.ui.frame_size_grip)

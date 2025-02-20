@@ -1,4 +1,4 @@
-from PySide6.QtCore import Qt, QAbstractTableModel, QModelIndex
+from PySide6.QtCore import Qt, QAbstractTableModel, QModelIndex, Signal
 from PySide6.QtGui import QColor, QIcon
 import json
 
@@ -6,6 +6,7 @@ from core import DB
 
 class TopThreatCategoryModel(QAbstractTableModel):
     threatCategories = []
+    loaded = Signal(list)
 
     def __init__(self, db: DB, parent=None):
         super().__init__(parent)
@@ -43,3 +44,4 @@ class TopThreatCategoryModel(QAbstractTableModel):
         for row in rows:
             self.threatCategories.append(row)
         self.endResetModel()
+        self.loaded.emit(self.threatCategories)

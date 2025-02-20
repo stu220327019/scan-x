@@ -2,6 +2,7 @@ from PySide6.QtCore import QObject, QThread, Signal, Qt, QModelIndex, QUrl
 from PySide6.QtWidgets import QFileDialog, QTreeWidgetItem, QMenu, QRadioButton
 from PySide6.QtGui import QAction, QClipboard, QDesktopServices
 import hashlib
+import pygal
 
 from model import (FileScanResultModel, UrlScanResultModel,
                    TopThreatDetectionModel, TopThreatModel, TopThreatCategoryModel)
@@ -85,6 +86,7 @@ class Home(Base):
 
     def connectSlotsAndSignals(self):
         self.signals['pageChanged'].connect(self.pageChanged)
+        self.topThreatCategoryModel.loaded.connect(self.topThreatCategoriesloaded)
         buttonGroupMapping = {
             'radioButton_filterByAll': 'all',
             'radioButton_filterByFile': 'file',
@@ -117,6 +119,14 @@ class Home(Base):
     def pageChanged(self, idx):
         if idx == 0:
             self.loadData()
+
+    def topThreatCategoriesloaded(self, data):
+        style = pygal.style.Style(tooltip_font_size=50)
+        pie_chart = pygal.Pie(human_readable=True, fill=True, show_legend=False, style=style, inner_radius=.4)
+        for cat in data:
+            pie_chart.add(cat['name'], cat['detected'])
+        data_uri = pie_chart.render_data_uri()
+        self.ui.webEngineView_topThreatsCategories.load(QUrl(data_uri))
 
     def setFilter(self, filterBy):
         self.filterBy = filterBy

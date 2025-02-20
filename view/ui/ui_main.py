@@ -15,6 +15,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWidgets import (QAbstractItemView, QApplication, QButtonGroup, QFormLayout,
     QFrame, QGridLayout, QGroupBox, QHBoxLayout,
     QHeaderView, QLabel, QLayout, QLineEdit,
@@ -1094,11 +1095,24 @@ class Ui_MainWindow(object):
         self.verticalLayout_19 = QVBoxLayout(self.page_2)
         self.verticalLayout_19.setObjectName(u"verticalLayout_19")
         self.verticalLayout_19.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_12 = QHBoxLayout()
+        self.horizontalLayout_12.setObjectName(u"horizontalLayout_12")
         self.tbl_topThreatsCategories = QTreeView(self.page_2)
         self.tbl_topThreatsCategories.setObjectName(u"tbl_topThreatsCategories")
         self.tbl_topThreatsCategories.setAlternatingRowColors(True)
 
-        self.verticalLayout_19.addWidget(self.tbl_topThreatsCategories)
+        self.horizontalLayout_12.addWidget(self.tbl_topThreatsCategories)
+
+        self.webEngineView_topThreatsCategories = QWebEngineView(self.page_2)
+        self.webEngineView_topThreatsCategories.setObjectName(u"webEngineView_topThreatsCategories")
+        self.webEngineView_topThreatsCategories.setUrl(QUrl(u"about:blank"))
+
+        self.horizontalLayout_12.addWidget(self.webEngineView_topThreatsCategories)
+
+        self.horizontalLayout_12.setStretch(0, 1)
+        self.horizontalLayout_12.setStretch(1, 1)
+
+        self.verticalLayout_19.addLayout(self.horizontalLayout_12)
 
         self.stackedWidget_topThreats.addWidget(self.page_2)
 

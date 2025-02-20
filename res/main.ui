@@ -1958,11 +1958,24 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                        <number>0</number>
                                       </property>
                                       <item>
-                                       <widget class="QTreeView" name="tbl_topThreatsCategories">
-                                        <property name="alternatingRowColors">
-                                         <bool>true</bool>
-                                        </property>
-                                       </widget>
+                                       <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="1,1">
+                                        <item>
+                                         <widget class="QTreeView" name="tbl_topThreatsCategories">
+                                          <property name="alternatingRowColors">
+                                           <bool>true</bool>
+                                          </property>
+                                         </widget>
+                                        </item>
+                                        <item>
+                                         <widget class="QWebEngineView" name="webEngineView_topThreatsCategories">
+                                          <property name="url">
+                                           <url>
+                                            <string>about:blank</string>
+                                           </url>
+                                          </property>
+                                         </widget>
+                                        </item>
+                                       </layout>
                                       </item>
                                      </layout>
                                     </widget>
@@ -2556,6 +2569,11 @@ li.checked::marker { content: &quot;\2612&quot;; }
   </widget>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>QWebEngineView</class>
+   <extends>QWidget</extends>
+   <header location="global">QtWebEngineWidgets/QWebEngineView</header>
+  </customwidget>
   <customwidget>
    <class>FileDropWidget</class>
    <extends>QWidget</extends>
