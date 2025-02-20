@@ -31,21 +31,26 @@ class Threats(Base):
         self.router.routeUpdated.connect(self.routeUpdated)
         self.threatCategoryModel.loaded.connect(self.categoriesLoaded)
         self.ui.comboBox_threatCategoryFilter.currentIndexChanged.connect(
-            lambda idx: self.setFilter(category=self.threatCategoryModel.threatCategories[idx-1] if idx > 0 else None).loadData(True))
+            lambda idx: self.setFilter(category=self.threatCategoryModel.threatCategories[idx-1] if idx > 0 else None).loadData(loadCategories=False)
+        )
 
     def routeUpdated(self, route: Route):
         if route.route == Route.ROUTE_THREATS:
-            self.setFilter().loadData()
+            searchFilter = route.params or {}
+            self.setFilter(**searchFilter)
+            self.loadData(loadThreats=not searchFilter)
 
     def categoriesLoaded(self, data):
         self.ui.comboBox_threatCategoryFilter.clear()
-        self.ui.comboBox_threatCategoryFilter.addItems(
-            ['- Any -'] + [category['name'] for category in data]
-        )
+        items = ['- Any -'] + [category['name'] for category in data]
+        self.ui.comboBox_threatCategoryFilter.addItems(items)
+        if self.filter['category'] is not None:
+            self.ui.comboBox_threatCategoryFilter.setCurrentIndex(items.index(self.filter['category']['name']))
 
-    def loadData(self, threatsOnly=False):
-        self.threatModel.loadData(search=self.filter)
-        if not threatsOnly:
+    def loadData(self, loadThreats=True, loadCategories=True):
+        if loadThreats:
+            self.threatModel.loadData(search=self.filter)
+        if loadCategories:
             self.threatCategoryModel.loadData()
 
     def setFilter(self, category=None):

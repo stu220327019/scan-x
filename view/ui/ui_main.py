@@ -1427,6 +1427,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_22.setObjectName(u"verticalLayout_22")
         self.horizontalLayout_17 = QHBoxLayout()
         self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
+        self.label_10 = QLabel(self.page_threats)
+        self.label_10.setObjectName(u"label_10")
+
+        self.horizontalLayout_17.addWidget(self.label_10)
+
         self.comboBox_threatCategoryFilter = QComboBox(self.page_threats)
         self.comboBox_threatCategoryFilter.setObjectName(u"comboBox_threatCategoryFilter")
 
@@ -1515,7 +1520,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         self.content.setCurrentIndex(1)
-        self.stackedWidget.setCurrentIndex(3)
+        self.stackedWidget.setCurrentIndex(0)
         self.tabWidget.setCurrentIndex(0)
         self.stackedWidget_topThreats.setCurrentIndex(0)
 
@@ -1619,6 +1624,7 @@ class Ui_MainWindow(object):
         ___qtreewidgetitem1.setText(0, QCoreApplication.translate("MainWindow", u"Vendor", None));
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"Elapsed time:", None))
         self.label_urlScanElapsedTime.setText("")
+        self.label_10.setText(QCoreApplication.translate("MainWindow", u"Filter:", None))
         self.comboBox_threatCategoryFilter.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Category", None))
         self.creditsLabel.setText(QCoreApplication.translate("MainWindow", u"Developed by Pang Hoi Him (220327019)", None))
         self.version.setText(QCoreApplication.translate("MainWindow", u"Scan-X version 1.0.0", None))

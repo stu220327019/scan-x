@@ -1767,7 +1767,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     <item>
                      <widget class="QStackedWidget" name="stackedWidget">
                       <property name="currentIndex">
-                       <number>3</number>
+                       <number>0</number>
                       </property>
                       <widget class="QWidget" name="home">
                        <layout class="QVBoxLayout" name="verticalLayout_28">
@@ -2481,6 +2481,13 @@ li.checked::marker { content: &quot;\2612&quot;; }
                        <layout class="QVBoxLayout" name="verticalLayout_22">
                         <item>
                          <layout class="QHBoxLayout" name="horizontalLayout_17">
+                          <item>
+                           <widget class="QLabel" name="label_10">
+                            <property name="text">
+                             <string>Filter:</string>
+                            </property>
+                           </widget>
+                          </item>
                           <item>
                            <widget class="QComboBox" name="comboBox_threatCategoryFilter">
                             <property name="placeholderText">

@@ -34,7 +34,6 @@ class Home(Base):
     def uiDefinitions(self):
         self.ui.tbl_latestFileScanResults.setModel(self.fileScanResultModel)
         self.ui.tbl_latestFileScanResults.setColumnWidth(1, 150)
-        self.ui.tbl_latestFileScanResults.doubleClicked.connect(self.fileScanResultsItemClick)
         def openFileOrDir(field):
             def _openFileOrDir(res):
                 path = res.file.get(field)
@@ -52,7 +51,6 @@ class Home(Base):
         createContextMenu(self.ui.tbl_latestFileScanResults, self.fileScanResultModel, 'results', latestFileScanResultsContextMenuActions)
         self.ui.tbl_latestUrlScanResults.setModel(self.urlScanResultModel)
         self.ui.tbl_latestUrlScanResults.setColumnWidth(0, 200)
-        self.ui.tbl_latestUrlScanResults.doubleClicked.connect(self.urlScanResultsItemClick)
         def copyURL(res):
             clipboard = QClipboard()
             clipboard.clear()
@@ -109,6 +107,9 @@ class Home(Base):
                                           ('threatsViewBy', self.ui.buttonGroup_homeViewBy)]:
             buttonGroup.buttonToggled.connect(buttonGroupToggled(filterName))
         self.ui.label_statsThreatsDetected.clicked.connect(lambda: self.router.routeTo(Route.ROUTE_THREATS))
+        self.ui.tbl_topThreatsCategories.doubleClicked.connect(self.topThreatsCategoriesItemClick)
+        self.ui.tbl_latestFileScanResults.doubleClicked.connect(self.fileScanResultsItemClick)
+        self.ui.tbl_latestUrlScanResults.doubleClicked.connect(self.urlScanResultsItemClick)
 
     def loadData(self):
         self.fileScanResultModel.loadData()
@@ -144,6 +145,11 @@ class Home(Base):
         row = index.row()
         scanResult = self.urlScanResultModel.results[row]
         self.signals['openRightBox'].emit('URL Scan Result', UrlScanResultContainer, {'scanResult': scanResult})
+
+    def topThreatsCategoriesItemClick(self, index: QModelIndex):
+        row = index.row()
+        category = self.topThreatCategoryModel.threatCategories[row]
+        self.router.routeTo(Route.ROUTE_THREATS, {'category': category})
 
     def updateSummary(self):
         filesScanned = self.db.fetchOneCol('SELECT COUNT(id) FROM file_scan_result')
