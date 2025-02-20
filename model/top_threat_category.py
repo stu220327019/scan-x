@@ -32,7 +32,7 @@ class TopThreatCategoryModel(QAbstractTableModel):
 
     def loadData(self, viewBy=None):
         query = """
-        SELECT c.name, COUNT(*) AS detected
+        SELECT c.id, c.name, COUNT(*) AS detected
         FROM threat t, threat_category c, threats_categories tc
         WHERE tc.threat_id = t.id AND tc.threat_category_id = c.id
         GROUP BY c.id

@@ -16,15 +16,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWebEngineWidgets import QWebEngineView
-from PySide6.QtWidgets import (QAbstractItemView, QApplication, QButtonGroup, QFormLayout,
-    QFrame, QGridLayout, QGroupBox, QHBoxLayout,
-    QHeaderView, QLabel, QLayout, QLineEdit,
-    QMainWindow, QPushButton, QRadioButton, QSizePolicy,
-    QSpacerItem, QStackedWidget, QTabWidget, QTextEdit,
-    QTreeView, QTreeWidget, QTreeWidgetItem, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QButtonGroup, QComboBox,
+    QFormLayout, QFrame, QGridLayout, QGroupBox,
+    QHBoxLayout, QHeaderView, QLabel, QLayout,
+    QLineEdit, QMainWindow, QPushButton, QRadioButton,
+    QSizePolicy, QSpacerItem, QStackedWidget, QTabWidget,
+    QTextEdit, QTreeView, QTreeWidget, QTreeWidgetItem,
+    QVBoxLayout, QWidget)
 
-from widgets import (CustomTreeView, FileDropWidget)
+from widgets import (CustomTreeView, FileDropWidget, LinkLabel)
 import resources_rc
 
 class Ui_MainWindow(object):
@@ -463,6 +463,16 @@ class Ui_MainWindow(object):
 "{\n"
 "	border: 2px dashed rgb(220, 220, 220);\n"
 "	border-radius: 5px;\n"
+"}\n"
+"\n"
+"\n"
+"QLabel[class~=\"link\"] {\n"
+"  color: rgb(26, 95, 180);\n"
+"  text-decoration: underline;\n"
+"}\n"
+"\n"
+"QLabel[class~=\"link\"]:hover {\n"
+"  color:rgb(53, 132, 228);\n"
 "}\n"
 "")
         self.verticalLayout_21 = QVBoxLayout(self.styleSheet)
@@ -990,6 +1000,7 @@ class Ui_MainWindow(object):
         self.label_statsFilesScanned = QLabel(self.groupBox_7)
         self.label_statsFilesScanned.setObjectName(u"label_statsFilesScanned")
         self.label_statsFilesScanned.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.label_statsFilesScanned.setProperty(u"class", u"link")
 
         self.formLayout.setWidget(0, QFormLayout.FieldRole, self.label_statsFilesScanned)
 
@@ -1001,6 +1012,7 @@ class Ui_MainWindow(object):
         self.label_statsUrlsScanned = QLabel(self.groupBox_7)
         self.label_statsUrlsScanned.setObjectName(u"label_statsUrlsScanned")
         self.label_statsUrlsScanned.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.label_statsUrlsScanned.setProperty(u"class", u"link")
 
         self.formLayout.setWidget(1, QFormLayout.FieldRole, self.label_statsUrlsScanned)
 
@@ -1009,9 +1021,11 @@ class Ui_MainWindow(object):
 
         self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_8)
 
-        self.label_statsThreatsDetected = QLabel(self.groupBox_7)
+        self.label_statsThreatsDetected = LinkLabel(self.groupBox_7)
         self.label_statsThreatsDetected.setObjectName(u"label_statsThreatsDetected")
+        self.label_statsThreatsDetected.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.label_statsThreatsDetected.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.label_statsThreatsDetected.setProperty(u"class", u"link")
 
         self.formLayout.setWidget(2, QFormLayout.FieldRole, self.label_statsThreatsDetected)
 
@@ -1023,6 +1037,7 @@ class Ui_MainWindow(object):
         self.label_statsAnalysisDetections = QLabel(self.groupBox_7)
         self.label_statsAnalysisDetections.setObjectName(u"label_statsAnalysisDetections")
         self.label_statsAnalysisDetections.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.label_statsAnalysisDetections.setProperty(u"class", u"link")
 
         self.formLayout.setWidget(3, QFormLayout.FieldRole, self.label_statsAnalysisDetections)
 
@@ -1217,11 +1232,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_28.addLayout(self.horizontalLayout_24)
 
         self.stackedWidget.addWidget(self.home)
-        self.page_fileScan2 = QWidget()
-        self.page_fileScan2.setObjectName(u"page_fileScan2")
-        self.verticalLayout_27 = QVBoxLayout(self.page_fileScan2)
+        self.page_fileScan = QWidget()
+        self.page_fileScan.setObjectName(u"page_fileScan")
+        self.verticalLayout_27 = QVBoxLayout(self.page_fileScan)
         self.verticalLayout_27.setObjectName(u"verticalLayout_27")
-        self.groupBox_4 = QGroupBox(self.page_fileScan2)
+        self.groupBox_4 = QGroupBox(self.page_fileScan)
         self.groupBox_4.setObjectName(u"groupBox_4")
         self.verticalLayout_26 = QVBoxLayout(self.groupBox_4)
         self.verticalLayout_26.setObjectName(u"verticalLayout_26")
@@ -1269,7 +1284,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_22.addItem(self.horizontalSpacer_16)
 
-        self.btn_startFileScan = QPushButton(self.page_fileScan2)
+        self.btn_startFileScan = QPushButton(self.page_fileScan)
         self.btn_startFileScan.setObjectName(u"btn_startFileScan")
         sizePolicy4.setHeightForWidth(self.btn_startFileScan.sizePolicy().hasHeightForWidth())
         self.btn_startFileScan.setSizePolicy(sizePolicy4)
@@ -1280,7 +1295,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_22.addWidget(self.btn_startFileScan)
 
-        self.btn_stopFileScan = QPushButton(self.page_fileScan2)
+        self.btn_stopFileScan = QPushButton(self.page_fileScan)
         self.btn_stopFileScan.setObjectName(u"btn_stopFileScan")
         sizePolicy4.setHeightForWidth(self.btn_stopFileScan.sizePolicy().hasHeightForWidth())
         self.btn_stopFileScan.setSizePolicy(sizePolicy4)
@@ -1298,7 +1313,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_27.addLayout(self.horizontalLayout_22)
 
-        self.stackedWidget.addWidget(self.page_fileScan2)
+        self.stackedWidget.addWidget(self.page_fileScan)
         self.page_urlScan = QWidget()
         self.page_urlScan.setObjectName(u"page_urlScan")
         self.verticalLayout_16 = QVBoxLayout(self.page_urlScan)
@@ -1406,6 +1421,36 @@ class Ui_MainWindow(object):
         self.verticalLayout_16.addLayout(self.horizontalLayout_6)
 
         self.stackedWidget.addWidget(self.page_urlScan)
+        self.page_threats = QWidget()
+        self.page_threats.setObjectName(u"page_threats")
+        self.verticalLayout_22 = QVBoxLayout(self.page_threats)
+        self.verticalLayout_22.setObjectName(u"verticalLayout_22")
+        self.horizontalLayout_17 = QHBoxLayout()
+        self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
+        self.comboBox_threatCategoryFilter = QComboBox(self.page_threats)
+        self.comboBox_threatCategoryFilter.setObjectName(u"comboBox_threatCategoryFilter")
+
+        self.horizontalLayout_17.addWidget(self.comboBox_threatCategoryFilter)
+
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_17.addItem(self.horizontalSpacer_2)
+
+
+        self.verticalLayout_22.addLayout(self.horizontalLayout_17)
+
+        self.verticalLayout_20 = QVBoxLayout()
+        self.verticalLayout_20.setObjectName(u"verticalLayout_20")
+        self.tbl_threats = QTreeView(self.page_threats)
+        self.tbl_threats.setObjectName(u"tbl_threats")
+        self.tbl_threats.setAlternatingRowColors(True)
+
+        self.verticalLayout_20.addWidget(self.tbl_threats)
+
+
+        self.verticalLayout_22.addLayout(self.verticalLayout_20)
+
+        self.stackedWidget.addWidget(self.page_threats)
 
         self.verticalLayout_15.addWidget(self.stackedWidget)
 
@@ -1470,7 +1515,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         self.content.setCurrentIndex(1)
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(3)
         self.tabWidget.setCurrentIndex(0)
         self.stackedWidget_topThreats.setCurrentIndex(0)
 
@@ -1574,6 +1619,7 @@ class Ui_MainWindow(object):
         ___qtreewidgetitem1.setText(0, QCoreApplication.translate("MainWindow", u"Vendor", None));
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"Elapsed time:", None))
         self.label_urlScanElapsedTime.setText("")
+        self.comboBox_threatCategoryFilter.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Category", None))
         self.creditsLabel.setText(QCoreApplication.translate("MainWindow", u"Developed by Pang Hoi Him (220327019)", None))
         self.version.setText(QCoreApplication.translate("MainWindow", u"Scan-X version 1.0.0", None))
     # retranslateUi

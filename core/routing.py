@@ -5,6 +5,7 @@ class Route(Map):
     ROUTE_HOME = 0
     ROUTE_FILE_SCAN = 1
     ROUTE_URL_SCAN = 2
+    ROUTE_THREATS = 3
 
     route: int
     params: dict

@@ -4,7 +4,7 @@ from PySide6.QtGui import QIcon, QColor
 from widgets import CustomGrip
 from .ui.ui_main import Ui_MainWindow
 from .ui.ui_file_details import Ui_FileDetails
-from .pages import Home, FileScan, URLScan
+from .pages import Home, FileScan, URLScan, Threats
 from core import Route, Router
 
 class View(QMainWindow):
@@ -47,8 +47,9 @@ class View(QMainWindow):
         }
 
         for (pageName, pageClass) in [('pageHome', Home),
-                                      ('pageScan', FileScan),
-                                      ('urlScan', URLScan)]:
+                                      ('pageFileScan', FileScan),
+                                      ('pageUrlScan', URLScan),
+                                      ('pageThreats', Threats)]:
             setattr(self, pageName, pageClass(self.ui, signals=signals, ctx=ctx))
 
         self.connectSlotsAndSignals()

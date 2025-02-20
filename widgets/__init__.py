@@ -15,6 +15,7 @@
 # ///////////////////////////////////////////////////////////////
 
 from . custom_grips import CustomGrip
+from . link_label import LinkLabel
 from . file_drop import FileDropWidget
 from . custom_tree_view import CustomTreeView
 from . file_scan_result_container import FileScanResultContainer

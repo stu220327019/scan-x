@@ -108,6 +108,7 @@ class Home(Base):
         for (filterName, buttonGroup) in [('scanResultType', self.ui.buttonGroup_homeFilterBy),
                                           ('threatsViewBy', self.ui.buttonGroup_homeViewBy)]:
             buttonGroup.buttonToggled.connect(buttonGroupToggled(filterName))
+        self.ui.label_statsThreatsDetected.clicked.connect(lambda: self.router.routeTo(Route.ROUTE_THREATS))
 
     def loadData(self):
         self.fileScanResultModel.loadData()
@@ -124,8 +125,8 @@ class Home(Base):
     def topThreatCategoriesloaded(self, data):
         style = pygal.style.Style(tooltip_font_size=50)
         pie_chart = pygal.Pie(human_readable=True, fill=True, show_legend=False, style=style, inner_radius=.4)
-        for cat in data:
-            pie_chart.add(cat['name'], cat['detected'])
+        for category in data:
+            pie_chart.add(category['name'], category['detected'])
         data_uri = pie_chart.render_data_uri()
         self.ui.webEngineView_topThreatsCategories.load(QUrl(data_uri))
 

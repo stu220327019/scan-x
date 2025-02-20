@@ -409,3 +409,13 @@ Custome */
 	border: 2px dashed rgb(220, 220, 220);
 	border-radius: 5px;
 }
+
+
+QLabel[class~="link"] {
+  color: rgb(26, 95, 180);
+  text-decoration: underline;
+}
+
+QLabel[class~="link"]:hover {
+  color:rgb(53, 132, 228);
+}

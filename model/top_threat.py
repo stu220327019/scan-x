@@ -30,13 +30,22 @@ class TopThreatModel(QAbstractTableModel):
         val = self.threats[row][['name', 'detected', 'categories'][col]]
         return str.join(', ', val) if type(val) == list else val
 
-    def loadData(self, viewBy=None):
-        query = """
+    def loadData(self, viewBy=None, search=None):
+        whereClauses = []
+        joinClauses = []
+        if search:
+            if search['category'] is not None:
+                whereClauses.append('tc.threat_category_id = %d' % (search['category']['id']))
+                joinClauses.append('threats_categories tc ON tc.threat_id = t.id')
+        where = 'AND ' + ' AND '.join(whereClauses) if len(whereClauses) > 0 else ''
+        join = 'JOIN ' + ' JOIN '.join(joinClauses) if len(joinClauses) > 0 else ''
+
+        query = f"""
         SELECT t.*, JSON_GROUP_ARRAY(c.name) AS categories
         FROM (
             SELECT t.id, t.name, COUNT(*) AS detected
-            FROM threat t, file f
-            WHERE f.threat_id = t.id
+            FROM threat t, file f {join}
+            WHERE f.threat_id = t.id {where}
             GROUP BY t.id
             ORDER BY detected DESC
             LIMIT 100
@@ -45,6 +54,7 @@ class TopThreatModel(QAbstractTableModel):
         GROUP BY t.id
         ORDER BY detected DESC
         """
+
         rows = self.db.fetchAll(query)
         self.beginResetModel()
         self.threats.clear()
