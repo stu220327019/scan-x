@@ -5,6 +5,7 @@ from widgets import CustomGrip
 from .ui.ui_main import Ui_MainWindow
 from .ui.ui_file_details import Ui_FileDetails
 from .pages import Home, FileScan, URLScan
+from core import Route, Router
 
 class View(QMainWindow):
     ENABLE_CUSTOM_TITLE_BAR = True
@@ -26,12 +27,12 @@ class View(QMainWindow):
     toggleRightBoxSignal = Signal()
     openRightBoxSignal = Signal(str, object, object)
     closeRightBoxSignal = Signal()
-    pageChangedSignal = Signal(int)
 
     def __init__(self, ctx):
         super(View, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.router: Router = ctx.get('router')
 
         self.setWindowTitle("Scan-X GUI Application")
         self.setWindowFlags(Qt.FramelessWindowHint)
@@ -42,8 +43,7 @@ class View(QMainWindow):
         signals = {
             'toggleRightBox': self.toggleRightBoxSignal,
             'openRightBox': self.openRightBoxSignal,
-            'closeRightBox': self.closeRightBoxSignal,
-            'pageChanged': self.pageChangedSignal
+            'closeRightBox': self.closeRightBoxSignal
         }
 
         for (pageName, pageClass) in [('pageHome', Home),
@@ -65,14 +65,14 @@ class View(QMainWindow):
         self.toggleRightBoxSignal.connect(self.toggleRightBox)
         self.openRightBoxSignal.connect(self.openRightBox)
         self.closeRightBoxSignal.connect(self.closeRightBox)
-        self.pageChangedSignal.connect(self.pageChanged)
+        self.router.routeUpdated.connect(self.routeUpdated)
 
         self._connectNavLinks()
 
     def _connectNavLinks(self):
         for idx, button in enumerate(self.ui.topMenu.findChildren(QPushButton)):
-            button.clicked.connect(lambda _, idx=idx: self.pageChangedSignal.emit(idx))
-        self.pageChangedSignal.emit(0)
+            button.clicked.connect(lambda _, idx=idx: self.router.routeTo(idx))
+        self.router.routeTo(Route.ROUTE_HOME)
 
     # TOGGLE MENU
     # ///////////////////////////////////////////////////////////////
@@ -301,11 +301,11 @@ class View(QMainWindow):
     def resizeEvent(self, event):
         self.resize_grips()
 
-    def pageChanged(self, idx):
+    def routeUpdated(self, route: Route):
         for _idx, button in enumerate(self.ui.topMenu.findChildren(QPushButton)):
-            if _idx == idx:
+            if _idx == route.route:
                 styleSheet = button.styleSheet() + self.MENU_SELECTED_STYLESHEET
             else:
                 styleSheet = button.styleSheet().replace(self.MENU_SELECTED_STYLESHEET, "")
             button.setStyleSheet(styleSheet)
-        self.ui.stackedWidget.setCurrentIndex(idx)
+        self.ui.stackedWidget.setCurrentIndex(route.route)

@@ -5,7 +5,7 @@ import sys
 import asyncio
 import os
 from qasync import QEventLoop
-from core import config, DB
+from core import config, DB, Router
 
 def initDB(db: DB):
     with open('res/create_tables.sql', 'r') as f:
@@ -23,7 +23,8 @@ def main():
     initDB(db)
 
     ctx = {
-        'db': db
+        'db': db,
+        'router': Router()
     }
 
     view = View(ctx)

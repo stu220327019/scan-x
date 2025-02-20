@@ -9,7 +9,7 @@ from model import (FileScanResultModel, UrlScanResultModel,
 from lib.entity import File
 from view.ui.ui_main import Ui_MainWindow
 from widgets import FileScanResultContainer, UrlScanResultContainer
-from core import DB
+from core import DB, Route, Router
 from .base import Base
 from view.utils import createContextMenu
 
@@ -23,6 +23,7 @@ class Home(Base):
         self.ui = ui
         self.signals = signals
         self.db: DB = ctx.get('db')
+        self.router: Router = ctx.get('router')
         self.fileScanResultModel = FileScanResultModel(self.db)
         self.urlScanResultModel = UrlScanResultModel(self.db)
         self.topThreatDetectionModel = TopThreatDetectionModel(self.db)
@@ -85,7 +86,7 @@ class Home(Base):
         self.ui.tbl_topThreatsCategories.setModel(self.topThreatCategoryModel)
 
     def connectSlotsAndSignals(self):
-        self.signals['pageChanged'].connect(self.pageChanged)
+        self.router.routeUpdated.connect(self.routeUpdated)
         self.topThreatCategoryModel.loaded.connect(self.topThreatCategoriesloaded)
         buttonGroupMapping = {
             'radioButton_filterByAll': 'all',
@@ -116,8 +117,8 @@ class Home(Base):
         self.topThreatCategoryModel.loadData()
         self.updateSummary()
 
-    def pageChanged(self, idx):
-        if idx == 0:
+    def routeUpdated(self, route: Route):
+        if route.route == Route.ROUTE_HOME:
             self.loadData()
 
     def topThreatCategoriesloaded(self, data):
