@@ -1,3 +1,5 @@
+from PySide6.QtGui import QDesktopServices
+
 from model import TopThreatModel, TopThreatCategoryModel
 from view.ui.ui_main import Ui_MainWindow
 from core import DB, Router, Route
@@ -31,7 +33,8 @@ class Threats(Base):
         self.router.routeUpdated.connect(self.routeUpdated)
         self.threatCategoryModel.loaded.connect(self.categoriesLoaded)
         self.ui.comboBox_threatCategoryFilter.currentIndexChanged.connect(
-            lambda idx: self.setFilter(category=self.threatCategoryModel.threatCategories[idx-1]).loadData(loadCategories=False) if idx > 0 else None
+            lambda idx: self.setFilter(category=self.threatCategoryModel.threatCategories[idx-1] if idx > 0 else None).loadData(loadCategories=False)
+            if not self._filterReset else None
         )
         self.ui.btn_back.clicked.connect(lambda: self.router.routeTo(Route.ROUTE_HOME))
 
@@ -39,12 +42,14 @@ class Threats(Base):
         if route.route == Route.ROUTE_THREATS:
             searchFilter = route.params or {}
             self.setFilter(**searchFilter)
+            self._filterReset = True
             self.loadData(loadThreats=not searchFilter)
 
     def categoriesLoaded(self, data):
         self.ui.comboBox_threatCategoryFilter.clear()
         items = ['- Any -'] + [category['name'] for category in data]
         self.ui.comboBox_threatCategoryFilter.addItems(items)
+        self._filterReset = False
         if self.filter['category'] is not None:
             self.ui.comboBox_threatCategoryFilter.setCurrentIndex(items.index(self.filter['category']['name']))
 
