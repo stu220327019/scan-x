@@ -8,7 +8,8 @@ from view.utils import createContextMenu
 
 class Threats(Base):
     filter = {
-        'category': None
+        'category': None,
+        'threatName': None
     }
 
     def __init__(self, ui: Ui_MainWindow, signals=None, ctx=None, *args, **kwargs):
@@ -33,16 +34,21 @@ class Threats(Base):
         self.router.routeUpdated.connect(self.routeUpdated)
         self.threatCategoryModel.loaded.connect(self.categoriesLoaded)
         self.ui.comboBox_threatCategoryFilter.currentIndexChanged.connect(
-            lambda idx: self.setFilter(category=self.threatCategoryModel.threatCategories[idx-1] if idx > 0 else None).loadData(loadCategories=False)
+            lambda idx: self.setFilter(category=self.threatCategoryModel.threatCategories[idx-1] if idx > 0 else -1).loadData(loadCategories=False)
             if not self._filterReset else None
         )
         self.ui.btn_back.clicked.connect(lambda: self.router.routeTo(Route.ROUTE_HOME))
+        self.ui.lineEdit_threatNameSearch.textChanged.connect(
+            lambda x: self.setFilter(threatName=x).loadData(loadCategories=False)
+            if not self._filterReset else None
+        )
 
     def routeUpdated(self, route: Route):
         if route.route == Route.ROUTE_THREATS:
-            searchFilter = route.params or {}
-            self.setFilter(**searchFilter)
             self._filterReset = True
+            self.ui.lineEdit_threatNameSearch.clear()
+            searchFilter = route.params or {}
+            self.setFilter(reset=True, **searchFilter)
             self.loadData(loadThreats=not searchFilter)
 
     def categoriesLoaded(self, data):
@@ -59,6 +65,9 @@ class Threats(Base):
         if loadCategories:
             self.threatCategoryModel.loadData()
 
-    def setFilter(self, category=None):
-        self.filter['category'] = category
+    def setFilter(self, category=None, threatName=None, reset=False):
+        if reset or category is not None:
+            self.filter['category'] = category if category != -1 else None
+        if reset or threatName is not None:
+            self.filter['threatName'] = threatName
         return self

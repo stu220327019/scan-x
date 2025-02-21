@@ -50,3 +50,48 @@ class DB:
     def rollback(self):
         self.conn.rollback()
         # self.exec('rollback')
+
+
+class QueryBuilder:
+    EQUAL = 0
+    NOT_EQUAL = 1
+    LIKE = 2
+
+    JOIN = 0
+
+    def __init__(self):
+        self._whereClauses = []
+        self._joinClauses = []
+
+    def where(self, field, val, cond=EQUAL):
+        self._whereClauses.append((field, val, cond))
+        return self
+
+    def join(self, tbl, a, b, joinType=JOIN):
+        self._joinClauses.append((tbl, a, b, joinType))
+        return self
+
+    def build(self):
+        where = ''
+        if len(self._whereClauses) > 0:
+            strWhereClauses = []
+            for (field, val, cond) in self._whereClauses:
+                op = ['=', '!=', 'LIKE'][cond]
+                if type(val) == str:
+                    val = val.replace('\'', '\'\'')
+                    if cond == self.LIKE:
+                        val = f'%{val}%'
+                    val = f'\'{val}\''
+                strWhereClauses.append(f'{field} {op} {val}')
+            where = 'AND ' + ' AND '.join(strWhereClauses)
+
+        join = ''
+        if len(self._joinClauses) > 0:
+            strJoinClauses = [f' {tbl} ON {a} = {b}'
+                              for (tbl, a, b, _) in self._joinClauses]
+            join = 'JOIN ' + ' JOIN '.join(strJoinClauses)
+
+        return {
+            'where': where,
+            'join': join
+        }

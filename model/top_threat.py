@@ -1,8 +1,9 @@
 from PySide6.QtCore import Qt, QAbstractTableModel, QModelIndex
 from PySide6.QtGui import QColor, QIcon
 import json
+from operator import itemgetter
 
-from core import DB
+from core import DB, QueryBuilder
 
 class TopThreatModel(QAbstractTableModel):
     threats = []
@@ -31,14 +32,14 @@ class TopThreatModel(QAbstractTableModel):
         return str.join(', ', val) if type(val) == list else val
 
     def loadData(self, viewBy=None, search=None):
-        whereClauses = []
-        joinClauses = []
+        qb = QueryBuilder()
         if search:
-            if search['category'] is not None:
-                whereClauses.append('tc.threat_category_id = %d' % (search['category']['id']))
-                joinClauses.append('threats_categories tc ON tc.threat_id = t.id')
-        where = 'AND ' + ' AND '.join(whereClauses) if len(whereClauses) > 0 else ''
-        join = 'JOIN ' + ' JOIN '.join(joinClauses) if len(joinClauses) > 0 else ''
+            if search['category']:
+                qb.where('tc.threat_category_id', search['category']['id'])
+                qb.join('threats_categories tc', 'tc.threat_id', 't.id')
+            if search['threatName']:
+                qb.where('t.name', search['threatName'], qb.LIKE)
+        where, join = itemgetter('where', 'join')(qb.build())
 
         query = f"""
         SELECT t.*, JSON_GROUP_ARRAY(c.name) AS categories
