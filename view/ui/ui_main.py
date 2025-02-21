@@ -1461,24 +1461,21 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_22.addWidget(self.horizontalWidget_2)
 
-        self.horizontalLayout_17 = QHBoxLayout()
-        self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
-        self.label_10 = QLabel(self.page_threats)
-        self.label_10.setObjectName(u"label_10")
-
-        self.horizontalLayout_17.addWidget(self.label_10)
-
-        self.comboBox_threatCategoryFilter = QComboBox(self.page_threats)
+        self.groupBox_3 = QGroupBox(self.page_threats)
+        self.groupBox_3.setObjectName(u"groupBox_3")
+        self.horizontalLayout_20 = QHBoxLayout(self.groupBox_3)
+        self.horizontalLayout_20.setObjectName(u"horizontalLayout_20")
+        self.comboBox_threatCategoryFilter = QComboBox(self.groupBox_3)
         self.comboBox_threatCategoryFilter.setObjectName(u"comboBox_threatCategoryFilter")
 
-        self.horizontalLayout_17.addWidget(self.comboBox_threatCategoryFilter)
+        self.horizontalLayout_20.addWidget(self.comboBox_threatCategoryFilter)
 
         self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.horizontalLayout_17.addItem(self.horizontalSpacer_2)
+        self.horizontalLayout_20.addItem(self.horizontalSpacer_2)
 
 
-        self.verticalLayout_22.addLayout(self.horizontalLayout_17)
+        self.verticalLayout_22.addWidget(self.groupBox_3)
 
         self.verticalLayout_20 = QVBoxLayout()
         self.verticalLayout_20.setObjectName(u"verticalLayout_20")
@@ -1665,7 +1662,7 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(tooltip)
         self.btn_back.setText("")
         self.label_11.setText(QCoreApplication.translate("MainWindow", u"Detected Threats", None))
-        self.label_10.setText(QCoreApplication.translate("MainWindow", u"Filter:", None))
+        self.groupBox_3.setTitle(QCoreApplication.translate("MainWindow", u"Filter", None))
         self.comboBox_threatCategoryFilter.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Category", None))
         self.creditsLabel.setText(QCoreApplication.translate("MainWindow", u"Developed by Pang Hoi Him (220327019)", None))
         self.version.setText(QCoreApplication.translate("MainWindow", u"Scan-X version 1.0.0", None))
