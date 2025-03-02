@@ -428,3 +428,65 @@ QLabel[class~="page-header"] {
 #pagesContainer QPushButton[class~="nav-btn"] { background-color: rgba(255, 255, 255, 0); border: none;  border-radius: 5px; padding: 5px; }
 #pagesContainer QPushButton[class~="nav-btn"]:hover { background-color: #f2f6ff; border-style: solid; border-radius: 4px; }
 #pagesContainer QPushButton[class~="nav-btn"]:pressed { background-color: #2f93e1; border-style: solid; border-radius: 4px; }
+
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////
+TabWidget */
+
+#page_fileScan QTabBar::tab
+{
+    background-color: white;
+    border-color: gray;
+    font: 10px 'Arial';
+    color: gray;
+    height: 20px;
+	padding-right: 15px;
+	padding-left: 15px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+#page_fileScan QTabWidget::tab-bar {
+    alignment: center;
+}
+
+#page_fileScan QTabBar::tab:first
+{
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+#page_fileScan QTabBar::tab:last
+{
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+#page_fileScan QTabBar::tab:!selected
+{
+    background-color: rgb(153, 193, 241);
+    color: #4d4d4d;
+}
+
+#page_fileScan QTabBar::close-button
+{
+    background-position: center;
+}
+
+#page_fileScan QTabWidget::pane
+{
+    /* background-color: rgba(250, 250, 250, 1); */
+	top: -26px;
+	padding-top: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	border-radius: 0px;
+}
+
+#page_fileScan QTabBar::tab:selected
+{
+    border-color: #2f93e1;
+    background-color: #2f93e1;
+    color: white;
+}

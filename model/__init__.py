@@ -1,4 +1,5 @@
 from .file_scan import FileScanModel
+from .dir_scan import DirScanModel
 from .file_scan_result import FileScanResultModel
 from .url_scan_result import UrlScanResultModel
 from .top_threat import TopThreatModel

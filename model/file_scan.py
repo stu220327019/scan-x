@@ -1,31 +1,56 @@
 from PySide6.QtCore import QThread, QAbstractTableModel, QModelIndex, Signal
 from PySide6.QtGui import Qt, QIcon, QColor
 import hashlib
-import magic
 import os
+from abc import ABC, abstractmethod
+import mimetypes
 
 from lib.entity import File, FileScanResult, Color
 
-class FileScanModel(QAbstractTableModel):
-    results: list[FileScanResult] = []
-    added = set()
+class AbstractScanModel(ABC):
+    @abstractmethod
+    def getItems(self):
+        raise NotImplementedError
 
+    @abstractmethod
+    def getItem(self, index: QModelIndex):
+        raise NotImplementedError
+
+    @abstractmethod
+    def updateItem(self, index: QModelIndex, **kwargs):
+        raise NotImplementedError
+
+
+class FileScanModel(QAbstractTableModel):
     def __init__(self, parent=None):
         super().__init__(parent)
+        self._data: list[FileScanResult] = []
+        self._added = set()
 
     def rowCount(self, parent=QModelIndex()):
-        return len(self.results) if not parent.isValid() else 0
+        return len(self._data) if not parent.isValid() else 0
 
     def columnCount(self, parent=QModelIndex()):
         return 3  # Path, Filename, Status
 
-    def data(self, index, role=Qt.DisplayRole):
+    def index(
+        self, row: int, column: int, parent: QModelIndex = QModelIndex()
+    ) -> QModelIndex:
+        if not self.hasIndex(row, column, parent):
+            return QModelIndex()
+
+        item = self._data[row]
+        if item:
+            return self.createIndex(row, column, item)
+        return QModelIndex()
+
+    def data(self, index: QModelIndex, role=Qt.DisplayRole):
         if not index.isValid() or role not in (Qt.DisplayRole, Qt.DecorationRole, Qt.ForegroundRole):
             return None
         row = index.row()
         col = index.column()
 
-        result = self.results[row]
+        result: FileScanResult = index.internalPointer()
 
         if role == Qt.DisplayRole:
             if col == 2:
@@ -87,13 +112,14 @@ class FileScanModel(QAbstractTableModel):
     #     self.dataChanged.emit(index, index)
     #     return True
 
-    def addFile(self, filepath):
-        if not filepath in self.added:
+    def addItem(self, filepath) -> QModelIndex:
+        if not filepath in self._added:
             with open(filepath, 'rb') as f:
                 cfile = f.read()
                 path, filename  = os.path.split(str(filepath))
-                self.beginInsertRows(QModelIndex(), self.rowCount(), self.rowCount())
-                self.results.append(FileScanResult({
+                index = QModelIndex()
+                self.beginInsertRows(index, self.rowCount(), self.rowCount())
+                self._data.append(FileScanResult({
                     'file': File({
                         'filepath': filepath,
                         'filename': filename,
@@ -102,46 +128,39 @@ class FileScanModel(QAbstractTableModel):
                         'sha1': hashlib.sha1(cfile).hexdigest(),
                         'sha256': hashlib.sha256(cfile).hexdigest(),
                         'size': os.path.getsize(filepath),
-                        'type': magic.from_file(filepath)
+                        'type': mimetypes.guess_type(filepath)[0]
                     }),
                     'status': FileScanResult.STATUS_PENDING,
                     'id': filepath
                 }))
                 self.endInsertRows()
-                self.added.add(filepath)
+                self._added.add(filepath)
+                return index
             # fileDetailsThread = FileDetailsThread(filepath)
             # fileDetailsThread.loaded.connect(self.updateFileInfo)
             # fileDetailsThread.start()
 
-    # def updateFileInfo(self, fileInfo: dict):
-    #     print(fileInfo)
+    def getItems(self):
+        return self._data
 
-    def getResultRow(self, id):
-        return next(iter([i for i, j in enumerate(self.results) if j['id'] == id]), None)
+    def getItem(self, index: QModelIndex):
+        return index.internalPointer()
 
-    def getResult(self, id) -> FileScanResult:
-        row = self.getResultRow(id)
-        if row is not None:
-            return self.results[row]
+    def updateItem(self, index: QModelIndex, **kwargs) -> FileScanResult:
+        item = index.internalPointer()
+        for k, v in kwargs.items():
+            item[k] = v
+        row = index.row()
+        top_left = self.index(row, 0)
+        bottom_right = self.index(row, 2)
+        self.dataChanged.emit(top_left, bottom_right)
+        return item
 
-    def updateResult(self, id, **kwargs) -> FileScanResult:
-        row = self.getResultRow(id)
-        if row is not None:
-            result = self.results[row]
-            for k, w in kwargs.items():
-                result[k] = w
-            self.results[row] = result
-            top_left = self.index(row, 0)
-            bottom_right = self.index(row, 2)
-            self.dataChanged.emit(top_left, bottom_right)
-            return result
-        return False
-
-    def removeResult(self, row):
+    def removeItem(self, row):
         self.beginRemoveRows(QModelIndex(), row, row)
-        result = self.results[row]
-        del self.results[row]
-        self.added.remove(result.id)
+        result = self._data[row]
+        del self._data[row]
+        self._added.remove(result.id)
         self.endRemoveRows()
 
 

@@ -463,6 +463,68 @@ QLabel[class~=&quot;page-header&quot;] {
 #pagesContainer QPushButton[class~=&quot;nav-btn&quot;] { background-color: rgba(255, 255, 255, 0); border: none;  border-radius: 5px; padding: 5px; }
 #pagesContainer QPushButton[class~=&quot;nav-btn&quot;]:hover { background-color: #f2f6ff; border-style: solid; border-radius: 4px; }
 #pagesContainer QPushButton[class~=&quot;nav-btn&quot;]:pressed { background-color: #2f93e1; border-style: solid; border-radius: 4px; }
+
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////
+TabWidget */
+
+#page_fileScan QTabBar::tab
+{
+    background-color: white;
+    border-color: gray;
+    font: 10px 'Arial';
+    color: gray;
+    height: 20px;
+	padding-right: 15px;
+	padding-left: 15px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+#page_fileScan QTabWidget::tab-bar {
+    alignment: center;
+}
+
+#page_fileScan QTabBar::tab:first
+{
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+#page_fileScan QTabBar::tab:last
+{
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+#page_fileScan QTabBar::tab:!selected
+{
+    background-color: rgb(153, 193, 241);
+    color: #4d4d4d;
+}
+
+#page_fileScan QTabBar::close-button
+{
+    background-position: center;
+}
+
+#page_fileScan QTabWidget::pane
+{
+    /* background-color: rgba(250, 250, 250, 1); */
+	top: -26px;
+	padding-top: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	border-radius: 0px;
+}
+
+#page_fileScan QTabBar::tab:selected
+{
+    border-color: #2f93e1;
+    background-color: #2f93e1;
+    color: white;
+}
 </string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_21">
@@ -2152,154 +2214,241 @@ li.checked::marker { content: &quot;\2612&quot;; }
                        </layout>
                       </widget>
                       <widget class="QWidget" name="page_fileScan">
-                       <layout class="QVBoxLayout" name="verticalLayout_27">
+                       <layout class="QVBoxLayout" name="verticalLayout_25">
+                        <property name="leftMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="topMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="rightMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="bottomMargin">
+                         <number>0</number>
+                        </property>
                         <item>
-                         <widget class="QGroupBox" name="groupBox_4">
-                          <property name="title">
-                           <string>Scan files</string>
+                         <widget class="QTabWidget" name="tabWidget_2">
+                          <property name="currentIndex">
+                           <number>0</number>
                           </property>
-                          <layout class="QVBoxLayout" name="verticalLayout_26">
-                           <item>
-                            <widget class="QWidget" name="fileScanDropContainer" native="true">
-                             <layout class="QVBoxLayout" name="_2">
-                              <property name="leftMargin">
-                               <number>9</number>
+                          <widget class="QWidget" name="tab_3">
+                           <attribute name="title">
+                            <string>Scan Files</string>
+                           </attribute>
+                           <layout class="QVBoxLayout" name="verticalLayout_24">
+                            <item>
+                             <widget class="QWidget" name="fileScanDropContainer" native="true">
+                              <layout class="QVBoxLayout" name="_2">
+                               <property name="leftMargin">
+                                <number>9</number>
+                               </property>
+                               <property name="topMargin">
+                                <number>9</number>
+                               </property>
+                               <property name="rightMargin">
+                                <number>9</number>
+                               </property>
+                               <property name="bottomMargin">
+                                <number>9</number>
+                               </property>
+                               <item>
+                                <widget class="FileDropWidget" name="fileScanDrop" native="true">
+                                 <property name="minimumSize">
+                                  <size>
+                                   <width>0</width>
+                                   <height>100</height>
+                                  </size>
+                                 </property>
+                                 <property name="acceptDrops">
+                                  <bool>true</bool>
+                                 </property>
+                                 <layout class="QHBoxLayout" name="horizontalLayout_15">
+                                  <item>
+                                   <widget class="QPushButton" name="btn_fileSelect">
+                                    <property name="sizePolicy">
+                                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                      <horstretch>0</horstretch>
+                                      <verstretch>0</verstretch>
+                                     </sizepolicy>
+                                    </property>
+                                    <property name="text">
+                                     <string>Select files...</string>
+                                    </property>
+                                    <property name="icon">
+                                     <iconset resource="resources.qrc">
+                                      <normaloff>:/resources/images/icons/file_plus_white.svg</normaloff>:/resources/images/icons/file_plus_white.svg</iconset>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                 </layout>
+                                </widget>
+                               </item>
+                              </layout>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="CustomTreeView" name="tbl_fileScanList">
+                              <property name="alternatingRowColors">
+                               <bool>true</bool>
                               </property>
-                              <property name="topMargin">
-                               <number>9</number>
+                              <property name="selectionMode">
+                               <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
                               </property>
-                              <property name="rightMargin">
-                               <number>9</number>
-                              </property>
-                              <property name="bottomMargin">
-                               <number>9</number>
+                             </widget>
+                            </item>
+                            <item>
+                             <layout class="QHBoxLayout" name="horizontalLayout_22">
+                              <property name="spacing">
+                               <number>20</number>
                               </property>
                               <item>
-                               <widget class="FileDropWidget" name="fileScanDrop" native="true">
-                                <property name="minimumSize">
+                               <spacer name="horizontalSpacer_16">
+                                <property name="orientation">
+                                 <enum>Qt::Orientation::Horizontal</enum>
+                                </property>
+                                <property name="sizeHint" stdset="0">
                                  <size>
-                                  <width>0</width>
-                                  <height>100</height>
+                                  <width>40</width>
+                                  <height>20</height>
                                  </size>
                                 </property>
-                                <property name="acceptDrops">
-                                 <bool>true</bool>
+                               </spacer>
+                              </item>
+                              <item>
+                               <widget class="QPushButton" name="btn_startFileScan">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
                                 </property>
-                                <layout class="QHBoxLayout" name="horizontalLayout_15">
-                                 <item>
-                                  <widget class="QPushButton" name="btn_fileSelect">
-                                   <property name="sizePolicy">
-                                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                     <horstretch>0</horstretch>
-                                     <verstretch>0</verstretch>
-                                    </sizepolicy>
-                                   </property>
-                                   <property name="text">
-                                    <string>Select file...</string>
-                                   </property>
-                                   <property name="icon">
-                                    <iconset resource="resources.qrc">
-                                     <normaloff>:/resources/images/icons/file_plus_white.svg</normaloff>:/resources/images/icons/file_plus_white.svg</iconset>
-                                   </property>
-                                  </widget>
-                                 </item>
-                                </layout>
+                                <property name="minimumSize">
+                                 <size>
+                                  <width>100</width>
+                                  <height>0</height>
+                                 </size>
+                                </property>
+                                <property name="text">
+                                 <string>Start</string>
+                                </property>
+                                <property name="icon">
+                                 <iconset resource="resources.qrc">
+                                  <normaloff>:/resources/images/icons/play_white.svg</normaloff>:/resources/images/icons/play_white.svg</iconset>
+                                </property>
                                </widget>
                               </item>
+                              <item>
+                               <widget class="QPushButton" name="btn_stopFileScan">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="minimumSize">
+                                 <size>
+                                  <width>100</width>
+                                  <height>0</height>
+                                 </size>
+                                </property>
+                                <property name="text">
+                                 <string>Stop</string>
+                                </property>
+                                <property name="icon">
+                                 <iconset resource="resources.qrc">
+                                  <normaloff>:/resources/images/icons/rectangle_white.svg</normaloff>:/resources/images/icons/rectangle_white.svg</iconset>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <spacer name="horizontalSpacer_17">
+                                <property name="orientation">
+                                 <enum>Qt::Orientation::Horizontal</enum>
+                                </property>
+                                <property name="sizeHint" stdset="0">
+                                 <size>
+                                  <width>40</width>
+                                  <height>20</height>
+                                 </size>
+                                </property>
+                               </spacer>
+                              </item>
                              </layout>
-                            </widget>
-                           </item>
-                           <item>
-                            <widget class="CustomTreeView" name="tbl_fileScanList">
-                             <property name="alternatingRowColors">
-                              <bool>true</bool>
-                             </property>
-                             <property name="selectionMode">
-                              <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
-                             </property>
-                            </widget>
-                           </item>
-                          </layout>
+                            </item>
+                           </layout>
+                          </widget>
+                          <widget class="QWidget" name="tab_4">
+                           <attribute name="title">
+                            <string>Scan Directories</string>
+                           </attribute>
+                           <layout class="QVBoxLayout" name="verticalLayout_26">
+                            <item>
+                             <widget class="QGroupBox" name="groupBox_4">
+                              <property name="title">
+                               <string/>
+                              </property>
+                              <layout class="QVBoxLayout" name="verticalLayout_27">
+                               <item>
+                                <widget class="QGroupBox" name="groupBox_10">
+                                 <property name="title">
+                                  <string>Select a directory</string>
+                                 </property>
+                                 <layout class="QHBoxLayout" name="horizontalLayout_17">
+                                  <item>
+                                   <widget class="QPushButton" name="btn_browseDir">
+                                    <property name="text">
+                                     <string>Browse...</string>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                  <item>
+                                   <widget class="QLabel" name="label_dirSelected">
+                                    <property name="text">
+                                     <string>No directory selected.</string>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                  <item>
+                                   <spacer name="horizontalSpacer_3">
+                                    <property name="orientation">
+                                     <enum>Qt::Orientation::Horizontal</enum>
+                                    </property>
+                                    <property name="sizeHint" stdset="0">
+                                     <size>
+                                      <width>475</width>
+                                      <height>20</height>
+                                     </size>
+                                    </property>
+                                   </spacer>
+                                  </item>
+                                  <item>
+                                   <widget class="QPushButton" name="btn_dirScan">
+                                    <property name="text">
+                                     <string>Start</string>
+                                    </property>
+                                    <property name="icon">
+                                     <iconset resource="resources.qrc">
+                                      <normaloff>:/resources/images/icons/play_white.svg</normaloff>:/resources/images/icons/play_white.svg</iconset>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                 </layout>
+                                </widget>
+                               </item>
+                               <item>
+                                <widget class="QTreeView" name="tbl_dirScan">
+                                 <property name="alternatingRowColors">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </widget>
+                            </item>
+                           </layout>
+                          </widget>
                          </widget>
-                        </item>
-                        <item>
-                         <layout class="QHBoxLayout" name="horizontalLayout_22">
-                          <property name="spacing">
-                           <number>20</number>
-                          </property>
-                          <item>
-                           <spacer name="horizontalSpacer_16">
-                            <property name="orientation">
-                             <enum>Qt::Orientation::Horizontal</enum>
-                            </property>
-                            <property name="sizeHint" stdset="0">
-                             <size>
-                              <width>40</width>
-                              <height>20</height>
-                             </size>
-                            </property>
-                           </spacer>
-                          </item>
-                          <item>
-                           <widget class="QPushButton" name="btn_startFileScan">
-                            <property name="sizePolicy">
-                             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                              <horstretch>0</horstretch>
-                              <verstretch>0</verstretch>
-                             </sizepolicy>
-                            </property>
-                            <property name="minimumSize">
-                             <size>
-                              <width>100</width>
-                              <height>0</height>
-                             </size>
-                            </property>
-                            <property name="text">
-                             <string>Start</string>
-                            </property>
-                            <property name="icon">
-                             <iconset resource="resources.qrc">
-                              <normaloff>:/resources/images/icons/play_white.svg</normaloff>:/resources/images/icons/play_white.svg</iconset>
-                            </property>
-                           </widget>
-                          </item>
-                          <item>
-                           <widget class="QPushButton" name="btn_stopFileScan">
-                            <property name="sizePolicy">
-                             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                              <horstretch>0</horstretch>
-                              <verstretch>0</verstretch>
-                             </sizepolicy>
-                            </property>
-                            <property name="minimumSize">
-                             <size>
-                              <width>100</width>
-                              <height>0</height>
-                             </size>
-                            </property>
-                            <property name="text">
-                             <string>Stop</string>
-                            </property>
-                            <property name="icon">
-                             <iconset resource="resources.qrc">
-                              <normaloff>:/resources/images/icons/rectangle_white.svg</normaloff>:/resources/images/icons/rectangle_white.svg</iconset>
-                            </property>
-                           </widget>
-                          </item>
-                          <item>
-                           <spacer name="horizontalSpacer_17">
-                            <property name="orientation">
-                             <enum>Qt::Orientation::Horizontal</enum>
-                            </property>
-                            <property name="sizeHint" stdset="0">
-                             <size>
-                              <width>40</width>
-                              <height>20</height>
-                             </size>
-                            </property>
-                           </spacer>
-                          </item>
-                         </layout>
                         </item>
                        </layout>
                       </widget>

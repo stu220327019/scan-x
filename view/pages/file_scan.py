@@ -1,5 +1,6 @@
 from PySide6.QtCore import QObject, QThread, Signal, Qt, QModelIndex
-from PySide6.QtWidgets import QFileDialog, QTreeWidgetItem
+from PySide6.QtWidgets import QFileDialog, QTreeWidgetItem, QHeaderView
+from PySide6.QtGui import QIcon
 import asyncio
 from qasync import asyncSlot
 import time
@@ -9,8 +10,10 @@ import os
 import json
 import sqlite3
 from pprint import pprint
+from functools import partial
 
-from model import FileScanModel
+from model import FileScanModel, DirScanModel
+from model.dir_scan import _FileSystemModelLiteItem
 from lib.entity import (FileScanResult, Analysis, Threat,ThreatCategory,
                         ThreatTag, FileType, FileTypeTag)
 from view.ui.ui_main import Ui_MainWindow
@@ -18,11 +21,42 @@ from widgets import FileScanResultContainer
 from core.config import VIRUS_TOTAL_API_KEY, NUM_SCAN_WORKERS
 from core import DB
 from .base import Base
+from pprint import pprint
+
+
+def get_dir_tree(filepath):
+    for root, dirs, files in os.walk(filepath):
+        dir_content = []
+        for dir in dirs:
+            go_inside = os.path.join(filepath, dir)
+            dir_content.append(get_dir_tree(go_inside))
+        files_lst = []
+        for f in files:
+            files_lst.append(f)
+        _, name = os.path.split(str(root))
+        return {'name': name, 'files': files_lst, 'dirs': dir_content, 'root': root}
+
+
+def build_tree_widget_items(tree):
+    items = []
+    for d in tree.get('dirs'):
+        item = QTreeWidgetItem([d.get('name')])
+        item.addChildren(build_tree_widget_items(d))
+        items.append(item)
+    for f in tree.get('files'):
+        item = QTreeWidgetItem([f])
+        items.append(item)
+    return items
+
+
 
 class FileScan(Base):
-    model = FileScanModel()
-    queue = asyncio.Queue()
-    workerTasks = []
+    fileScanModel = FileScanModel()
+    fileScanQueue = asyncio.Queue()
+    fileScanWorkerTasks = []
+
+    dirScanQueue = asyncio.Queue()
+    dirScanWorkerTasks = []
 
     def __init__(self, ui: Ui_MainWindow, signals=None, ctx=None, *args, **kwargs):
         self.ui = ui
@@ -31,9 +65,10 @@ class FileScan(Base):
         super().__init__(*args, **kwargs)
 
     def uiDefinitions(self):
-        self.ui.tbl_fileScanList.setModel(self.model)
+        self.ui.tbl_fileScanList.setModel(self.fileScanModel)
         self.ui.tbl_fileScanList.setColumnWidth(0, 300)
         self.ui.tbl_fileScanList.setColumnWidth(1, 150)
+        self.ui.btn_dirScan.setEnabled(False)
 
     def connectSlotsAndSignals(self):
         self.ui.btn_fileSelect.clicked.connect(self.fileBrowse)
@@ -42,6 +77,9 @@ class FileScan(Base):
         self.ui.tbl_fileScanList.keyPressed.connect(self.filelistkeyPressed)
         self.ui.btn_startFileScan.clicked.connect(self.startFileScan)
         self.ui.btn_stopFileScan.clicked.connect(self.cancelFileScan)
+        self.ui.btn_browseDir.clicked.connect(self.dirBrowse)
+        self.ui.btn_dirScan.clicked.connect(self.startDirScan)
+        self.ui.tbl_dirScan.doubleClicked.connect(self.filelistItemClick)
 
     def fileBrowse(self):
         dlg = QFileDialog()
@@ -49,63 +87,143 @@ class FileScan(Base):
         if dlg.exec_():
             selectedFiles = dlg.selectedFiles()
             for filepath in selectedFiles:
-                self.model.addFile(filepath)
+                self.fileScanModel.addItem(filepath)
 
     def filesDropped(self, filepaths):
         for filepath in filepaths:
             if os.path.isfile(filepath):
-                self.model.addFile(filepath)
+                self.fileScanModel.addItem(filepath)
+
+    def dirBrowse(self):
+        dlg = QFileDialog()
+        dlg.setFileMode(QFileDialog.Directory)
+        if dlg.exec_():
+            selectedDir = dlg.selectedFiles()[0]
+            self.ui.label_dirSelected.setText(selectedDir)
+            self.ui.label_dirSelected.setStyleSheet("color: #7082b6")
+            self.ui.btn_dirScan.setEnabled(True)
+            dir_tree = get_dir_tree(selectedDir)
+            self.dirScanModel = DirScanModel(dir_tree)
+            self.ui.tbl_dirScan.setModel(self.dirScanModel)
+            self.ui.tbl_dirScan.expandAll()
+            # self.ui.tbl_dirScan.resizeColumnToContents(0)
+            self.ui.tbl_dirScan.setColumnWidth(0, 300)
+            self.dirScanItemMap = {}
+
+            def buildMap(index: QModelIndex, model: DirScanModel, itemMap: dict):
+                if not index.isValid():
+                    return
+
+                rows = model.rowCount(index)
+                cols = model.columnCount(index)
+
+                item = index.internalPointer()
+                if item.data():
+                    itemMap[item] = index
+
+                for i in range(rows):
+                    for j in range(cols):
+                        childIndex = model.index(i, j, index)
+                        buildMap(childIndex, model, itemMap)
+
+            for i in range(self.dirScanModel.rowCount()):
+                buildMap(self.dirScanModel.index(i, 0), self.dirScanModel, self.dirScanItemMap)
 
     def filelistkeyPressed(self, event):
         if event.key() == Qt.Key_Delete:
             selectedIndexes = self.ui.tbl_fileScanList.selectedIndexes()
             rows = sorted(list(set([index.row() for index in selectedIndexes if index.isValid()])), reverse=True)
             for row in rows:
-                self.model.removeResult(row)
+                self.fileScanModel.removeItem(row)
 
     def filelistItemClick(self, index: QModelIndex):
-        result = self.model.results[index.row()]
-        self.signals['openRightBox'].emit(result.file.filename, FileScanResultContainer, {'scanResult': result})
+        result = index.internalPointer()
+        if type(result) == _FileSystemModelLiteItem:
+            result = result.data()
+        if result:
+            self.signals['openRightBox'].emit(result.file.filename, FileScanResultContainer, {'scanResult': result})
 
     # @asyncSlot()
     def startFileScan(self):
-        files = [f for f in self.model.results
-                 if f.status in (FileScanResult.STATUS_PENDING, FileScanResult.STATUS_FAILED)]
-        for f in files:
-            self.queue.put_nowait(f)
-            self.model.updateResult(f.id, status=FileScanResult.STATUS_QUEUED)
+        for row in range(self.fileScanModel.rowCount()):
+            index = self.fileScanModel.index(row, 0)
+            item = index.internalPointer()
+            if item.status in (FileScanResult.STATUS_PENDING, FileScanResult.STATUS_FAILED):
+                self.fileScanQueue.put_nowait(index)
+                self.fileScanModel.updateItem(index, status=FileScanResult.STATUS_QUEUED)
 
-        if len(self.workerTasks) == 0:
+        if len(self.fileScanWorkerTasks) == 0:
             for i in range(NUM_SCAN_WORKERS):
-                worker = FileScanWorker(self.queue, VIRUS_TOTAL_API_KEY)
-                worker.started.connect(self.workerStarted)
-                worker.finished.connect(self.workerFinished)
-                worker.error.connect(self.workerError)
+                worker = FileScanWorker(self.fileScanQueue, VIRUS_TOTAL_API_KEY)
+                worker.started.connect(partial(self.workerStarted, self.fileScanModel))
+                worker.finished.connect(partial(self.workerFinished, self.fileScanModel))
+                worker.error.connect(partial(self.workerError, self.fileScanModel))
                 task = asyncio.create_task(worker.run())
-                self.workerTasks.append(task)
+                self.fileScanWorkerTasks.append(task)
 
     def cancelFileScan(self):
-        files = [f for f in self.model.results
-                 if f.status == FileScanResult.STATUS_QUEUED]
-        for f in files:
-            self.model.updateResult(f.id, status=FileScanResult.STATUS_CANCELED)
+        for row in range(self.fileScanModel.rowCount()):
+            index = self.fileScanModel.index(row, 0)
+            item = index.internalPointer()
+            if item.status == FileScanResult.STATUS_QUEUED:
+                self.fileScanModel.updateItem(index, status=FileScanResult.STATUS_CANCELED)
 
-    def workerStarted(self, filepath):
-        self.model.updateResult(filepath, status=FileScanResult.STATUS_SCANNING, startedTime=time.time())
+    def startDirScan(self):
+        self.ui.btn_browseDir.setEnabled(False)
+        self.ui.btn_dirScan.setText('Stop')
+        self.ui.btn_dirScan.setIcon(QIcon(":/resources/images/icons/rectangle_white.svg"))
+        self.ui.btn_dirScan.clicked.disconnect()
+        self.ui.btn_dirScan.clicked.connect(self.stopDirScan)
+        for index in self.dirScanItemMap.values():
+            item = index.internalPointer()
+            if item.data().status in (FileScanResult.STATUS_PENDING, FileScanResult.STATUS_FAILED):
+                self.dirScanQueue.put_nowait(index)
+                self.dirScanModel.updateItem(index, status=FileScanResult.STATUS_QUEUED)
 
-    def workerFinished(self, filepath, scanResult: dict):
+        if len(self.dirScanWorkerTasks) == 0:
+            for i in range(NUM_SCAN_WORKERS):
+                worker = FileScanWorker(self.dirScanQueue, VIRUS_TOTAL_API_KEY)
+                worker.started.connect(partial(self.workerStarted, self.dirScanModel))
+                worker.finished.connect(partial(self.workerFinished, self.dirScanModel))
+                worker.error.connect(partial(self.workerError, self.dirScanModel))
+                task = asyncio.create_task(worker.run())
+                self.dirScanWorkerTasks.append(task)
+
+    def stopDirScan(self):
+        self.ui.btn_browseDir.setEnabled(True)
+        self.ui.btn_dirScan.setText('Start')
+        self.ui.btn_dirScan.setIcon(QIcon(":/resources/images/icons/play_white.svg"))
+        self.ui.btn_dirScan.clicked.disconnect()
+        self.ui.btn_dirScan.clicked.connect(self.startDirScan)
+        for index in self.dirScanItemMap.values():
+            if index.internalPointer().data().status == FileScanResult.STATUS_QUEUED:
+                self.dirScanModel.updateItem(index, status=FileScanResult.STATUS_CANCELED)
+
+    def checkDirScanFinished(self):
+        if all(index.internalPointer().data().status != FileScanResult.STATUS_QUEUED
+               for index in self.dirScanItemMap.values()):
+            self.stopDirScan()
+
+    def workerStarted(self, model, index: QModelIndex):
+        model.updateItem(index, status=FileScanResult.STATUS_SCANNING, startedTime=time.time())
+
+    def workerFinished(self, model, index: QModelIndex, scanResult: dict):
         analysis, threat, fileType = scanResult.get('analysis'), scanResult.get('threat'), scanResult.get('fileType')
         analysisStats = analysis.stats
         analysisResults = analysis.results.values()
         detection = [x for x in analysisResults if x['result'] is not None]
         status = FileScanResult.STATUS_COMPLETED if len(detection) == 0 else FileScanResult.STATUS_INFECTED
-        result = self.model.getResult(filepath)
+        result = index.internalPointer()
+        if type(result) == _FileSystemModelLiteItem:
+            result = result.data()
         file = result.file
         if threat:
             file.threat = threat
         if fileType:
             file.fileType = fileType
-        result = self.model.updateResult(filepath, file=file, status=status, analysis=analysis, finishedTime=time.time())
+        result = model.updateItem(index, file=file, status=status, analysis=analysis, finishedTime=time.time())
+        if type(result) == _FileSystemModelLiteItem:
+            result = result.data()
         try:
             self.db.beginTransaction()
             fileId = self.db.fetchOneCol(
@@ -178,17 +296,19 @@ class FileScan(Base):
                 VALUES (?, ?, ?, ?, ?)
                 """, [engineId, virusId, analysisResult.get('category'), 'file', scanResultId])
             self.db.commit()
+            if type(model) == DirScanModel:
+                self.checkDirScanFinished()
         except sqlite3.Error as e:
             print(f"DB error: {e}")
             self.db.rollback()
 
-    def workerError(self, filepath, error):
-        self.model.updateResult(filepath, status=FileScanResult.STATUS_FAILED, error=error)
+    def workerError(self, model, index: QModelIndex, error):
+        model.updateItem(index, status=FileScanResult.STATUS_FAILED, error=error)
 
 class FileScanWorker(QObject):
-    started = Signal(str)
-    finished = Signal(str, object)
-    error = Signal(str, object)
+    started = Signal(object)
+    finished = Signal(object, object)
+    error = Signal(object, object)
 
     def __init__(self, queue, virustotalApiKey, parent=None):
         super(FileScanWorker, self).__init__(parent)
@@ -198,10 +318,13 @@ class FileScanWorker(QObject):
     async def run(self):
         while True:
             try:
-                result: FileScanResult = await self.queue.get()
+                index: QModelIndex = await self.queue.get()
+                result: FileScanResult = index.internalPointer()
+                if type(result) == _FileSystemModelLiteItem:
+                    result = result.data()
                 filepath, status = result.id, result.status
                 if status == FileScanResult.STATUS_QUEUED:
-                    self.started.emit(filepath)
+                    self.started.emit(index)
                     with open(filepath, 'rb') as f:
                         sha1 = hashlib.sha1(f.read()).hexdigest()
                         analysis = None
@@ -239,10 +362,10 @@ class FileScanWorker(QObject):
                                     'extension': analysis.get('type_extension'),
                                     'tags': [FileTypeTag({'name': tag}) for tag in analysis.get('type_tags', [])]
                                 })
-                            self.finished.emit(filepath, scanResult)
+                            self.finished.emit(index, scanResult)
                             self.queue.task_done()
                 else:
                     self.queue.task_done()
             except Exception as e:
-                self.error.emit(filepath, e)
+                self.error.emit(index, e)
                 self.queue.task_done()
