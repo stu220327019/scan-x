@@ -32,31 +32,35 @@ class TopThreatModel(QAbstractTableModel):
         return str.join(', ', val) if type(val) == list else val
 
     def loadData(self, viewBy=None, search=None):
-        qb = QueryBuilder()
+        query = QueryBuilder()
+
+        subquery = QueryBuilder()\
+                   .SELECT('t.id', 't.name', ('detected', 'COUNT(*)'))\
+                   .FROM(('t', 'threat'), ('f', 'file'))\
+                   .WHERE('f.threat_id = t.id')\
+                   .GROUP_BY('t.id')\
+                   .ORDER_BY('detected DESC')\
+                   .LIMIT('100')
+
         if search:
             if search['category']:
-                qb.where('tc.threat_category_id', search['category']['id'])
-                qb.join('threats_categories tc', 'tc.threat_id', 't.id')
+                subquery.WHERE('tc.threat_category_id = ?')
+                query.add_param(search['category']['id'])
+                subquery.JOIN('threats_categories tc ON tc.threat_id = t.id')
             if search['threatName']:
-                qb.where('t.name', search['threatName'], qb.LIKE)
-        where, join = itemgetter('where', 'join')(qb.build())
+                subquery.WHERE('t.name LIKE ?')
+                query.add_param(f'%{search['threatName']}%')
 
-        query = f"""
-        SELECT t.*, JSON_GROUP_ARRAY(c.name) AS categories
-        FROM (
-            SELECT t.id, t.name, COUNT(*) AS detected
-            FROM threat t, file f {join}
-            WHERE f.threat_id = t.id {where}
-            GROUP BY t.id
-            ORDER BY detected DESC
-            LIMIT 100
-        ) t, threat_category c, threats_categories tc
-        WHERE tc.threat_id = t.id AND tc.threat_category_id = c.id
-        GROUP BY t.id
-        ORDER BY detected DESC
-        """
+        query\
+            .SELECT('t.*', ('categories', 'JSON_GROUP_ARRAY(c.name)'))\
+            .FROM('t', ('c', 'threat_category'), ('tc', 'threats_categories'))\
+            .WHERE('tc.threat_id = t.id')\
+            .WHERE('tc.threat_category_id = c.id')\
+            .GROUP_BY('t.id')\
+            .ORDER_BY('detected DESC')\
+            .WITH(('t', str(subquery)))
 
-        rows = self.db.fetchAll(query)
+        rows = self.db.fetchAll(str(query), query.params())
         self.beginResetModel()
         self.threats.clear()
         for row in rows:
