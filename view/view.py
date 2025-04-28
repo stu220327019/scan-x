@@ -60,7 +60,7 @@ class View(QMainWindow):
         self.ui.toggleLeftBox.clicked.connect(self.toggleLeftBox)
         self.ui.extraCloseColumnBtn.clicked.connect(self.toggleLeftBox)
         # self.ui.settingsTopBtn.clicked.connect(self.toggleRightBox)
-        self.ui.settingsTopBtn.clicked.connect(lambda: self.toggleRightBoxSignal.emit())
+        # self.ui.settingsTopBtn.clicked.connect(lambda: self.toggleRightBoxSignal.emit())
         self.ui.btn_extraRightBoxClose.clicked.connect(lambda: self.closeRightBoxSignal.emit())
         self.ui.extraRightBoxBackdrop.mousePressEvent = lambda x: self.closeRightBoxSignal.emit()
 
@@ -116,9 +116,9 @@ class View(QMainWindow):
             widthExtended = maxExtend
             # SELECT BTN
             self.ui.toggleLeftBox.setStyleSheet(style + color)
-            if widthRightBox != 0:
-                style = self.ui.settingsTopBtn.styleSheet()
-                self.ui.settingsTopBtn.setStyleSheet(style.replace(self.BTN_RIGHT_BOX_COLOR, ''))
+            # if widthRightBox != 0:
+            #     style = self.ui.settingsTopBtn.styleSheet()
+            #     self.ui.settingsTopBtn.setStyleSheet(style.replace(self.BTN_RIGHT_BOX_COLOR, ''))
         else:
             widthExtended = standard
             # RESET BTN
@@ -141,20 +141,20 @@ class View(QMainWindow):
         standard = 0
 
         # GET BTN STYLE
-        style = self.ui.settingsTopBtn.styleSheet()
+        # style = self.ui.settingsTopBtn.styleSheet()
 
         # SET MAX WIDTH
         if expanding:
             widthExtended = maxExtend
             # SELECT BTN
-            self.ui.settingsTopBtn.setStyleSheet(style + color)
+            # self.ui.settingsTopBtn.setStyleSheet(style + color)
             if widthLeftBox != 0:
                 style = self.ui.toggleLeftBox.styleSheet()
                 self.ui.toggleLeftBox.setStyleSheet(style.replace(self.BTN_LEFT_BOX_COLOR, ''))
         else:
             widthExtended = standard
             # RESET BTN
-            self.ui.settingsTopBtn.setStyleSheet(style.replace(color, ''))
+            # self.ui.settingsTopBtn.setStyleSheet(style.replace(color, ''))
 
         hide_right_box = not expanding
         self.start_box_animation(widthLeftBox, width, "right", hide_right_box)

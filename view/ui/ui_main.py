@@ -167,7 +167,7 @@ class Ui_MainWindow(object):
 "#extraIcon {\n"
 "	background-position: center;\n"
 "	background-repeat: no-repeat;\n"
-"	background-image: url(:/resources/images/icons/icon_settings_black.png);\n"
+"	background-image: url(:/resources/images/icons/info.png);\n"
 "}\n"
 "\n"
 "/* Label */\n"
@@ -189,8 +189,8 @@ class Ui_MainWindow(object):
 "	background-repeat: no-repeat;\n"
 "	border: none;\n"
 "	border-left: 18px solid transparent;\n"
-""
-                        "	background-color:transparent;\n"
+"	background"
+                        "-color:transparent;\n"
 "	text-align: left;\n"
 "	padding-left: 44px;\n"
 "	color: #2f93e1;\n"
@@ -226,8 +226,8 @@ class Ui_MainWindow(object):
 "/* Top Buttons */\n"
 "#rightButtons QPushButton { background-color: rgba(255, 255, 255, 0); border: none;  border-radius: 5px; }\n"
 "#rightButtons QPushButton:hover { background-color: #f2f6ff; border-style: solid; border-radius: 4px; }\n"
-"#rightButtons QPushButton:pressed { background-colo"
-                        "r: #2f93e1; border-style: solid; border-radius: 4px; }\n"
+"#rightButtons QPushButton:pressed { background-color: #2f93e1;"
+                        " border-style: solid; border-radius: 4px; }\n"
 "\n"
 "/* Theme Settings */\n"
 "#extraRightBoxBg {\n"
@@ -254,9 +254,9 @@ class Ui_MainWindow(object):
 "	text-align: left;\n"
 "	padding-left: 44px;\n"
 "	color: #333333;\n"
-""
-                        "}\n"
-"#contentSettings .QPushButton:hover {\n"
+"}\n"
+"#cont"
+                        "entSettings .QPushButton:hover {\n"
 "	background-color: #2f93e1;\n"
 "	color: #f2f6ff;\n"
 "}\n"
@@ -292,8 +292,8 @@ class Ui_MainWindow(object):
 "	border-radius: 10px;\n"
 "	background: #f5f7ff;\n"
 "}\n"
-""
-                        "QRadioButton::indicator:hover {\n"
+"QRadioBut"
+                        "ton::indicator:hover {\n"
 "	border: 3px solid rgb(119, 136, 187);\n"
 "}\n"
 "QRadioButton::indicator:checked {\n"
@@ -324,8 +324,8 @@ class Ui_MainWindow(object):
 "/* 	background-position: center; */\n"
 "/* 	background-repeat: no-reperat; */\n"
 "/* } */\n"
-"/* "
-                        "QComboBox QAbstractItemView { */\n"
+"/* QComboBox"
+                        " QAbstractItemView { */\n"
 "/* 	color: #505050; */\n"
 "/* 	background-color: #ffffff; */\n"
 "/* 	padding: 10px; */\n"
@@ -365,8 +365,8 @@ class Ui_MainWindow(object):
 "	background-color: #ffffff;\n"
 "}\n"
 "QSlider::handle:vertical {\n"
-"	b"
-                        "ackground-color: rgb(189, 147, 249);\n"
+"	background"
+                        "-color: rgb(189, 147, 249);\n"
 "	border: none;\n"
 "	height: 10px;\n"
 "	width: 10px;\n"
@@ -401,9 +401,9 @@ class Ui_MainWindow(object):
 "/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
 "Button */\n"
 "/* #pagesContainer QPushButton { */\n"
-"/* 	border: 2px solid #2f93e"
-                        "1; */\n"
-"/* 	border-radius: 5px; */\n"
+"/* 	border: 2px solid #2f93e1; */\n"
+""
+                        "/* 	border-radius: 5px; */\n"
 "/* 	background-color: #2f93e1; */\n"
 "/* 	color: #f8f8f2; */\n"
 "/* } */\n"
@@ -445,8 +445,8 @@ class Ui_MainWindow(object):
 "/* 	image: url(:/resources/images/icons/v.png); */\n"
 "/* } */\n"
 "\n"
-""
-                        "/* QSplitter::handle:vertical { */\n"
+"/* QSp"
+                        "litter::handle:vertical { */\n"
 "/*     height: 2px; */\n"
 "/* 	image: url(:/resources/images/icons/h.png); */\n"
 "/* } */\n"
@@ -481,8 +481,8 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "#pagesContainer QPushButton[class~=\"nav-btn\"] { background-color: rgba(255, 255, 255, 0); border: none;  border-radius: 5px; padding: 5px; }\n"
-"#pagesContainer QPushButton[class~=\"nav-btn\"]:hover { background-color: #f2f6ff; border-style: solid;"
-                        " border-radius: 4px; }\n"
+"#pagesContainer QPushButton[class~=\"nav-btn\"]:hover { background-color: #f2f6ff; border-style: solid; borde"
+                        "r-radius: 4px; }\n"
 "#pagesContainer QPushButton[class~=\"nav-btn\"]:pressed { background-color: #2f93e1; border-style: solid; border-radius: 4px; }\n"
 "\n"
 "\n"
@@ -522,9 +522,9 @@ class Ui_MainWindow(object):
 "{\n"
 "    background-color: rgb(153, 193, 241);\n"
 "    color: #4d4d4d;\n"
+"}\n"
 ""
-                        "}\n"
-"\n"
+                        "\n"
 "#page_fileScan QTabBar::close-button\n"
 "{\n"
 "    background-position: center;\n"
@@ -641,7 +641,7 @@ class Ui_MainWindow(object):
         self.nav_btn_home.setFont(font)
         self.nav_btn_home.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.nav_btn_home.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        self.nav_btn_home.setStyleSheet(u"background-image: url(:/heroicons/Home.svg);")
+        self.nav_btn_home.setStyleSheet(u"background-image: url(:/heroicons/Home.png);")
         self.nav_btn_home.setCheckable(False)
         self.nav_btn_home.setChecked(False)
 
@@ -655,7 +655,7 @@ class Ui_MainWindow(object):
         self.nav_btn_fileScan.setFont(font)
         self.nav_btn_fileScan.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.nav_btn_fileScan.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        self.nav_btn_fileScan.setStyleSheet(u"background-image: url(:/heroicons/DocumentMagnifyingGlass.svg);")
+        self.nav_btn_fileScan.setStyleSheet(u"background-image: url(:/heroicons/DocumentMagnifyingGlass.png);")
 
         self.verticalLayout_8.addWidget(self.nav_btn_fileScan)
 
@@ -663,7 +663,7 @@ class Ui_MainWindow(object):
         self.nav_btn_urlScan.setObjectName(u"nav_btn_urlScan")
         self.nav_btn_urlScan.setMinimumSize(QSize(0, 45))
         self.nav_btn_urlScan.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        self.nav_btn_urlScan.setStyleSheet(u"background-image: url(:/heroicons/GlobeAlt.svg);")
+        self.nav_btn_urlScan.setStyleSheet(u"background-image: url(:/heroicons/GlobeAlt.png);")
 
         self.verticalLayout_8.addWidget(self.nav_btn_urlScan)
 
@@ -686,7 +686,7 @@ class Ui_MainWindow(object):
         self.toggleLeftBox.setFont(font)
         self.toggleLeftBox.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.toggleLeftBox.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        self.toggleLeftBox.setStyleSheet(u"background-image: url(:/resources/images/icons/icon_settings_black.png);")
+        self.toggleLeftBox.setStyleSheet(u"background-image: url(:/resources/images/icons/info.svg);")
 
         self.verticalLayout_9.addWidget(self.toggleLeftBox)
 
@@ -726,6 +726,7 @@ class Ui_MainWindow(object):
         self.extraTopLayout.setContentsMargins(10, -1, 10, -1)
         self.extraIcon = QFrame(self.extraTopBg)
         self.extraIcon.setObjectName(u"extraIcon")
+        self.extraIcon.setEnabled(True)
         self.extraIcon.setMinimumSize(QSize(20, 0))
         self.extraIcon.setMaximumSize(QSize(20, 20))
         self.extraIcon.setFrameShape(QFrame.Shape.NoFrame)
@@ -773,18 +774,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_11.setSpacing(0)
         self.verticalLayout_11.setObjectName(u"verticalLayout_11")
         self.verticalLayout_11.setContentsMargins(0, 0, 0, 0)
-        self.btn_more = QPushButton(self.extraTopMenu)
-        self.btn_more.setObjectName(u"btn_more")
-        sizePolicy.setHeightForWidth(self.btn_more.sizePolicy().hasHeightForWidth())
-        self.btn_more.setSizePolicy(sizePolicy)
-        self.btn_more.setMinimumSize(QSize(0, 45))
-        self.btn_more.setFont(font)
-        self.btn_more.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        self.btn_more.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        self.btn_more.setStyleSheet(u"background-image: url(:/resources/images/icons/cil-save-black.png);")
-
-        self.verticalLayout_11.addWidget(self.btn_more)
-
 
         self.verticalLayout_12.addWidget(self.extraTopMenu, 0, Qt.AlignmentFlag.AlignTop)
 
@@ -890,26 +879,14 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.setSpacing(5)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.settingsTopBtn = QPushButton(self.rightButtons)
-        self.settingsTopBtn.setObjectName(u"settingsTopBtn")
-        self.settingsTopBtn.setMinimumSize(QSize(28, 28))
-        self.settingsTopBtn.setMaximumSize(QSize(28, 28))
-        self.settingsTopBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        icon1 = QIcon()
-        icon1.addFile(u":/resources/images/icons/icon_settings_black.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.settingsTopBtn.setIcon(icon1)
-        self.settingsTopBtn.setIconSize(QSize(20, 20))
-
-        self.horizontalLayout_2.addWidget(self.settingsTopBtn)
-
         self.minimizeAppBtn = QPushButton(self.rightButtons)
         self.minimizeAppBtn.setObjectName(u"minimizeAppBtn")
         self.minimizeAppBtn.setMinimumSize(QSize(28, 28))
         self.minimizeAppBtn.setMaximumSize(QSize(28, 28))
         self.minimizeAppBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        icon2 = QIcon()
-        icon2.addFile(u":/resources/images/icons/icon_minimize_black.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.minimizeAppBtn.setIcon(icon2)
+        icon1 = QIcon()
+        icon1.addFile(u":/resources/images/icons/icon_minimize_black.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.minimizeAppBtn.setIcon(icon1)
         self.minimizeAppBtn.setIconSize(QSize(20, 20))
 
         self.horizontalLayout_2.addWidget(self.minimizeAppBtn)
@@ -926,9 +903,9 @@ class Ui_MainWindow(object):
         font2.setStyleStrategy(QFont.PreferDefault)
         self.maximizeRestoreAppBtn.setFont(font2)
         self.maximizeRestoreAppBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        icon3 = QIcon()
-        icon3.addFile(u":/resources/images/icons/icon_maximize_black.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.maximizeRestoreAppBtn.setIcon(icon3)
+        icon2 = QIcon()
+        icon2.addFile(u":/resources/images/icons/icon_maximize_black.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.maximizeRestoreAppBtn.setIcon(icon2)
         self.maximizeRestoreAppBtn.setIconSize(QSize(20, 20))
 
         self.horizontalLayout_2.addWidget(self.maximizeRestoreAppBtn)
@@ -938,9 +915,9 @@ class Ui_MainWindow(object):
         self.closeAppBtn.setMinimumSize(QSize(28, 28))
         self.closeAppBtn.setMaximumSize(QSize(28, 28))
         self.closeAppBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        icon4 = QIcon()
-        icon4.addFile(u":/resources/images/icons/icon_close_black.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.closeAppBtn.setIcon(icon4)
+        icon3 = QIcon()
+        icon3.addFile(u":/resources/images/icons/icon_close_black.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.closeAppBtn.setIcon(icon3)
         self.closeAppBtn.setIconSize(QSize(20, 20))
 
         self.horizontalLayout_2.addWidget(self.closeAppBtn)
@@ -1016,7 +993,7 @@ class Ui_MainWindow(object):
         self.btn_extraRightBoxClose.setMinimumSize(QSize(16, 16))
         self.btn_extraRightBoxClose.setMaximumSize(QSize(16, 16))
         self.btn_extraRightBoxClose.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        self.btn_extraRightBoxClose.setIcon(icon4)
+        self.btn_extraRightBoxClose.setIcon(icon3)
         self.btn_extraRightBoxClose.setIconSize(QSize(20, 20))
 
         self.horizontalLayout_18.addWidget(self.btn_extraRightBoxClose)
@@ -1332,9 +1309,9 @@ class Ui_MainWindow(object):
         self.btn_fileSelect.setObjectName(u"btn_fileSelect")
         sizePolicy4.setHeightForWidth(self.btn_fileSelect.sizePolicy().hasHeightForWidth())
         self.btn_fileSelect.setSizePolicy(sizePolicy4)
-        icon5 = QIcon()
-        icon5.addFile(u":/resources/images/icons/file_plus_white.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.btn_fileSelect.setIcon(icon5)
+        icon4 = QIcon()
+        icon4.addFile(u":/resources/images/icons/file_plus_white.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_fileSelect.setIcon(icon4)
 
         self.horizontalLayout_15.addWidget(self.btn_fileSelect)
 
@@ -1363,9 +1340,9 @@ class Ui_MainWindow(object):
         sizePolicy4.setHeightForWidth(self.btn_startFileScan.sizePolicy().hasHeightForWidth())
         self.btn_startFileScan.setSizePolicy(sizePolicy4)
         self.btn_startFileScan.setMinimumSize(QSize(100, 0))
-        icon6 = QIcon()
-        icon6.addFile(u":/resources/images/icons/play_white.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.btn_startFileScan.setIcon(icon6)
+        icon5 = QIcon()
+        icon5.addFile(u":/resources/images/icons/play_white.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_startFileScan.setIcon(icon5)
 
         self.horizontalLayout_22.addWidget(self.btn_startFileScan)
 
@@ -1374,9 +1351,9 @@ class Ui_MainWindow(object):
         sizePolicy4.setHeightForWidth(self.btn_stopFileScan.sizePolicy().hasHeightForWidth())
         self.btn_stopFileScan.setSizePolicy(sizePolicy4)
         self.btn_stopFileScan.setMinimumSize(QSize(100, 0))
-        icon7 = QIcon()
-        icon7.addFile(u":/resources/images/icons/rectangle_white.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.btn_stopFileScan.setIcon(icon7)
+        icon6 = QIcon()
+        icon6.addFile(u":/resources/images/icons/rectangle_white.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_stopFileScan.setIcon(icon6)
 
         self.horizontalLayout_22.addWidget(self.btn_stopFileScan)
 
@@ -1416,7 +1393,7 @@ class Ui_MainWindow(object):
 
         self.btn_dirScan = QPushButton(self.groupBox_10)
         self.btn_dirScan.setObjectName(u"btn_dirScan")
-        self.btn_dirScan.setIcon(icon6)
+        self.btn_dirScan.setIcon(icon5)
 
         self.horizontalLayout_17.addWidget(self.btn_dirScan)
 
@@ -1557,9 +1534,9 @@ class Ui_MainWindow(object):
         self.btn_back = QPushButton(self.horizontalWidget_2)
         self.btn_back.setObjectName(u"btn_back")
         self.btn_back.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        icon8 = QIcon()
-        icon8.addFile(u":/resources/images/icons/arrow-left.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.btn_back.setIcon(icon8)
+        icon7 = QIcon()
+        icon7.addFile(u":/resources/images/icons/arrow-left.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_back.setIcon(icon7)
         self.btn_back.setIconSize(QSize(20, 20))
         self.btn_back.setProperty(u"class", u"nav-btn")
 
@@ -1627,7 +1604,7 @@ class Ui_MainWindow(object):
         self.btn_back_2 = QPushButton(self.horizontalWidget_3)
         self.btn_back_2.setObjectName(u"btn_back_2")
         self.btn_back_2.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        self.btn_back_2.setIcon(icon8)
+        self.btn_back_2.setIcon(icon7)
         self.btn_back_2.setIconSize(QSize(20, 20))
         self.btn_back_2.setProperty(u"class", u"nav-btn")
 
@@ -1746,7 +1723,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         self.content.setCurrentIndex(1)
-        self.stackedWidget.setCurrentIndex(4)
+        self.stackedWidget.setCurrentIndex(0)
         self.tabWidget.setCurrentIndex(0)
         self.stackedWidget_topThreats.setCurrentIndex(0)
         self.tabWidget_2.setCurrentIndex(0)
@@ -1762,13 +1739,12 @@ class Ui_MainWindow(object):
         self.nav_btn_home.setText(QCoreApplication.translate("MainWindow", u"Home", None))
         self.nav_btn_fileScan.setText(QCoreApplication.translate("MainWindow", u"File Scan", None))
         self.nav_btn_urlScan.setText(QCoreApplication.translate("MainWindow", u"URL Scan", None))
-        self.toggleLeftBox.setText(QCoreApplication.translate("MainWindow", u"Left Box", None))
-        self.extraLabel.setText(QCoreApplication.translate("MainWindow", u"Settings", None))
+        self.toggleLeftBox.setText(QCoreApplication.translate("MainWindow", u"About", None))
+        self.extraLabel.setText(QCoreApplication.translate("MainWindow", u"About", None))
 #if QT_CONFIG(tooltip)
         self.extraCloseColumnBtn.setToolTip(QCoreApplication.translate("MainWindow", u"Close left box", None))
 #endif // QT_CONFIG(tooltip)
         self.extraCloseColumnBtn.setText("")
-        self.btn_more.setText(QCoreApplication.translate("MainWindow", u"More", None))
         self.textEdit.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -1776,21 +1752,11 @@ class Ui_MainWindow(object):
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-weight:600; color:#0055ff;\">GUI With PySide</span></p>\n"
-"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#454544;\">An interface created using Python and PySide (support for PyQt), and with colors based on the Dracula theme created "
-                        "by Zeno Rocha.</span></p>\n"
-"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#454544;\">MIT License</span></p>\n"
-"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-weight:600; color:#0055ff;\">Convert UI</span></p>\n"
-"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; color:#483d37;\">pyside6-uic main.ui -o ui_main.py</span></p>\n"
-"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-weight:600; color:#0055ff;\">Convert QRC</span></p>\n"
-"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0"
-                        "px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; color:#483d37;\">pyside6-rcc resources.qrc -o resources_rc.py</span></p></body></html>", None))
+"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-weight:600; color:#0055ff;\">Scan-X</span></p>\n"
+"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#454544;\">Scan-X is a malware scanning and analysis tool created by PANG Hoi Him (220327019) for the final-year project of IT524122 Hig"
+                        "her Diploma in Cybersecurity.</span></p></body></html>", None))
         self.toggleButton.setText("")
         self.titleRightInfo.setText(QCoreApplication.translate("MainWindow", u"Scan-X // Malware Scanning and Analysis Tool", None))
-#if QT_CONFIG(tooltip)
-        self.settingsTopBtn.setToolTip(QCoreApplication.translate("MainWindow", u"Settings", None))
-#endif // QT_CONFIG(tooltip)
-        self.settingsTopBtn.setText("")
 #if QT_CONFIG(tooltip)
         self.minimizeAppBtn.setToolTip(QCoreApplication.translate("MainWindow", u"Minimize", None))
 #endif // QT_CONFIG(tooltip)

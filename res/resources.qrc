@@ -1,6 +1,18 @@
 <RCC>
   <qresource prefix="resources">
+    <file>images/icons/info.svg</file>
+    <file>images/icons/info.png</file>
     <file>images/icons/arrow-left.svg</file>
+    <file>images/icons/rectangle_white.png</file>
+    <file>images/icons/play_white.png</file>
+    <file>images/icons/magnifying-glass.png</file>
+    <file>images/icons/info-circle.png</file>
+    <file>images/icons/folder-add_white.png</file>
+    <file>images/icons/file_plus_white.png</file>
+    <file>images/icons/exclaimation-circle.png</file>
+    <file>images/icons/check-circle.png</file>
+    <file>images/icons/arrow-left.png</file>
+    <file>images/icons/alert-triangle.png</file>
     <file>images/icons/alert-triangle.svg</file>
     <file>images/icons/magnifying-glass.svg</file>
     <file>images/icons/info-circle.svg</file>
@@ -28,6 +40,9 @@
     <file>images/media/Gino_vertical.png</file>
   </qresource>
   <qresource>
+    <file>heroicons/Home.png</file>
+    <file>heroicons/GlobeAlt.png</file>
+    <file>heroicons/DocumentMagnifyingGlass.png</file>
     <file>heroicons/CheckCircle.svg</file>
     <file>heroicons/GlobeAlt.svg</file>
     <file>heroicons/FolderOpen.svg</file>

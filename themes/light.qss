@@ -120,7 +120,7 @@ Extra Tab */
 #extraIcon {
 	background-position: center;
 	background-repeat: no-repeat;
-	background-image: url(:/resources/images/icons/icon_settings_black.png);
+	background-image: url(:/resources/images/icons/info.png);
 }
 
 /* Label */
