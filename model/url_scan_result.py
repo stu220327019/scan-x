@@ -3,15 +3,14 @@ from PySide6.QtGui import QColor, QIcon
 import json
 from datetime import datetime
 
-from core import DB
+from core import DB, QueryBuilder
 from lib.entity import UrlScanResult, URL, UrlHttpResponse, Analysis, Color
 
 class UrlScanResultModel(QAbstractTableModel):
-    results: list[UrlScanResult] = []
-
     def __init__(self, db: DB, parent=None):
         super().__init__(parent)
         self.db = db
+        self.results: list[UrlScanResult] = []
 
     def rowCount(self, parent=QModelIndex()):
         return len(self.results) if not parent.isValid() else 0
@@ -69,14 +68,17 @@ class UrlScanResultModel(QAbstractTableModel):
             self.endRemoveRows()
         self.db.exec('DELETE FROM url_scan_result WHERE id = ?', [id], True)
 
-    def loadData(self):
-        rows = self.db.fetchAll("""
-        SELECT u.url, resp.*, r.id, r.clean, r.analysis_stats, r.analysis_results, r.started_at, r.finished_at, r.created_at
-        FROM url_scan_result r, url u
-        LEFT JOIN url_http_response resp ON resp.id = r.url_http_response_id
-        WHERE u.id = r.url_id
-        ORDER BY r.created_at DESC LIMIT 100
-        """)
+    def loadData(self, limit=None):
+        query = QueryBuilder()\
+            .SELECT('u.url', 'resp.*', 'r.id', 'r.clean', 'r.analysis_stats',
+                    'r.analysis_results', 'r.started_at', 'r.finished_at', 'r.created_at')\
+            .FROM(('r', 'url_scan_result'), ('u', 'url'))\
+            .WHERE('u.id = r.url_id')\
+            .LEFT_JOIN('url_http_response resp ON resp.id = r.url_http_response_id')\
+            .ORDER_BY('r.created_at DESC')
+        if limit:
+            query.LIMIT(limit)
+        rows = self.db.fetchAll(str(query))
         self.beginResetModel()
         self.results.clear()
         for row in rows:

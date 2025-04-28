@@ -106,14 +106,16 @@ class Home(Base):
         for (filterName, buttonGroup) in [('scanResultType', self.ui.buttonGroup_homeFilterBy),
                                           ('threatsViewBy', self.ui.buttonGroup_homeViewBy)]:
             buttonGroup.buttonToggled.connect(buttonGroupToggled(filterName))
+        self.ui.label_statsFilesScanned.clicked.connect(lambda: self.router.routeTo(Route.ROUTE_FILES_SCANNED))
         self.ui.label_statsThreatsDetected.clicked.connect(lambda: self.router.routeTo(Route.ROUTE_THREATS))
+        self.ui.tbl_topThreats.doubleClicked.connect(self.topThreatsItemClick)
         self.ui.tbl_topThreatsCategories.doubleClicked.connect(self.topThreatsCategoriesItemClick)
         self.ui.tbl_latestFileScanResults.doubleClicked.connect(self.fileScanResultsItemClick)
         self.ui.tbl_latestUrlScanResults.doubleClicked.connect(self.urlScanResultsItemClick)
 
     def loadData(self):
-        self.fileScanResultModel.loadData()
-        self.urlScanResultModel.loadData()
+        self.fileScanResultModel.loadData(limit=100)
+        self.urlScanResultModel.loadData(limit=100)
         self.topThreatDetectionModel.loadData(self.filter['scanResultType'])
         self.topThreatModel.loadData()
         self.topThreatCategoryModel.loadData()
@@ -150,6 +152,11 @@ class Home(Base):
         row = index.row()
         category = self.topThreatCategoryModel.threatCategories[row]
         self.router.routeTo(Route.ROUTE_THREATS, {'category': category})
+
+    def topThreatsItemClick(self, index: QModelIndex):
+        row = index.row()
+        threat = self.topThreatModel.threats[row]
+        self.router.routeTo(Route.ROUTE_FILES_SCANNED, {'search': threat['name']})
 
     def updateSummary(self):
         filesScanned = self.db.fetchOneCol('SELECT COUNT(id) FROM file_scan_result')

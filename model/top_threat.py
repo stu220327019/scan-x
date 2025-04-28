@@ -6,11 +6,10 @@ from operator import itemgetter
 from core import DB, QueryBuilder
 
 class TopThreatModel(QAbstractTableModel):
-    threats = []
-
     def __init__(self, db: DB, parent=None):
         super().__init__(parent)
         self.db = db
+        self.threats = []
 
     def rowCount(self, parent=QModelIndex()):
         return len(self.threats) if not parent.isValid() else 0

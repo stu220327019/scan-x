@@ -118,7 +118,7 @@ class QueryBuilder:
         return self._params
 
     def add_params(self, params):
-        self._params + params
+        self._params += params
 
     def add_param(self, param):
         self._params.append(param)
@@ -195,6 +195,8 @@ class _Thing(NamedTuple):
     def from_arg(cls, arg, **kwargs):
         if isinstance(arg, str):
             alias, value = '', arg
+        elif isinstance(arg, int):
+            alias, value = '', str(arg)
         elif len(arg) == 2:
             alias, value = arg
         else:

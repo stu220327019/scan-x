@@ -3,15 +3,15 @@ from PySide6.QtGui import QColor, QIcon
 import json
 from datetime import datetime
 
-from core import DB
+from core import DB, QueryBuilder
 from lib.entity import FileScanResult, File, Analysis, Color, Threat, FileType
 
 class FileScanResultModel(QAbstractTableModel):
-    results: list[FileScanResult] = []
-
-    def __init__(self, db: DB, parent=None):
+    def __init__(self, db: DB, parent=None, show_extra_cols=False):
         super().__init__(parent)
         self.db = db
+        self.results: list[FileScanResult] = []
+        self.show_extra_cols = show_extra_cols
 
     def rowCount(self, parent=QModelIndex()):
         return len(self.results) if not parent.isValid() else 0
@@ -48,7 +48,7 @@ class FileScanResultModel(QAbstractTableModel):
         elif role == Qt.DecorationRole:
             if col == 1:
                 return QIcon(':/resources/images/icons/check-circle.svg' \
-                             if result.get('clean') == True else \
+                             if result.clean == True else \
                              ':/resources/images/icons/exclaimation-circle.svg')
             else:
                 return None
@@ -88,12 +88,27 @@ class FileScanResultModel(QAbstractTableModel):
         self.db.exec('DELETE FROM file_scan_result WHERE id = ?', [id], True)
 
 
-    def loadData(self):
-        rows = self.db.fetchAll("""
-        SELECT f.*, f.id AS file_id, r.id, r.clean, r.analysis_stats, r.analysis_results, r.started_at, r.finished_at, r.created_at FROM file_scan_result r, file f
-        WHERE f.id = r.file_id
-        ORDER BY r.created_at DESC LIMIT 100
-        """)
+    def loadData(self, search=None, limit=None):
+        query = QueryBuilder()\
+            .SELECT('f.*', ('file_id', 'f.id'), 'r.id', 'r.clean', 'r.analysis_stats',
+                    'r.analysis_results', 'r.started_at', 'r.finished_at', 'r.created_at')\
+            .FROM(('r', 'file_scan_result'), ('f', 'file'))\
+            .WHERE('f.id = r.file_id')\
+            .ORDER_BY('r.created_at DESC')
+        if self.show_extra_cols:
+            query.SELECT(('threat', 't.name'), ('file_type', 'ft.description'))\
+                 .LEFT_JOIN('threat t ON t.id = f.threat_id')\
+                 .LEFT_JOIN('file_type ft on ft.id = f.file_type_id')
+        if search:
+            if 'threat' in search:
+                query.WHERE('t.id = ?')
+                query.add_param(search['threat'])
+            if 'file' in search:
+                query.WHERE('f.id = ?')
+                query.add_param(search['file'])
+        if limit:
+            query.LIMIT(limit)
+        rows = self.db.fetchAll(str(query), query.params())
         self.beginResetModel()
         self.results.clear()
         for row in rows:
@@ -107,7 +122,13 @@ class FileScanResultModel(QAbstractTableModel):
                     'md5': row['md5'],
                     'size': row['size'],
                     'type': row['type'],
-                    'id': row['file_id']
+                    'id': row['file_id'],
+                    'threat': Threat({
+                        'name': row['threat'] if 'threat' in row else None
+                    }),
+                    'fileType': FileType({
+                        'description': row['file_type'] if 'file_type' in row else None
+                    })
                 }),
                 'analysis': Analysis({
                     'stats': json.loads(row['analysis_stats']),

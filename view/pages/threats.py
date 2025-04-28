@@ -1,6 +1,7 @@
 from PySide6.QtGui import QDesktopServices
+from PySide6.QtCore import QModelIndex
 
-from model import TopThreatModel, TopThreatCategoryModel
+from model import TopThreatModel, TopThreatCategoryModel, FileModel
 from view.ui.ui_main import Ui_MainWindow
 from core import DB, Router, Route
 from .base import Base
@@ -19,6 +20,7 @@ class Threats(Base):
         self.router: Router = ctx.get('router')
         self.threatModel = TopThreatModel(self.db)
         self.threatCategoryModel = TopThreatCategoryModel(self.db)
+        self.fileModel = FileModel(self.db)
         super().__init__(*args, **kwargs)
 
     def uiDefinitions(self):
@@ -28,6 +30,8 @@ class Threats(Base):
             ('Google Lookup', lambda res: QDesktopServices.openUrl('https://www.google.com/search?&q={}'.format(res['name'])))
         ]
         createContextMenu(self.ui.tbl_threats, self.threatModel, 'threats', contextMenuActions)
+        self.ui.tbl_threats.doubleClicked.connect(self.threatsItemClick)
+        self.ui.tbl_threatFiles.setModel(self.fileModel)
         # self.ui.comboBox_threatCategoryFilter.setModel(self.threatCategoryModel)
 
     def connectSlotsAndSignals(self):
@@ -37,7 +41,7 @@ class Threats(Base):
             lambda idx: self.setFilter(category=self.threatCategoryModel.threatCategories[idx-1] if idx > 0 else -1).loadData(loadCategories=False)
             if not self._filterReset else None
         )
-        self.ui.btn_back.clicked.connect(lambda: self.router.routeTo(Route.ROUTE_HOME))
+        self.ui.btn_back.clicked.connect(lambda: self.router.back())
         self.ui.lineEdit_threatNameSearch.textChanged.connect(
             lambda x: self.setFilter(threatName=x).loadData(loadCategories=False)
             if not self._filterReset else None
@@ -47,6 +51,7 @@ class Threats(Base):
         if route.route == Route.ROUTE_THREATS:
             self._filterReset = True
             self.ui.lineEdit_threatNameSearch.clear()
+            self.ui.tbl_threatFiles.setVisible(False)
             searchFilter = route.params or {}
             self.setFilter(reset=True, **searchFilter)
             self.loadData(loadThreats=not searchFilter)
@@ -71,3 +76,9 @@ class Threats(Base):
         if reset or threatName is not None:
             self.filter['threatName'] = threatName
         return self
+
+    def threatsItemClick(self, index: QModelIndex):
+        row = index.row()
+        threat = self.threatModel.threats[row]
+        self.fileModel.loadData(search={'threat': threat['id']})
+        self.ui.tbl_threatFiles.setVisible(True)

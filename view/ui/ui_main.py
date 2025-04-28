@@ -1070,8 +1070,9 @@ class Ui_MainWindow(object):
 
         self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label)
 
-        self.label_statsFilesScanned = QLabel(self.groupBox_7)
+        self.label_statsFilesScanned = LinkLabel(self.groupBox_7)
         self.label_statsFilesScanned.setObjectName(u"label_statsFilesScanned")
+        self.label_statsFilesScanned.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.label_statsFilesScanned.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
         self.label_statsFilesScanned.setProperty(u"class", u"link")
 
@@ -1082,7 +1083,7 @@ class Ui_MainWindow(object):
 
         self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_4)
 
-        self.label_statsUrlsScanned = QLabel(self.groupBox_7)
+        self.label_statsUrlsScanned = LinkLabel(self.groupBox_7)
         self.label_statsUrlsScanned.setObjectName(u"label_statsUrlsScanned")
         self.label_statsUrlsScanned.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
         self.label_statsUrlsScanned.setProperty(u"class", u"link")
@@ -1107,7 +1108,7 @@ class Ui_MainWindow(object):
 
         self.formLayout.setWidget(3, QFormLayout.LabelRole, self.label_5)
 
-        self.label_statsAnalysisDetections = QLabel(self.groupBox_7)
+        self.label_statsAnalysisDetections = LinkLabel(self.groupBox_7)
         self.label_statsAnalysisDetections.setObjectName(u"label_statsAnalysisDetections")
         self.label_statsAnalysisDetections.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
         self.label_statsAnalysisDetections.setProperty(u"class", u"link")
@@ -1603,10 +1604,84 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_20.addWidget(self.tbl_threats)
 
+        self.tbl_threatFiles = QTreeView(self.page_threats)
+        self.tbl_threatFiles.setObjectName(u"tbl_threatFiles")
+        self.tbl_threatFiles.setAlternatingRowColors(True)
+
+        self.verticalLayout_20.addWidget(self.tbl_threatFiles)
+
 
         self.verticalLayout_22.addLayout(self.verticalLayout_20)
 
         self.stackedWidget.addWidget(self.page_threats)
+        self.page_filesScanned = QWidget()
+        self.page_filesScanned.setObjectName(u"page_filesScanned")
+        self.verticalLayout_33 = QVBoxLayout(self.page_filesScanned)
+        self.verticalLayout_33.setObjectName(u"verticalLayout_33")
+        self.horizontalWidget_3 = QWidget(self.page_filesScanned)
+        self.horizontalWidget_3.setObjectName(u"horizontalWidget_3")
+        self.horizontalWidget_3.setProperty(u"class", u"page-header-container")
+        self.horizontalLayout_26 = QHBoxLayout(self.horizontalWidget_3)
+        self.horizontalLayout_26.setObjectName(u"horizontalLayout_26")
+        self.horizontalLayout_26.setContentsMargins(0, 0, 0, 9)
+        self.btn_back_2 = QPushButton(self.horizontalWidget_3)
+        self.btn_back_2.setObjectName(u"btn_back_2")
+        self.btn_back_2.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.btn_back_2.setIcon(icon8)
+        self.btn_back_2.setIconSize(QSize(20, 20))
+        self.btn_back_2.setProperty(u"class", u"nav-btn")
+
+        self.horizontalLayout_26.addWidget(self.btn_back_2)
+
+        self.label_12 = QLabel(self.horizontalWidget_3)
+        self.label_12.setObjectName(u"label_12")
+        self.label_12.setProperty(u"class", u"page-header")
+
+        self.horizontalLayout_26.addWidget(self.label_12)
+
+        self.horizontalLayout_26.setStretch(1, 1)
+
+        self.verticalLayout_33.addWidget(self.horizontalWidget_3)
+
+        self.groupBox_11 = QGroupBox(self.page_filesScanned)
+        self.groupBox_11.setObjectName(u"groupBox_11")
+        self.horizontalLayout_25 = QHBoxLayout(self.groupBox_11)
+        self.horizontalLayout_25.setObjectName(u"horizontalLayout_25")
+        self.comboBox_fileTypeFilter = QComboBox(self.groupBox_11)
+        self.comboBox_fileTypeFilter.setObjectName(u"comboBox_fileTypeFilter")
+
+        self.horizontalLayout_25.addWidget(self.comboBox_fileTypeFilter)
+
+        self.lineEdit_fileNameSearch = QLineEdit(self.groupBox_11)
+        self.lineEdit_fileNameSearch.setObjectName(u"lineEdit_fileNameSearch")
+
+        self.horizontalLayout_25.addWidget(self.lineEdit_fileNameSearch)
+
+        self.horizontalSpacer_4 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_25.addItem(self.horizontalSpacer_4)
+
+
+        self.verticalLayout_33.addWidget(self.groupBox_11)
+
+        self.verticalLayout_32 = QVBoxLayout()
+        self.verticalLayout_32.setObjectName(u"verticalLayout_32")
+        self.tbl_filesScanned = QTreeView(self.page_filesScanned)
+        self.tbl_filesScanned.setObjectName(u"tbl_filesScanned")
+        self.tbl_filesScanned.setAlternatingRowColors(True)
+
+        self.verticalLayout_32.addWidget(self.tbl_filesScanned)
+
+        self.tbl_fileScanResults = QTreeView(self.page_filesScanned)
+        self.tbl_fileScanResults.setObjectName(u"tbl_fileScanResults")
+        self.tbl_fileScanResults.setAlternatingRowColors(True)
+
+        self.verticalLayout_32.addWidget(self.tbl_fileScanResults)
+
+
+        self.verticalLayout_33.addLayout(self.verticalLayout_32)
+
+        self.stackedWidget.addWidget(self.page_filesScanned)
 
         self.verticalLayout_15.addWidget(self.stackedWidget)
 
@@ -1671,7 +1746,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         self.content.setCurrentIndex(1)
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(4)
         self.tabWidget.setCurrentIndex(0)
         self.stackedWidget_topThreats.setCurrentIndex(0)
         self.tabWidget_2.setCurrentIndex(0)
@@ -1682,8 +1757,8 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.titleLeftApp.setText(QCoreApplication.translate("MainWindow", u"Genius Software", None))
-        self.titleLeftDescription.setText(QCoreApplication.translate("MainWindow", u"Invoice App", None))
+        self.titleLeftApp.setText(QCoreApplication.translate("MainWindow", u"Scan-X", None))
+        self.titleLeftDescription.setText(QCoreApplication.translate("MainWindow", u"Securing Your Digital World", None))
         self.nav_btn_home.setText(QCoreApplication.translate("MainWindow", u"Home", None))
         self.nav_btn_fileScan.setText(QCoreApplication.translate("MainWindow", u"File Scan", None))
         self.nav_btn_urlScan.setText(QCoreApplication.translate("MainWindow", u"URL Scan", None))
@@ -1790,6 +1865,14 @@ class Ui_MainWindow(object):
         self.groupBox_3.setTitle(QCoreApplication.translate("MainWindow", u"Filter", None))
         self.comboBox_threatCategoryFilter.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Category", None))
         self.lineEdit_threatNameSearch.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Search by threat name", None))
+#if QT_CONFIG(tooltip)
+        self.btn_back_2.setToolTip(QCoreApplication.translate("MainWindow", u"Return", None))
+#endif // QT_CONFIG(tooltip)
+        self.btn_back_2.setText("")
+        self.label_12.setText(QCoreApplication.translate("MainWindow", u"Files Scanned", None))
+        self.groupBox_11.setTitle(QCoreApplication.translate("MainWindow", u"Filter", None))
+        self.comboBox_fileTypeFilter.setPlaceholderText(QCoreApplication.translate("MainWindow", u"File type", None))
+        self.lineEdit_fileNameSearch.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Search by filename or threat", None))
         self.creditsLabel.setText(QCoreApplication.translate("MainWindow", u"Developed by Pang Hoi Him (220327019)", None))
         self.version.setText(QCoreApplication.translate("MainWindow", u"Scan-X version 1.0.0", None))
     # retranslateUi
