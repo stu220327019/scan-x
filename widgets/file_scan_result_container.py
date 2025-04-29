@@ -45,7 +45,7 @@ class FileScanResultContainer(QWidget):
                 detected = result['result'] is not None
                 value = result['result'] if detected else 'Undetected'
                 item.setText(1, value)
-                icon = QIcon(':/resources/images/icons/exclaimation-circle.svg' if detected else ':/resources/images/icons/check-circle.svg')
+                icon = QIcon(':/resources/images/icons/exclaimation-circle.png' if detected else ':/resources/images/icons/check-circle.png')
                 item.setIcon(1, icon)
             self.ui.label_detection.setText('{} / {}'.format(len(detection), len(analysisResults)))
             statusTxt, color = ('No virus detected', Color.SUCCESS) if len(detection) == 0 else ('Virus detected', Color.DANGER)

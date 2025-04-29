@@ -47,9 +47,9 @@ class FileScanResultModel(QAbstractTableModel):
             return result.file.filename
         elif role == Qt.DecorationRole:
             if col == 1:
-                return QIcon(':/resources/images/icons/check-circle.svg' \
+                return QIcon(':/resources/images/icons/check-circle.png' \
                              if result.clean == True else \
-                             ':/resources/images/icons/exclaimation-circle.svg')
+                             ':/resources/images/icons/exclaimation-circle.png')
             else:
                 return None
         elif role == Qt.ForegroundRole:

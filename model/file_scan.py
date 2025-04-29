@@ -68,13 +68,13 @@ class FileScanModel(QAbstractTableModel):
             if col == 2:
                 def getIcon(status):
                     if status == FileScanResult.STATUS_COMPLETED:
-                        return ':/resources/images/icons/check-circle.svg'
+                        return ':/resources/images/icons/check-circle.png'
                     # elif status == File.STATUS_ATTENTION:
                     #     return ':/resources/images/icons/alert-triangle.svg'
                     elif status in [FileScanResult.STATUS_FAILED, FileScanResult.STATUS_INFECTED]:
-                        return ':/resources/images/icons/exclaimation-circle.svg'
+                        return ':/resources/images/icons/exclaimation-circle.png'
                     else:
-                        return ':/resources/images/icons/info-circle.svg'
+                        return ':/resources/images/icons/info-circle.png'
                 return QIcon(getIcon(result.status))
             else:
                 return None

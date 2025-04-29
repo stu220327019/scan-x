@@ -50,7 +50,7 @@ class UrlScanResultContainer(QWidget):
             value = result['result']
             detected = value not in ('clean', 'unrated')
             item.setText(1, value)
-            icon = QIcon(':/resources/images/icons/exclaimation-circle.svg' if detected else ':/resources/images/icons/check-circle.svg')
+            icon = QIcon(':/resources/images/icons/exclaimation-circle.png' if detected else ':/resources/images/icons/check-circle.png')
             item.setIcon(1, icon)
         self.ui.label_detection.setText('{} / {}'.format(len(detection), len(analysisResults)))
         statusTxt, color = ('Safe', Color.SUCCESS) if len(detection) == 0 else ('Unsafe', Color.DANGER)
