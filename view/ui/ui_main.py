@@ -686,7 +686,7 @@ class Ui_MainWindow(object):
         self.toggleLeftBox.setFont(font)
         self.toggleLeftBox.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.toggleLeftBox.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        self.toggleLeftBox.setStyleSheet(u"background-image: url(:/resources/images/icons/info.svg);")
+        self.toggleLeftBox.setStyleSheet(u"background-image: url(:/resources/images/icons/info.png);")
 
         self.verticalLayout_9.addWidget(self.toggleLeftBox)
 
@@ -1310,7 +1310,7 @@ class Ui_MainWindow(object):
         sizePolicy4.setHeightForWidth(self.btn_fileSelect.sizePolicy().hasHeightForWidth())
         self.btn_fileSelect.setSizePolicy(sizePolicy4)
         icon4 = QIcon()
-        icon4.addFile(u":/resources/images/icons/file_plus_white.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon4.addFile(u":/resources/images/icons/file_plus_white.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.btn_fileSelect.setIcon(icon4)
 
         self.horizontalLayout_15.addWidget(self.btn_fileSelect)
@@ -1341,7 +1341,7 @@ class Ui_MainWindow(object):
         self.btn_startFileScan.setSizePolicy(sizePolicy4)
         self.btn_startFileScan.setMinimumSize(QSize(100, 0))
         icon5 = QIcon()
-        icon5.addFile(u":/resources/images/icons/play_white.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon5.addFile(u":/resources/images/icons/play_white.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.btn_startFileScan.setIcon(icon5)
 
         self.horizontalLayout_22.addWidget(self.btn_startFileScan)
@@ -1352,7 +1352,7 @@ class Ui_MainWindow(object):
         self.btn_stopFileScan.setSizePolicy(sizePolicy4)
         self.btn_stopFileScan.setMinimumSize(QSize(100, 0))
         icon6 = QIcon()
-        icon6.addFile(u":/resources/images/icons/rectangle_white.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon6.addFile(u":/resources/images/icons/rectangle_white.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.btn_stopFileScan.setIcon(icon6)
 
         self.horizontalLayout_22.addWidget(self.btn_stopFileScan)
@@ -1535,7 +1535,7 @@ class Ui_MainWindow(object):
         self.btn_back.setObjectName(u"btn_back")
         self.btn_back.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         icon7 = QIcon()
-        icon7.addFile(u":/resources/images/icons/arrow-left.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon7.addFile(u":/resources/images/icons/arrow-left.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.btn_back.setIcon(icon7)
         self.btn_back.setIconSize(QSize(20, 20))
         self.btn_back.setProperty(u"class", u"nav-btn")
@@ -1753,8 +1753,8 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-weight:600; color:#0055ff;\">Scan-X</span></p>\n"
-"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#454544;\">Scan-X is a malware scanning and analysis tool created by PANG Hoi Him (220327019) for the final-year project of IT524122 Hig"
-                        "her Diploma in Cybersecurity.</span></p></body></html>", None))
+"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#454544;\">Scan-X is a malware scanning and analysis tool created by PANG Hoi Him (220327019) as the final-year project of IT524122 High"
+                        "er Diploma in Cybersecurity.</span></p></body></html>", None))
         self.toggleButton.setText("")
         self.titleRightInfo.setText(QCoreApplication.translate("MainWindow", u"Scan-X // Malware Scanning and Analysis Tool", None))
 #if QT_CONFIG(tooltip)

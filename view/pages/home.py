@@ -47,7 +47,7 @@ class Home(Base):
             ("View in directory", openFileOrDir('path')),
             ("View in VirusTotal", lambda res:\
              QDesktopServices.openUrl(f'https://www.virustotal.com/gui/file/{res.file.sha256}')),
-            ("Delete", delFileScanResult)]
+            ("Delete scan result", delFileScanResult)]
         createContextMenu(self.ui.tbl_latestFileScanResults, self.fileScanResultModel, 'results', latestFileScanResultsContextMenuActions)
         self.ui.tbl_latestUrlScanResults.setModel(self.urlScanResultModel)
         self.ui.tbl_latestUrlScanResults.setColumnWidth(0, 200)
@@ -66,7 +66,7 @@ class Home(Base):
             ("Copy URL", copyURL),
             ("Open in Browser", lambda res: QDesktopServices.openUrl(res.url.url)),
             ("View in VirusTotal", viewURLVirusTotal),
-            ("Delete", delURLScanResult)
+            ("Delete scan result", delURLScanResult)
         ]
         createContextMenu(self.ui.tbl_latestUrlScanResults, self.urlScanResultModel, 'results', latestUrlScanResultsContextMenuActions)
         self.ui.tbl_topThreatsDetections.setModel(self.topThreatDetectionModel)

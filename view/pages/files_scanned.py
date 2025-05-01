@@ -1,5 +1,5 @@
 from PySide6.QtGui import QDesktopServices
-from PySide6.QtCore import QModelIndex
+from PySide6.QtCore import QModelIndex, QUrl
 
 from model import FileModel, FileScanResultModel, FileTypeModel
 from lib.entity import File
@@ -27,8 +27,28 @@ class FilesScanned(Base):
 
     def uiDefinitions(self):
         self.ui.tbl_filesScanned.setModel(self.fileModel)
+        def openFileOrDir(field):
+            def _openFileOrDir(res):
+                path = res['file'].get(field)
+                QDesktopServices.openUrl(QUrl.fromUserInput(path))
+            return _openFileOrDir
+        def delFileScanResult(res):
+            self.fileScanResultModel.delScanResult(res.id)
+            self.loadData()
+        def delFileEntry(res):
+            self.fileModel.delFile(res['file'].id)
+            self.loadData()
+        filesScannedContextMenuActions = [
+            ("Open with default program", openFileOrDir('filepath')),
+            ("View in directory", openFileOrDir('path')),
+            ("View in VirusTotal", lambda res:\
+             QDesktopServices.openUrl(f'https://www.virustotal.com/gui/file/{res["file"].sha256}')),
+            ("Delete file entry", delFileEntry)]
+        createContextMenu(self.ui.tbl_filesScanned, self.fileModel, '_data', filesScannedContextMenuActions)
         self.ui.tbl_filesScanned.doubleClicked.connect(self.filesItemClick)
         self.ui.tbl_fileScanResults.setModel(self.fileScanResultModel)
+        createContextMenu(self.ui.tbl_fileScanResults, self.fileScanResultModel, 'results',
+                          [("Delete scan result", delFileScanResult)])
         self.ui.tbl_fileScanResults.doubleClicked.connect(self.fileScanResultsItemClick)
 
     def connectSlotsAndSignals(self):
