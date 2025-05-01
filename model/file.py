@@ -46,13 +46,24 @@ class FileModel(QAbstractTableModel):
             elif col == 4:
                 val = sizeof_fmt(val)
             elif col == 6:
-                val = datetime.fromtimestamp(val).strftime('%Y-%m-%d %H:%M:%S')
+                val = datetime.fromtimestamp(val).strftime('%Y-%m-%d %H:%M:%S') if val else '--'
             return val
         elif role == Qt.ForegroundRole:
             if col == 3:
                 return QColor(Color.SUCCESS if not data['file']['threat'] else Color.DANGER)
             else:
                 return None
+
+    def getRowByFileId(self, id):
+        return next(iter([i for i, j in enumerate(self._data) if j['file'].id == id]), None)
+
+    def delFile(self, id):
+        row = self.getRowByFileId(id)
+        if row:
+            self.beginRemoveRows(QModelIndex(), row, row)
+            del self._data[row]
+            self.endRemoveRows()
+        self.db.exec('DELETE FROM file WHERE id = ?', [id], True)
 
     def loadData(self, search=None, limit=None):
         query = QueryBuilder()\

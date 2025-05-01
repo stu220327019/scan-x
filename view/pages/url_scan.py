@@ -1,5 +1,5 @@
 from PySide6.QtCore import QObject, QThread, Signal
-from PySide6.QtWidgets import QFileDialog, QTreeWidgetItem
+from PySide6.QtWidgets import QFileDialog, QTreeWidgetItem, QMessageBox
 from PySide6.QtGui import Qt, QIcon
 import re
 import vt
@@ -150,6 +150,11 @@ class URLScan(Base):
 
     def scanError(self, error):
         print(f'Error: {error}')
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Critical)
+        msg.setText(f'{error}')
+        msg.setWindowTitle("Error")
+        msg.exec_()
         self.resetUi()
 
 
